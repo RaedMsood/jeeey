@@ -5,7 +5,7 @@ import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../core/widgets/buttons/icon_button_widget.dart';
 import '../../../../core/widgets/buttons/ink_well_button_widget.dart';
-import '../../../home/presentation/widgets/sliver_appbar_home_widget.dart';
+import '../../../home/presentation/widgets/app_bar_home_widget.dart';
 
 AppBar appBarCategoryWidget({
   required TabController tabController,

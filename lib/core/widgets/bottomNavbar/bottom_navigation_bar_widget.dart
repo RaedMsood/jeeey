@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../features/category/presentation/pages/category_page.dart';
 import '../../../features/home/presentation/pages/home_page.dart';
+import '../../../features/new/presentation/pages/new_page.dart';
 import '../../../generated/l10n.dart';
 import '../../constants/app_icons.dart';
 import '../../helpers/exit_from_the_app.dart';
@@ -26,17 +27,14 @@ class _BottomNavigationBarWidgetState
       textDirection: Directionality.of(context),
       child: Scaffold(
         body: [
-           const ExitFromAppWidget(child: HomePage()),
-           const ExitFromAppWidget(child: CategoryPage()),
+          const ExitFromAppWidget(child: HomePage()),
+          const ExitFromAppWidget(child: CategoryPage()),
+          const ExitFromAppWidget(child: NewPage()),
           const ExitFromAppWidget(child: Scaffold()),
-           const ExitFromAppWidget(child: Scaffold()),
           const ExitFromAppWidget(child: Scaffold()),
-
         ][activeIndex],
-
         bottomNavigationBar: Container(
           color: AppColors.whiteColor,
-
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [

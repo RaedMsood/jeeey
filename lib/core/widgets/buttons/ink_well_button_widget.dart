@@ -27,7 +27,7 @@ class InkWellButtonWidget extends StatelessWidget {
       onTap: onPressed,
       child: SvgPicture.asset(
         icon,
-        color: iconColor,
+        color: iconColor??AppColors.primaryColor,
         height: height,
       ),
     );

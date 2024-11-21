@@ -17,6 +17,7 @@ class AppIcons {
   static const String filter = '${_iconsPath}filter.svg';
   static const String highPrice = '${_iconsPath}high_price.svg';
   static const String lowPrice = '${_iconsPath}low_price.svg';
+  static const String close = '${_iconsPath}close.svg';
 
   /// Contact
   static const String facebook = '${_iconsPath}contact/facebook.svg';

@@ -5,16 +5,20 @@ import '../theme/app_colors.dart';
 import 'product_card.dart';
 
 class ProductListWidget extends StatelessWidget {
-  const ProductListWidget({super.key});
+  final bool? gradient;
+  const ProductListWidget({super.key, this.gradient=false});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: AppColors.whiteColor,
-        gradient: LinearGradient(colors: [
+      decoration:  BoxDecoration(
+        gradient: LinearGradient(colors:gradient==false? [
           AppColors.whiteColor,
-          AppColors.whiteColor,
+          AppColors.scaffoldColor,
+          AppColors.scaffoldColor,
+
+        ]:[
+          AppColors.scaffoldColor,
           AppColors.scaffoldColor,
         ], begin: Alignment.topCenter, end: Alignment.center),
       ),

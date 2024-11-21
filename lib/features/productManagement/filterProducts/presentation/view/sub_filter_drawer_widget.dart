@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jeeey/core/widgets/auto_size_text_widget.dart';
-
 import '../../../../../core/theme/app_colors.dart';
+import '../../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../../generated/l10n.dart';
 import '../widgets/a_menu_to_display_the_sub_filter_content_widget.dart';
 import '../widgets/card_of_sub_filter_drawer_widget.dart';
@@ -22,8 +21,10 @@ class _SubFilterDrawerWidgetState extends State<SubFilterDrawerWidget> {
   Widget build(BuildContext context) {
     return Drawer(
       backgroundColor: Colors.white,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
       child: Column(
-
         children: [
           28.h.verticalSpace,
           AutoSizeTextWidget(
@@ -89,7 +90,6 @@ class _SubFilterDrawerWidgetState extends State<SubFilterDrawerWidget> {
                     fontWeight: FontWeight.w600,
                   ),
                   8.h.verticalSpace,
-
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

@@ -55,6 +55,7 @@ dependencies:
   cached_network_image:
   flutter_svg:
   flutter_staggered_grid_view:
+  pinput:
 
 
 dev_dependencies:

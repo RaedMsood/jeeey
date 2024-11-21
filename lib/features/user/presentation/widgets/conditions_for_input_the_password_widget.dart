@@ -1,28 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:jeeey/core/helpers/flash_bar_helper.dart';
-import 'package:jeeey/core/widgets/auto_size_text_widget.dart';
-import 'package:jeeey/core/widgets/buttons/icon_button_widget.dart';
-import 'package:jeeey/core/widgets/text_form_field.dart';
-
 import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/auto_size_text_widget.dart';
+import '../../../../core/widgets/buttons/icon_button_widget.dart';
+import '../../../../core/widgets/text_form_field.dart';
 import '../../../../generated/l10n.dart';
 
-class InputPasswordToSignUpWidget extends StatefulWidget {
+class ConditionsForInputThePasswordWidget extends StatefulWidget {
   final ValueChanged<bool> onValidationChanged;
 
-  const InputPasswordToSignUpWidget(
+  const ConditionsForInputThePasswordWidget(
       {super.key, required this.onValidationChanged});
 
   @override
-  State<InputPasswordToSignUpWidget> createState() =>
-      _InputPasswordToSignUpWidgetState();
+  State<ConditionsForInputThePasswordWidget> createState() =>
+      _ConditionsForInputThePasswordWidgetState();
 }
 
-class _InputPasswordToSignUpWidgetState
-    extends State<InputPasswordToSignUpWidget> {
+class _ConditionsForInputThePasswordWidgetState
+    extends State<ConditionsForInputThePasswordWidget> {
   final TextEditingController _passwordController = TextEditingController();
   bool isLengthValid = false;
   bool hasLetter = false;
@@ -52,6 +49,9 @@ class _InputPasswordToSignUpWidgetState
           onChanged: validatePassword,
           borderSide: const BorderSide(
             color: Colors.black26,
+          ),
+          borderSideError:  const BorderSide(
+            color: AppColors.primaryColor,
           ),
           isPassword: isShow,
           suffixIcon: IconButtonWidget(
@@ -90,7 +90,7 @@ class _InputPasswordToSignUpWidgetState
       child: AutoSizeTextWidget(
         text: text,
         colorText: color,
-        fontSize: 10.5.sp,
+        fontSize: 11.sp,
       ),
     );
   }

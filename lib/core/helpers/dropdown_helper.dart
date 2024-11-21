@@ -15,12 +15,14 @@ class DropdownHelper {
     required BuildContext context,
     required Widget items,
     GestureTapDownCallback? onTapDown,
+    double? top = 0,
   }) {
     if (overlayEntry == null) {
       overlayEntry = _createOverlayEntry(
         context: context,
         items: items,
         onTapDown: onTapDown,
+        top: top,
       );
       Overlay.of(context).insert(overlayEntry!);
     } else {
@@ -33,6 +35,7 @@ class DropdownHelper {
     required BuildContext context,
     required Widget items,
     GestureTapDownCallback? onTapDown,
+    double? top = 0,
   }) {
     RenderBox renderBox = context.findRenderObject() as RenderBox;
     final offset = renderBox.localToGlobal(Offset.zero);
@@ -57,7 +60,7 @@ class DropdownHelper {
           ),
           Positioned(
             left: 0,
-            top: offset.dy + renderBox.size.height,
+            top: offset.dy + renderBox.size.height - top!,
             width: MediaQuery.of(context).size.width,
             child: Material(
               elevation: 2.0,

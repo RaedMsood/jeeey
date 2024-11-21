@@ -31,32 +31,55 @@ class MessageLookup extends MessageLookupByLibrary {
         "cart": MessageLookupByLibrary.simpleMessage("السلة"),
         "category": MessageLookupByLibrary.simpleMessage("الفئات"),
         "clear": MessageLookupByLibrary.simpleMessage("مسح"),
+        "codeHasBeenSendTo":
+            MessageLookupByLibrary.simpleMessage("تم إرسال الرمز إلى"),
+        "confirm": MessageLookupByLibrary.simpleMessage("تأكيد"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("تأكيد كلمة المرور:"),
         "continueWithFacebook": MessageLookupByLibrary.simpleMessage(
             "الاستمرار بالفيسبوك Facebook"),
         "continueWithGoogle":
             MessageLookupByLibrary.simpleMessage("الاستمرار بجوجل Google"),
+        "createANewPassword":
+            MessageLookupByLibrary.simpleMessage("إنشاء كلمة المرور الجديدة"),
+        "dailyNew": MessageLookupByLibrary.simpleMessage("الجديد اليومي"),
         "discount":
             MessageLookupByLibrary.simpleMessage("خصم 15%\nعلى طلبك الأول"),
         "done": MessageLookupByLibrary.simpleMessage("تم"),
-        "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني"),
+        "email": MessageLookupByLibrary.simpleMessage("البريد الالكتروني:"),
         "exclusiveBenefits": MessageLookupByLibrary.simpleMessage(
             "jeeey cloub alglaban\n مزايا حصرية"),
         "filter": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "following": MessageLookupByLibrary.simpleMessage("متابعة"),
+        "forgotYourPassword":
+            MessageLookupByLibrary.simpleMessage("نسيت كلمة المرور؟"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "logIn": MessageLookupByLibrary.simpleMessage("تسجيل الدخول"),
         "mostPopular": MessageLookupByLibrary.simpleMessage("أوسع انتشار"),
         "newArrivals": MessageLookupByLibrary.simpleMessage("الوصول الجديد"),
+        "newPassword":
+            MessageLookupByLibrary.simpleMessage("كلمة المرور الجديدة:"),
         "neww": MessageLookupByLibrary.simpleMessage("جديدنا"),
         "or": MessageLookupByLibrary.simpleMessage("أو"),
-        "password": MessageLookupByLibrary.simpleMessage("كلمة العبور"),
-        "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف"),
+        "password": MessageLookupByLibrary.simpleMessage("كلمة المرور:"),
+        "phoneNumber": MessageLookupByLibrary.simpleMessage("رقم الهاتف:"),
         "phoneNumberOrEmail": MessageLookupByLibrary.simpleMessage(
-            "رقم الهاتف أو البريد الإلكتروني"),
-        "pleaseEnter": MessageLookupByLibrary.simpleMessage("يرجى أدخال"),
+            "رقم الهاتف أو البريد الإلكتروني:"),
+        "pleaseConfirmYourPassword":
+            MessageLookupByLibrary.simpleMessage("يرجى تأكيد كلمة المرور"),
+        "pleaseEnterTheVerificationCode":
+            MessageLookupByLibrary.simpleMessage("يرجى أدخال رمز التحقق"),
+        "pleaseEnterYourPassword":
+            MessageLookupByLibrary.simpleMessage("يرجى أدخال كلمة المرور"),
+        "pleaseEnterYourPhoneNumberOrEmail":
+            MessageLookupByLibrary.simpleMessage(
+                "يرجى أدخال رقم الهاتف أو البريد الالكتروني"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "profile": MessageLookupByLibrary.simpleMessage("الحساب"),
         "recommend": MessageLookupByLibrary.simpleMessage("التوصية"),
+        "resend": MessageLookupByLibrary.simpleMessage("إعادة الإرسال"),
+        "resendCodeIN":
+            MessageLookupByLibrary.simpleMessage("إعادة إرسال الرمز خلال"),
         "signUp": MessageLookupByLibrary.simpleMessage("تسجيل الاشتراك"),
         "topRated": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "viewMore": MessageLookupByLibrary.simpleMessage("عرض المزيد")

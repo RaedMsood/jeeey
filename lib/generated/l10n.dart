@@ -82,6 +82,36 @@ class S {
     );
   }
 
+  /// `Confirm`
+  String get confirm {
+    return Intl.message(
+      'Confirm',
+      name: 'confirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Following`
+  String get following {
+    return Intl.message(
+      'Following',
+      name: 'following',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily new`
+  String get dailyNew {
+    return Intl.message(
+      'Daily new',
+      name: 'dailyNew',
+      desc: '',
+      args: [],
+    );
+  }
+
   // skipped getter for the '--------bottombar-----------' key
 
   /// `Home`
@@ -198,10 +228,10 @@ class S {
 
   // skipped getter for the '--------user-----------' key
 
-  /// `Phone number or email`
+  /// `Phone number or email:`
   String get phoneNumberOrEmail {
     return Intl.message(
-      'Phone number or email',
+      'Phone number or email:',
       name: 'phoneNumberOrEmail',
       desc: '',
       args: [],
@@ -228,41 +258,101 @@ class S {
     );
   }
 
-  /// `Email`
+  /// `Email:`
   String get email {
     return Intl.message(
-      'Email',
+      'Email:',
       name: 'email',
       desc: '',
       args: [],
     );
   }
 
-  /// `Password`
+  /// `Password:`
   String get password {
     return Intl.message(
-      'Password',
+      'Password:',
       name: 'password',
       desc: '',
       args: [],
     );
   }
 
-  /// `Phone number`
+  /// `New password:`
+  String get newPassword {
+    return Intl.message(
+      'New password:',
+      name: 'newPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm password:`
+  String get confirmPassword {
+    return Intl.message(
+      'Confirm password:',
+      name: 'confirmPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create a new password`
+  String get createANewPassword {
+    return Intl.message(
+      'Create a new password',
+      name: 'createANewPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number:`
   String get phoneNumber {
     return Intl.message(
-      'Phone number',
+      'Phone number:',
       name: 'phoneNumber',
       desc: '',
       args: [],
     );
   }
 
-  /// `Following`
-  String get following {
+  /// `Forgot your password?`
+  String get forgotYourPassword {
     return Intl.message(
-      'Following',
-      name: 'following',
+      'Forgot your password?',
+      name: 'forgotYourPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend code in`
+  String get resendCodeIN {
+    return Intl.message(
+      'Resend code in',
+      name: 'resendCodeIN',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Resend`
+  String get resend {
+    return Intl.message(
+      'Resend',
+      name: 'resend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Code has been send to`
+  String get codeHasBeenSendTo {
+    return Intl.message(
+      'Code has been send to',
+      name: 'codeHasBeenSendTo',
       desc: '',
       args: [],
     );
@@ -348,11 +438,41 @@ class S {
     );
   }
 
-  /// `Please enter`
-  String get pleaseEnter {
+  /// `Please enter your phone number or email`
+  String get pleaseEnterYourPhoneNumberOrEmail {
     return Intl.message(
-      'Please enter',
-      name: 'pleaseEnter',
+      'Please enter your phone number or email',
+      name: 'pleaseEnterYourPhoneNumberOrEmail',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter your password`
+  String get pleaseEnterYourPassword {
+    return Intl.message(
+      'Please enter your password',
+      name: 'pleaseEnterYourPassword',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter the verification code`
+  String get pleaseEnterTheVerificationCode {
+    return Intl.message(
+      'Please enter the verification code',
+      name: 'pleaseEnterTheVerificationCode',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please confirm your password`
+  String get pleaseConfirmYourPassword {
+    return Intl.message(
+      'Please confirm your password',
+      name: 'pleaseConfirmYourPassword',
       desc: '',
       args: [],
     );

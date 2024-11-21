@@ -14,6 +14,7 @@ class OnlineImagesWidget extends StatelessWidget {
   final Size? size;
   final BoxFit? fit;
   final double? logoWidth;
+  final double? borderRadius;
 
   const OnlineImagesWidget({
     super.key,
@@ -24,6 +25,7 @@ class OnlineImagesWidget extends StatelessWidget {
     this.size,
     this.fit,
     this.logoWidth,
+    this.borderRadius,
   });
 
   @override
@@ -36,7 +38,7 @@ class OnlineImagesWidget extends StatelessWidget {
           width: size?.width,
           decoration: BoxDecoration(
             color: AppColors.primaryColor.withOpacity(.1),
-            borderRadius: BorderRadius.circular(6.r),
+            borderRadius: BorderRadius.circular(borderRadius??4.r),
           ),
           child: SpinKitPulse(
             color: AppColors.primaryColor,
@@ -64,7 +66,7 @@ class OnlineImagesWidget extends StatelessWidget {
                   : Container(
                       decoration: BoxDecoration(
                         image: image,
-                        borderRadius: BorderRadius.circular(6.r),
+                        borderRadius: BorderRadius.circular(borderRadius??4.r),
                       ),
                       height: size?.height,
                       width: size?.width,
@@ -79,7 +81,7 @@ class OnlineImagesWidget extends StatelessWidget {
         width: size?.width,
         decoration: BoxDecoration(
           color: AppColors.greySwatch.shade50,
-          borderRadius: BorderRadius.circular(8.r),
+          borderRadius: BorderRadius.circular(borderRadius??4.r),
         ),
         child: Center(
           child: SvgPicture.asset(

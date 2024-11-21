@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jeeey/core/helpers/flash_bar_helper.dart';
-
-import '../view/main_filter_widget.dart';
+import 'main_filter_widget.dart';
 
 class SliverPersistentHeaderMainFilterWidget
     extends SliverPersistentHeaderDelegate {

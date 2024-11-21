@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import '../../../../core/constants/app_icons.dart';
+import '../../../../core/helpers/navigateTo.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../core/widgets/buttons/default_button.dart';
-import '../../../../core/widgets/buttons/icon_button_widget.dart';
 import '../../../../generated/l10n.dart';
+import '../widgets/app_bar_to_user_widget.dart';
 import '../widgets/exclusive_discount_and_benefits_widget.dart';
-import '../widgets/input_password_to_log_in_widget.dart';
-import '../widgets/input_password_to_sign_up_widget.dart';
+import '../widgets/input_password_widget.dart';
 import '../widgets/receive_newsletters_widget.dart';
 import '../widgets/view_email_widget.dart';
+import 'forget_password_page.dart';
 
 class ContinueToLogInPage extends StatefulWidget {
   const ContinueToLogInPage({super.key});
@@ -21,88 +20,92 @@ class ContinueToLogInPage extends StatefulWidget {
 }
 
 class _ContinueToLogInPageState extends State<ContinueToLogInPage> {
-  bool isPasswordValid = false;
+  TextEditingController passwordController = TextEditingController();
+  final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(
-        toolbarHeight: 36.h,
-        leading: IconButtonWidget(
-          icon: AppIcons.arrowBack,
-          iconColor: AppColors.primaryColor,
-          height: 30.h,
-        ),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(horizontal: 14.w),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            AutoSizeTextWidget(
-              text: "مرحبا بعودتك!",
-              fontSize: 16.5.sp,
-              fontWeight: FontWeight.w600,
-            ),
-            AutoSizeTextWidget(
-              text:
-                  "أدخل كلمة المرور الخاصة بك لتسجيل الدخول إلى حسابك على Jeeey",
-              fontSize: 12.5.sp,
-              colorText: AppColors.fontColor,
-              maxLines: 2,
-            ),
-            12.h.verticalSpace,
-            AutoSizeTextWidget(
-              text: S.of(context).email,
-              fontSize: 13.sp,
-              colorText: Colors.black87,
-            ),
-            6.h.verticalSpace,
+      appBar: const AppBarToUserWidget(),
+      body: Form(
+        key: formKey,
+        child: SingleChildScrollView(
+          padding: EdgeInsets.symmetric(horizontal: 14.w),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              AutoSizeTextWidget(
+                text: "مرحبا بعودتك!",
+                fontSize: 16.5.sp,
+                fontWeight: FontWeight.w600,
+              ),
+              AutoSizeTextWidget(
+                text:
+                    "أدخل كلمة المرور الخاصة بك لتسجيل الدخول إلى حسابك على Jeeey",
+                fontSize: 12.5.sp,
+                colorText: AppColors.fontColor,
+                maxLines: 2,
+              ),
+              12.h.verticalSpace,
+              AutoSizeTextWidget(
+                text: S.of(context).email,
+                fontSize: 13.sp,
+                colorText: Colors.black87,
+              ),
+              6.h.verticalSpace,
 
-            /// Class View Email Widget
-            const ViewEmailWidget(
-              email: "mraedsshkahs@gmail.com",
-            ),
+              /// Class View Email Widget
+              const ViewEmailWidget(
+                email: "mraedsshkahs@gmail.com",
+              ),
 
-            /// Class Input Password Widget
-            InputPasswordToLogInWidget(),
-            2.5.h.verticalSpace,
+              /// Class Input Password Widget
+              InputPasswordWidget(
+                title: S.of(context).password,
+                validator: S.of(context).pleaseEnterYourPassword,
+                passwordController: passwordController,
+              ),
+              2.5.h.verticalSpace,
 
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                InkWell(
-                  onTap: (){
-
-                  },
-                  child: AutoSizeTextWidget(
-                    text:
-                    "هل نسيت كلمة المرور؟",
-                    fontSize: 11.2.sp,
-                    colorText: AppColors.fontColor,
-                    maxLines: 2,
-                    // textAlign: TextAlign.end,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      navigateTo(context, ForgetPasswordPage());
+                    },
+                    child: AutoSizeTextWidget(
+                      text: S.of(context).forgotYourPassword,
+                      fontSize: 11.2.sp,
+                      colorText: AppColors.fontColor,
+                      maxLines: 2,
+                      // textAlign: TextAlign.end,
+                    ),
                   ),
-                ),
-              ],
-            ),
+                ],
+              ),
 
-            10.h.verticalSpace,
-            /// Class Receive Newsletters Widget
-            ReceiveNewslettersWidget(),
+              10.h.verticalSpace,
 
-            DefaultButtonWidget(
-              text: S.of(context).logIn,
-              height: 42.h,
-              textSize: 13.sp,
-              onPressed: isPasswordValid ? () {} : null,
-            ),
-            14.h.verticalSpace,
+              /// Class Receive Newsletters Widget
+              const ReceiveNewslettersWidget(),
 
-            /// Class Exclusive Discount And Benefits Widget
-            const ExclusiveDiscountAndBenefitsWidget(),
-          ],
+              DefaultButtonWidget(
+                text: S.of(context).logIn,
+                height: 42.h,
+                textSize: 13.sp,
+                onPressed: () {
+                  final isValid = formKey.currentState!.validate();
+                  if (isValid) {}
+                },
+              ),
+              14.h.verticalSpace,
+
+              /// Class Exclusive Discount And Benefits Widget
+              const ExclusiveDiscountAndBenefitsWidget(),
+            ],
+          ),
         ),
       ),
     );

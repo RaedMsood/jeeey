@@ -6,14 +6,14 @@ import '../../constants/app_icons.dart';
 import '../../theme/app_colors.dart';
 
 class IconButtonWidget extends StatelessWidget {
-  final String icon;
+  final String? icon;
   final Color? iconColor;
   final double? height;
   final VoidCallback? onPressed;
 
   const IconButtonWidget({
     super.key,
-    required this.icon,
+    this.icon,
     this.iconColor,
     this.height,
     this.onPressed,
@@ -28,18 +28,15 @@ class IconButtonWidget extends StatelessWidget {
       style: ButtonStyle(
         shape: MaterialStateProperty.all(const CircleBorder()),
         // padding: MaterialStateProperty.all(EdgeInsets.all(14.r)),
-
-
       ),
       onPressed: onPressed ??
           () {
             Navigator.of(context).pop();
           },
       icon: SvgPicture.asset(
-
-         icon,
+        icon ?? AppIcons.arrowBack,
         height: height,
-        color: iconColor,
+        color: iconColor??AppColors.primaryColor,
       ),
     );
   }

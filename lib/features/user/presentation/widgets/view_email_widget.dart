@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jeeey/core/helpers/flash_bar_helper.dart';
 import 'package:jeeey/core/theme/app_colors.dart';
 import 'package:jeeey/core/widgets/auto_size_text_widget.dart';
 

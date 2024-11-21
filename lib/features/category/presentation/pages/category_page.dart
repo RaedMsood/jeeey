@@ -6,7 +6,7 @@ import 'package:jeeey/core/widgets/auto_size_text_widget.dart';
 import 'package:jeeey/features/category/presentation/widgets/app_bar_category_widget.dart';
 
 import '../../../../core/widgets/online_images_widget.dart';
-import '../../../home/presentation/widgets/sliver_appbar_home_widget.dart';
+import '../../../home/presentation/widgets/app_bar_home_widget.dart';
 import '../widgets/circle_card_for_categories_widget.dart';
 import '../widgets/filter_categories_widget.dart';
 

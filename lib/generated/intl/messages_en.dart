@@ -31,32 +31,53 @@ class MessageLookup extends MessageLookupByLibrary {
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
         "category": MessageLookupByLibrary.simpleMessage("Category"),
         "clear": MessageLookupByLibrary.simpleMessage("Clear"),
+        "codeHasBeenSendTo":
+            MessageLookupByLibrary.simpleMessage("Code has been send to"),
+        "confirm": MessageLookupByLibrary.simpleMessage("Confirm"),
+        "confirmPassword":
+            MessageLookupByLibrary.simpleMessage("Confirm password:"),
         "continueWithFacebook":
             MessageLookupByLibrary.simpleMessage("Facebook with Continue"),
         "continueWithGoogle":
             MessageLookupByLibrary.simpleMessage("Continue with google"),
+        "createANewPassword":
+            MessageLookupByLibrary.simpleMessage("Create a new password"),
+        "dailyNew": MessageLookupByLibrary.simpleMessage("Daily new"),
         "discount": MessageLookupByLibrary.simpleMessage(
             "15% discount\n on your first offer"),
         "done": MessageLookupByLibrary.simpleMessage("Done"),
-        "email": MessageLookupByLibrary.simpleMessage("Email"),
+        "email": MessageLookupByLibrary.simpleMessage("Email:"),
         "exclusiveBenefits": MessageLookupByLibrary.simpleMessage(
             "jeeey cloub alglaban\n exclusive benefits"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "following": MessageLookupByLibrary.simpleMessage("Following"),
+        "forgotYourPassword":
+            MessageLookupByLibrary.simpleMessage("Forgot your password?"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "logIn": MessageLookupByLibrary.simpleMessage("Log in"),
         "mostPopular": MessageLookupByLibrary.simpleMessage("Most Popular"),
         "newArrivals": MessageLookupByLibrary.simpleMessage("New Arrivals"),
+        "newPassword": MessageLookupByLibrary.simpleMessage("New password:"),
         "neww": MessageLookupByLibrary.simpleMessage("New"),
         "or": MessageLookupByLibrary.simpleMessage("Or"),
-        "password": MessageLookupByLibrary.simpleMessage("Password"),
-        "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone number"),
+        "password": MessageLookupByLibrary.simpleMessage("Password:"),
+        "phoneNumber": MessageLookupByLibrary.simpleMessage("Phone number:"),
         "phoneNumberOrEmail":
-            MessageLookupByLibrary.simpleMessage("Phone number or email"),
-        "pleaseEnter": MessageLookupByLibrary.simpleMessage("Please enter"),
+            MessageLookupByLibrary.simpleMessage("Phone number or email:"),
+        "pleaseConfirmYourPassword": MessageLookupByLibrary.simpleMessage(
+            "Please confirm your password"),
+        "pleaseEnterTheVerificationCode": MessageLookupByLibrary.simpleMessage(
+            "Please enter the verification code"),
+        "pleaseEnterYourPassword":
+            MessageLookupByLibrary.simpleMessage("Please enter your password"),
+        "pleaseEnterYourPhoneNumberOrEmail":
+            MessageLookupByLibrary.simpleMessage(
+                "Please enter your phone number or email"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "profile": MessageLookupByLibrary.simpleMessage("Profile"),
         "recommend": MessageLookupByLibrary.simpleMessage("Recommend"),
+        "resend": MessageLookupByLibrary.simpleMessage("Resend"),
+        "resendCodeIN": MessageLookupByLibrary.simpleMessage("Resend code in"),
         "signUp": MessageLookupByLibrary.simpleMessage("Sign up"),
         "topRated": MessageLookupByLibrary.simpleMessage("Top Rated"),
         "viewMore": MessageLookupByLibrary.simpleMessage("View more")

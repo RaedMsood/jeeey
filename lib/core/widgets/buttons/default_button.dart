@@ -47,7 +47,7 @@ class DefaultButtonWidget extends StatelessWidget {
         height: height ?? 40.h,
         decoration: BoxDecoration(
           color: background ?? AppColors.primaryColor,
-          borderRadius: BorderRadius.circular(borderRadius ?? 6.sp),
+          borderRadius: BorderRadius.circular(borderRadius ?? 4.sp),
           border: border ??
               Border.all(
                 color: Colors.transparent,

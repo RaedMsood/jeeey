@@ -7,7 +7,7 @@ import '../../../../core/widgets/buttons/default_button.dart';
 import '../../../../core/widgets/buttons/icon_button_widget.dart';
 import '../../../../generated/l10n.dart';
 import '../widgets/exclusive_discount_and_benefits_widget.dart';
-import '../widgets/input_password_to_sign_up_widget.dart';
+import '../widgets/conditions_for_input_the_password_widget.dart';
 import '../widgets/receive_newsletters_widget.dart';
 import '../widgets/view_email_widget.dart';
 
@@ -70,8 +70,8 @@ class _SignUpPageState extends State<SignUpPage> {
             ),
             6.h.verticalSpace,
 
-            /// Class Input Password Widget
-            InputPasswordToSignUpWidget(
+            /// Class Conditions For Input The Password Widget
+            ConditionsForInputThePasswordWidget(
               onValidationChanged: (isValid) {
                 setState(() {
                   isPasswordValid = isValid;

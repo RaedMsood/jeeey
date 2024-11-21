@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jeeey/core/widgets/auto_size_text_widget.dart';
 
 import '../../../../core/theme/app_colors.dart';
+import '../../../../core/widgets/auto_size_text_widget.dart';
 
 class ReceiveNewslettersWidget extends StatefulWidget {
   const ReceiveNewslettersWidget({super.key});
