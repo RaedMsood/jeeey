@@ -8,10 +8,15 @@ import '../../../../core/widgets/text_form_field.dart';
 import '../../../../generated/l10n.dart';
 
 class ConditionsForInputThePasswordWidget extends StatefulWidget {
+  final TextEditingController passwordController;
+
   final ValueChanged<bool> onValidationChanged;
 
-  const ConditionsForInputThePasswordWidget(
-      {super.key, required this.onValidationChanged});
+  const ConditionsForInputThePasswordWidget({
+    super.key,
+    required this.onValidationChanged,
+    required this.passwordController,
+  });
 
   @override
   State<ConditionsForInputThePasswordWidget> createState() =>
@@ -20,7 +25,6 @@ class ConditionsForInputThePasswordWidget extends StatefulWidget {
 
 class _ConditionsForInputThePasswordWidgetState
     extends State<ConditionsForInputThePasswordWidget> {
-  final TextEditingController _passwordController = TextEditingController();
   bool isLengthValid = false;
   bool hasLetter = false;
   bool hasNumber = false;
@@ -45,12 +49,12 @@ class _ConditionsForInputThePasswordWidgetState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextFormFieldWidget(
-          controller: _passwordController,
+          controller: widget.passwordController,
           onChanged: validatePassword,
           borderSide: const BorderSide(
             color: Colors.black26,
           ),
-          borderSideError:  const BorderSide(
+          borderSideError: const BorderSide(
             color: AppColors.primaryColor,
           ),
           isPassword: isShow,
@@ -82,8 +86,9 @@ class _ConditionsForInputThePasswordWidgetState
   }
 
   Widget buildRequirementText(String text, bool isValid) {
-    Color color =
-        isFirstInput ? Colors.black : (isValid ? Colors.green : AppColors.primarySwatch.shade600);
+    Color color = isFirstInput
+        ? Colors.black
+        : (isValid ? Colors.green : AppColors.primarySwatch.shade600);
 
     return Padding(
       padding: EdgeInsets.only(bottom: 1.h),

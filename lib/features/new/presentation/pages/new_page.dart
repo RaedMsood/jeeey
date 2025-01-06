@@ -39,11 +39,11 @@ class _NewPageState extends State<NewPage> {
               scrollController: _scrollController,
             ),
           ),
-          SliverToBoxAdapter(
-            child: ProductListWidget(
-              gradient: true,
-            ),
-          ),
+          // SliverToBoxAdapter(
+          //   child: ProductListWidget(
+          //     gradient: true,
+          //   ),
+          // ),
         ],
       ),
     );

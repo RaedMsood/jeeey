@@ -4,7 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class AutoSizeTextWidget extends StatelessWidget {
   final String text;
- final double? fontSize;
+  final double? fontSize;
   final FontWeight? fontWeight;
   final TextAlign? textAlign;
   final Color? colorText;
@@ -32,7 +32,7 @@ class AutoSizeTextWidget extends StatelessWidget {
         fontWeight: fontWeight ?? FontWeight.w500,
         fontSize: fontSize ?? 14.sp,
         color: colorText ?? Colors.black,
-        fontFamily: 'PlusJakartaSans',
+        fontFamily: 'IBMPlexSansArabic',
       ),
       maxLines: maxLines ?? 1,
       maxFontSize: maxFontSize ?? 24,

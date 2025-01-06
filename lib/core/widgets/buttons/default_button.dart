@@ -16,7 +16,6 @@ class DefaultButtonWidget extends StatelessWidget {
   double? maxFontSize;
   double? minFontSize;
   FontWeight? fontWeight;
-  bool? gradient;
   bool? isLoading;
   final Border? border;
 
@@ -33,7 +32,6 @@ class DefaultButtonWidget extends StatelessWidget {
     this.borderRadius,
     this.maxFontSize,
     this.minFontSize,
-    this.gradient = true,
     this.isLoading,
     this.border,
   });

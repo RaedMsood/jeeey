@@ -33,9 +33,11 @@ class DailyNewPage extends StatelessWidget {
           const SliverToBoxAdapter(
             child: ListToSubFilterWidget(),
           ),
-          const SliverToBoxAdapter(
-            child: ProductListWidget(),
-          ),
+          // const SliverToBoxAdapter(
+          //   child: ProductListWidget(
+          //
+          //   ),
+          // ),
         ],
       ),
       endDrawer: const SubFilterDrawerWidget(),

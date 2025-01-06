@@ -27,7 +27,6 @@ class IconButtonWidget extends StatelessWidget {
       splashRadius: 2,
       style: ButtonStyle(
         shape: MaterialStateProperty.all(const CircleBorder()),
-        // padding: MaterialStateProperty.all(EdgeInsets.all(14.r)),
       ),
       onPressed: onPressed ??
           () {

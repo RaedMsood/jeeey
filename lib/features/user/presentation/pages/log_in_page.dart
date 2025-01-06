@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:jeeey/core/state/check_state_in_get_api_data_widget.dart';
+import 'package:jeeey/core/state/check_state_in_post_api_data_widget.dart';
+import 'package:jeeey/core/state/state.dart';
+import 'package:jeeey/features/user/presentation/riverpod/user_riverpod.dart';
 import '../../../../core/helpers/navigateTo.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/auto_size_text_widget.dart';
@@ -11,20 +15,22 @@ import '../widgets/app_bar_to_user_widget.dart';
 import '../widgets/continue_with_google_or_facebook_widget.dart';
 import '../widgets/exclusive_discount_and_benefits_widget.dart';
 import 'continue_to_log_in_page.dart';
+import 'sign_up_page.dart';
 
-class LogInPage extends StatefulWidget {
+class LogInPage extends ConsumerStatefulWidget {
   const LogInPage({super.key});
 
   @override
-  State<LogInPage> createState() => _LogInPageState();
+  ConsumerState<LogInPage> createState() => _LogInPageState();
 }
 
-class _LogInPageState extends State<LogInPage> {
+class _LogInPageState extends ConsumerState<LogInPage> {
   TextEditingController phoneNumberOrEmailController = TextEditingController();
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
+    var state = ref.watch(checkUserProvider);
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const AppBarToUserWidget(),
@@ -79,17 +85,34 @@ class _LogInPageState extends State<LogInPage> {
               ),
               12.h.verticalSpace,
 
-              DefaultButtonWidget(
-                text: S.of(context).following,
-                height: 42.h,
-                textSize: 13.sp,
-                onPressed: () {
-                  final isValid = formKey.currentState!.validate();
-
-                  if (isValid) {
+              CheckStateInPostApiDataWidget(
+                state: state,
+                hasMessageSuccess: false,
+                functionSuccess: () {
+                  if (state.data.status == "not exists") {
+                    navigateTo(context, const SignUpPage());
+                  } else {
                     navigateTo(context, const ContinueToLogInPage());
                   }
                 },
+                bottonWidget: DefaultButtonWidget(
+                  text: S.of(context).following,
+                  height: 42.h,
+                  textSize: 13.sp,
+                  isLoading: state.stateData == States.loading,
+                  onPressed: () {
+                    final isValid = formKey.currentState!.validate();
+
+                    if (isValid) {
+                      FocusManager.instance.primaryFocus?.unfocus();
+
+                      ref.read(checkUserProvider.notifier).checkUser(
+                            phoneNumberOrEmail:
+                                phoneNumberOrEmailController.text,
+                          );
+                    }
+                  },
+                ),
               ),
               22.h.verticalSpace,
 

@@ -14,7 +14,7 @@ SliverAppBar appBarToFilterSubcategoryProductsWidget({
 }) {
   return SliverAppBar(
     backgroundColor: Colors.white,
-    expandedHeight: viewType == 1 ? 140.h : 155.h,
+    expandedHeight:viewType!=0 ?viewType == 1 ? 140.h : 155.h:0,
     elevation: 0,
     pinned: true,
     titleSpacing: 0.w,

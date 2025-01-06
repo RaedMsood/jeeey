@@ -41,8 +41,12 @@ dependencies:
   flutter_secure_storage:
   encrypt:
   get_it:
+  dartz:
   dio:
   flutter_riverpod:
+  google_maps_flutter:
+  geolocator:
+  geocoding:
   auto_size_text:
   another_flushbar:
   page_transition:
@@ -56,7 +60,14 @@ dependencies:
   flutter_svg:
   flutter_staggered_grid_view:
   pinput:
-
+  reactive_forms:
+  shimmer:
+  skeletonizer:
+  photo_view:
+  hive:
+  hive_flutter:
+  build_runner:
+  hive_generator:
 
 dev_dependencies:
   flutter_test:
@@ -90,8 +101,8 @@ flutter:
     - assets/icons/user/
 
   fonts:
-    - family: PlusJakartaSans
+    - family: IBMPlexSansArabic
       fonts:
-        - asset: assets/fonts/PlusJakartaSans-Medium.ttf
+        - asset: assets/fonts/IBMPlexSansArabic-Regular.ttf
 flutter_intl:
   enabled: true

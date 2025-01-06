@@ -9,17 +9,20 @@ import '../pages/subcategory_product_filter_page.dart';
 
 class RectangularCardForCategoriesWidget extends StatelessWidget {
   final String name;
+  final int idCategory;
 
   const RectangularCardForCategoriesWidget({
     super.key,
     required this.name,
+    required this.idCategory
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
+        print(idCategory);
+        //navigateTo(context, SubcategoryProductFilterPage(idCategory: idCategory,));
       },
       child: Container(
         width: 70.w,

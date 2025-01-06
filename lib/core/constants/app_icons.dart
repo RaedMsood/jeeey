@@ -10,14 +10,29 @@ class AppIcons {
   static const String favorite = '${_iconsPath}favorite.svg';
   static const String starActive = '${_iconsPath}star_active.svg';
   static const String star = '${_iconsPath}star.svg';
+
   static const String arrowBack = '${_iconsPath}arrow_back.svg';
   static const String arrowUp = '${_iconsPath}arrow_up.svg';
   static const String arrowBottom = '${_iconsPath}arrow_bottom.svg';
+  static const String arrowLeft = '${_iconsPath}arrow_left.svg';
+
   static const String showRow = '${_iconsPath}show_row.svg';
   static const String filter = '${_iconsPath}filter.svg';
   static const String highPrice = '${_iconsPath}high_price.svg';
   static const String lowPrice = '${_iconsPath}low_price.svg';
   static const String close = '${_iconsPath}close.svg';
+  static const String addNewAddress = '${_iconsPath}add_new_address.svg';
+  static const String cardAddress = '${_iconsPath}card_address.svg';
+  static const String sharing = '${_iconsPath}sharing.svg';
+
+  static const String cartPlus = '${_iconsPath}cart_plus.svg';
+  static const String cartMinus = '${_iconsPath}cart_minus.svg';
+  static const String cartDelete = '${_iconsPath}cart_delete.svg';
+
+  static const String yourOrderHasBeenConfirmedSuccessfully =
+      '${_iconsPath}your_order_has_been_confirmed_successfully.svg';
+  static const String mapLocation = '${_iconsPath}map_location.svg';
+  static const String trash = '${_iconsPath}trash.svg';
 
   /// Contact
   static const String facebook = '${_iconsPath}contact/facebook.svg';
@@ -28,6 +43,23 @@ class AppIcons {
   static const String email = '${_iconsPath}contact/email.svg';
 
   // Profile
+  static const String setting = '${_iconsPath}profile/setting.svg';
+  static const String wallet = '${_iconsPath}profile/wallet.svg';
+  static const String giftCard = '${_iconsPath}profile/gift_card.svg';
+  static const String unpaid = '${_iconsPath}profile/unpaid.svg';
+  static const String processing = '${_iconsPath}profile/processing.svg';
+  static const String shipped = '${_iconsPath}profile/shipped.svg';
+  static const String review = '${_iconsPath}profile/review.svg';
+  static const String returns = '${_iconsPath}profile/returns.svg';
+  static const String support = '${_iconsPath}profile/support.svg';
+  static const String logIn = '${_iconsPath}profile/log_in.svg';
+  static const String surveyCenter = '${_iconsPath}profile/survey_center.svg';
+  static const String freeTrialCenter =
+      '${_iconsPath}profile/free_trial_center.svg';
+  static const String receiptDiscount =
+      '${_iconsPath}profile/receipt_discount.svg';
+  static const String truckFast = '${_iconsPath}profile/truck_fast.svg';
+  static const String logout = '${_iconsPath}profile/log_out.svg';
 
   /// User Icons
   static const String showPassword = '${_iconsPath}user/show_password.svg';

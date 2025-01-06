@@ -2,8 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../constants/app_icons.dart';
+import 'package:jeeey/core/constants/app_images.dart';
 import '../theme/app_colors.dart';
 
 class OnlineImagesWidget extends StatelessWidget {
@@ -37,8 +36,8 @@ class OnlineImagesWidget extends StatelessWidget {
           height: size?.height,
           width: size?.width,
           decoration: BoxDecoration(
-            color: AppColors.primaryColor.withOpacity(.1),
-            borderRadius: BorderRadius.circular(borderRadius??4.r),
+            color: Colors.grey[300],
+            borderRadius: BorderRadius.circular(borderRadius ?? 4.r),
           ),
           child: SpinKitPulse(
             color: AppColors.primaryColor,
@@ -61,12 +60,13 @@ class OnlineImagesWidget extends StatelessWidget {
               circularImage
                   ? CircleAvatar(
                       backgroundImage: imageProvider,
-                      radius: circularRadius?? 35.sp,
+                      radius: circularRadius ?? 35.sp,
                     )
                   : Container(
                       decoration: BoxDecoration(
                         image: image,
-                        borderRadius: BorderRadius.circular(borderRadius??4.r),
+                        borderRadius:
+                            BorderRadius.circular(borderRadius ?? 4.r),
                       ),
                       height: size?.height,
                       width: size?.width,
@@ -81,11 +81,11 @@ class OnlineImagesWidget extends StatelessWidget {
         width: size?.width,
         decoration: BoxDecoration(
           color: AppColors.greySwatch.shade50,
-          borderRadius: BorderRadius.circular(borderRadius??4.r),
+          borderRadius: BorderRadius.circular(borderRadius ?? 4.r),
         ),
         child: Center(
-          child: SvgPicture.asset(
-            AppIcons.logo,
+          child: Image.asset(
+            AppImages.logo,
             width: logoWidth ?? 48.r,
           ),
         ),

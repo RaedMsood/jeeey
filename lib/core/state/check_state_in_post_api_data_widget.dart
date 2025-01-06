@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
+import '../../services/auth/auth.dart';
 import '../helpers/flash_bar_helper.dart';
-import '../network/remote_exception.dart';
+import '../network/errors/remote_exception.dart';
 import '../state/state.dart';
 import '../state/state_data.dart';
 
@@ -29,7 +30,7 @@ class CheckStateInPostApiDataWidget extends StatelessWidget {
         functionSuccess!();
 
        hasMessageSuccess? showFlashBarSuccess(
-          message: messageSuccess??"شكرا تم اكمال العملية بنجاح",
+          message: messageSuccess??" تم اكمال العملية بنجاح",
               context: context,
             ):const SizedBox();
         state.stateData = States.initial;
@@ -47,8 +48,6 @@ class CheckStateInPostApiDataWidget extends StatelessWidget {
           state.stateData = States.initial;
         },
       );
-    } else if (state.stateData == States.loading) {
-      return const Text("");
     }
     return bottonWidget!;
   }

@@ -45,10 +45,15 @@ extension ColorExtension on String {
   /// Convert a string hex color to Color object if the string is a valid hex color, otherwise throws an exception.
   Color toColor() {
     String formattedColor = toUpperCase().replaceAll('#', '');
-    // if (formattedColor.length == 6) {
-    formattedColor = 'FF$formattedColor';
+    // hex = hex.replaceAll('#', '');
+    // if (hex.length == 6) {
+    //   hex = 'FF$hex';
     // }
-    return Color(int.parse(formattedColor, radix: 16));
+    // return Color(int.parse('0x$hex'));
+    if (formattedColor.length == 6) {
+    formattedColor = 'FF$formattedColor';
+    }
+    return Color(int.parse("0x$formattedColor"));
   }
 
   /// Convert a string hex color to Color object if the string is a valid hex color, otherwise returns null.

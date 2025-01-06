@@ -33,8 +33,8 @@ class RecommendPage extends StatelessWidget {
           const SliverToBoxAdapter(
             child: ListToSubFilterWidget(),
           ),
-          const SliverToBoxAdapter(
-            child: ProductListWidget(),
+          SliverToBoxAdapter(
+            child: ProductListWidget(product: [],),
           ),
         ],
       ),

@@ -1,5 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../../../core/state/state_data.dart';
+
 abstract class HomeProductsFilter {
   static String all = "all";
   static String famous = "most_famous";
@@ -33,3 +35,17 @@ class FilterProductsRiverpodController
     // await getData();
   }
 }
+// final changeWalletProviders = StateNotifierProvider<ChangeWalletNotifier, dynamic>(
+//         (ref) => ChangeWalletNotifier(ref));
+//
+// class ChangeWalletNotifier extends StateNotifier<DataState> {
+//
+//   int numWallet=0;
+//   ChangeWalletNotifier(super._state);
+//
+//   getWalletNumber(int num){
+//     numWallet = num;
+//     state =state.copyWith(state: States.changeWallet, data: numWallet);
+//   }
+
+//}

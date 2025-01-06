@@ -6,8 +6,8 @@ import 'app_colors.dart';
 ThemeData lightTheme = ThemeData(
   scaffoldBackgroundColor: AppColors.scaffoldColor,
   primarySwatch: AppColors.primarySwatch,
-  splashColor: AppColors.primarySwatch.shade50.withOpacity(.6),
-  highlightColor: AppColors.primarySwatch.shade50.withOpacity(.4),
+  splashColor: AppColors.primaryColor.withOpacity(.1),
+  highlightColor: AppColors.primaryColor.withOpacity(.1),
   appBarTheme: const AppBarTheme(
     backgroundColor: Colors.transparent,
     elevation: 0.0,
@@ -30,6 +30,8 @@ ThemeData lightTheme = ThemeData(
         return AppColors.primaryColor.withOpacity(0.1);
       },
     ),
+    unselectedLabelStyle: const TextStyle(fontFamily: "IBMPlexSansArabic"),
+    labelStyle: const TextStyle(fontFamily: "IBMPlexSansArabic"),
     indicatorSize: TabBarIndicatorSize.label,
     indicator: const UnderlineTabIndicator(
       borderSide: BorderSide(width: 1.6, color: Colors.black),
@@ -38,5 +40,5 @@ ThemeData lightTheme = ThemeData(
     dividerHeight: 0.23,
     tabAlignment: TabAlignment.start,
   ),
-  fontFamily: 'PlusJakartaSans',
+  fontFamily: 'IBMPlexSansArabic',
 );

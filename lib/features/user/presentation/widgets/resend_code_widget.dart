@@ -2,14 +2,20 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
+import '../../../../core/state/check_state_in_post_api_data_widget.dart';
+import '../../../../core/state/state.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../generated/l10n.dart';
+import '../riverpod/user_riverpod.dart';
 
 class ResendCodeWidget extends ConsumerStatefulWidget {
+  final String phoneNumberOrEmail;
+
   const ResendCodeWidget({
     super.key,
+    required this.phoneNumberOrEmail,
   });
 
   @override
@@ -61,7 +67,7 @@ class _ResendCodeWidgetState extends ConsumerState<ResendCodeWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // var controller = ref.watch(resendOtpProvider);
+    var state = ref.watch(userProvider);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -73,30 +79,33 @@ class _ResendCodeWidgetState extends ConsumerState<ResendCodeWidget> {
         ),
         canResend ? 6.w.horizontalSpace : 3.w.horizontalSpace,
         canResend
-            ?
-            // controller.viewState == ViewState.loading
-            //         ? SpinKitThreeBounce(
-            //             color: AppColors.secondaryColor,
-            //             size: 17.sp,
-            //           )
-            //         :
-            InkWell(
-                onTap: () {
-                  // ref.read(resendOtpProvider.notifier).resendOtp(context,
-                  //     onSuccess: () {
-                  //   resend();
-                  // });
-                  resend();
-                },
-                child: Text(
-                  S.of(context).resend,
-                  style: TextStyle(
-                    fontSize: 12.sp,
+            ? state.stateData == States.loading
+                ? SpinKitThreeBounce(
                     color: AppColors.primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              )
+                    size: 17.sp,
+                  )
+                : CheckStateInPostApiDataWidget(
+                    state: state,
+                    hasMessageSuccess: false,
+                    functionSuccess: () {
+                      resend();
+                    },
+                    bottonWidget: InkWell(
+                      onTap: () {
+                        ref.read(userProvider.notifier).resendOTP(
+                              phoneNumberOrEmail: widget.phoneNumberOrEmail,
+                            );
+                      },
+                      child: Text(
+                        S.of(context).resend,
+                        style: TextStyle(
+                          fontSize: 12.sp,
+                          color: AppColors.primaryColor,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  )
             : AutoSizeTextWidget(
                 text:
                     "00:${countDown < 10 ? "0${countDown.toString()}" : countDown.toString()}",

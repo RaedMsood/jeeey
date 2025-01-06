@@ -14,6 +14,7 @@ class TextFormFieldWidget extends StatelessWidget {
   final Color? labelTextColor;
   final double? hintFontSize;
   final double? labelFontSize;
+  final TextAlign? textAlign;
   final BorderSide? borderSide;
   final BorderSide? borderSideError;
   final FormFieldValidator? fieldValidator;
@@ -29,7 +30,7 @@ class TextFormFieldWidget extends StatelessWidget {
   const TextFormFieldWidget({
     super.key,
     required this.controller,
-     this.type,
+    this.type,
     this.fillColor,
     this.hintText,
     this.hintTextColor,
@@ -37,6 +38,7 @@ class TextFormFieldWidget extends StatelessWidget {
     this.label,
     this.labelTextColor,
     this.labelFontSize,
+    this.textAlign,
     this.borderSide,
     this.borderSideError,
     this.fieldValidator,
@@ -56,10 +58,10 @@ class TextFormFieldWidget extends StatelessWidget {
     return TextFormField(
       maxLines: maxLine ?? 1,
       controller: controller,
-      keyboardType: type??TextInputType.text,
+      keyboardType: type ?? TextInputType.text,
       validator: fieldValidator,
       obscureText: isPassword ?? false,
-      autofocus: autofocus??false,
+      autofocus: autofocus ?? false,
       onFieldSubmitted: onSubmit,
       onTap: onTap,
       onChanged: onChanged,
@@ -88,7 +90,6 @@ class TextFormFieldWidget extends StatelessWidget {
           borderSide: borderSideError ?? BorderSide.none,
           borderRadius: BorderRadius.circular(4.sp),
         ),
-
         focusedBorder: OutlineInputBorder(
           borderSide: borderSide ?? BorderSide.none,
           borderRadius: BorderRadius.circular(4.sp),
@@ -102,7 +103,7 @@ class TextFormFieldWidget extends StatelessWidget {
         contentPadding: const EdgeInsets.all(10.0),
       ),
       expands: expanded ?? false,
-      textAlign: TextAlign.start,
+      textAlign: textAlign ?? TextAlign.start,
     );
   }
 }

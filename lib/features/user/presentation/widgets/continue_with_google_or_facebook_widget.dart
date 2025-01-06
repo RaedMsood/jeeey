@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/auto_size_text_widget.dart';
@@ -40,7 +39,6 @@ class ContinueWithGoogleOrFacebookWidget extends StatelessWidget {
         ContinueWidget(
           title: S.of(context).continueWithGoogle,
           icon: AppIcons.continueToGoogle,
-          padding: 7.sp,
           onTap: () {},
         ),
         8.h.verticalSpace,
@@ -58,14 +56,12 @@ class ContinueWidget extends StatelessWidget {
   final String title;
   final String icon;
   final VoidCallback onTap;
-  final double? padding;
 
   const ContinueWidget({
     super.key,
     required this.title,
     required this.icon,
     required this.onTap,
-    this.padding,
   });
 
   @override
@@ -73,7 +69,7 @@ class ContinueWidget extends StatelessWidget {
     return InkWell(
       onTap: onTap,
       child: Container(
-        padding: EdgeInsets.all(padding ?? 4.sp),
+        padding: EdgeInsets.all(9.sp),
         decoration: BoxDecoration(
           border: Border.all(
             color: Colors.black26,
@@ -83,7 +79,10 @@ class ContinueWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            SvgPicture.asset(icon),
+            SvgPicture.asset(
+              icon,
+              height: 24.h,
+            ),
             Expanded(
               child: AutoSizeTextWidget(
                 text: title,

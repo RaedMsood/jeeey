@@ -1,158 +1,144 @@
-import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import '../../../../core/theme/app_colors.dart';
-import '../../../category/presentation/widgets/list_to_display_categories_on_the_home_widget.dart';
-import '../../../../core/widgets/product_list_widget.dart';
-import '../widgets/carousel_slider_for_offers_widget.dart';
-import '../widgets/filter_products_home_widget.dart';
-import '../widgets/list_of_discount_widget.dart';
-import '../widgets/list_of_major_offers_widget.dart';
-import '../widgets/list_of_trends_widget.dart';
-import '../widgets/app_bar_home_widget.dart';
-import '../widgets/smooth_page_indicator_widget.dart';
 
-class HomePage extends StatefulWidget {
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import '../../../../core/state/check_state_in_get_api_data_widget.dart';
+import '../../../../core/theme/app_colors.dart';
+import '../riverpod/sections_riverpod.dart';
+import '../widgets/app_bar_home_widget.dart';
+import '../widgets/sections_widget.dart';
+import '../widgets/skeletonizer_of_home_page.dart';
+
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
-  ScrollController _scrollController = ScrollController();
-  Color iconColor = Colors.white;
-  int pageController = 0;
-  late TabController _tabController;
-  Color appBarColor = Colors.transparent;
-  final List<String> images = [
-    'https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_1280.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQqGK3diR3Zi-mnOXEaj-3ewmFyRYVxGzVzZw&s',
-    'https://letsenhance.io/static/03620c83508fc72c6d2b218c7e304ba5/11499/UpscalerAfter.jpg',
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRG1X1dlZuFdyXtSX3gXdycKtVeXGtGOzsfdw&s'
-  ];
-
+class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMixin {
+   TabController? _tabController;
+  bool _isTabControllerInitialized = false;
+  late ScrollController scrollController;
+  final Map<int, ScrollController> _scrollControllers = {};
+  final Map<int, VoidCallback> _scrollListeners = {};
+  late PageController pageController;
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: categories.length, vsync: this);
-    _scrollController = ScrollController();
-    _scrollController.addListener(_onScroll);
-  }
-
-  void _onScroll() {
-    if (_scrollController.offset > kToolbarHeight + 20.h) {
-      setState(() {
-        iconColor = Colors.black;
-      });
-    } else {
-      setState(() {
-        iconColor = Colors.white;
-      });
-    }
-    if (_scrollController.offset > kToolbarHeight + 50.h) {
-      setState(() {
-        appBarColor = Colors.white;
-      });
-    } else {
-      setState(() {
-        appBarColor = Colors.transparent;
-      });
-    }
+    pageController = PageController();
+    scrollController = ScrollController();
   }
 
   @override
   void dispose() {
-    _tabController.dispose();
-    _scrollController.removeListener(_onScroll);
-    _scrollController.dispose();
+    _scrollControllers.forEach((key, controller) {
+      controller.dispose();
+    });
+    _tabController!.dispose();
+    pageController.dispose();
     super.dispose();
+  }
+
+  void _onScroll(int sectionId) {
+    final scrollController = _scrollControllers[sectionId];
+    if (scrollController == null) {
+      return;
+    }
+    final offset = scrollController.offset;
+    var iconColor = ref.watch(colorIconAppBarProvider);
+    var appBarColor = ref.watch(colorBackAppBarProvider);
+
+    if (offset > kToolbarHeight + 20.h) {
+      if (iconColor != const Color(0xff8a1538)) {
+        ref.read(colorIconAppBarProvider.notifier).setColorIcon(const Color(0xff8a1538));
+      }
+    } else {
+      if (iconColor != Colors.white) {
+        ref.read(colorIconAppBarProvider.notifier).setColorIcon(Colors.white);
+      }
+    }
+
+    if (offset > kToolbarHeight + 50.h) {
+      if (appBarColor != Colors.white) {
+        ref.read(colorBackAppBarProvider.notifier).setColorBackGround(Colors.white);
+      }
+    } else {
+      if (appBarColor != Colors.transparent) {
+        ref.read(colorBackAppBarProvider.notifier).setColorBackGround(Colors.transparent);
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    double expandedHeight = 120.h;
-    return Scaffold(
-      backgroundColor: AppColors.scaffoldColor,
-      extendBodyBehindAppBar: true,
-      appBar: appBarHomeWidget(
-        tabController: _tabController,
-        iconColor: iconColor,
-        appBarColor: appBarColor,
-      ),
-      body: DefaultTabController(
-        length: categories.length,
-        child: TabBarView(
-          controller: _tabController,
-          children: categories.map((category) {
-            return CustomScrollView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              controller: _scrollController,
-              slivers: [
-                SliverAppBar(
-                  expandedHeight: expandedHeight,
-                  pinned: false,
-                  stretch: true,
-                  backgroundColor: Colors.white,
+    var iconColors = ref.watch(colorIconAppBarProvider) ?? Colors.white;
+    var appBarColor = ref.watch(colorBackAppBarProvider) ?? Colors.transparent;
+    var state = ref.watch(sectionProvider);
+    if (state.data.section == null || state.data.section!.isEmpty) {
+      return const  Center(child: CircularProgressIndicator());
+    }
+    try {
+      if (!_isTabControllerInitialized) {
+        _tabController = TabController(
+          length: state.data.section!.length,
+          vsync: this,
+        );
+        _isTabControllerInitialized = true;
+      }
+    } catch (e) {
+      if (kReleaseMode) {
+        print("Error initializing TabController in Release mode: $e");
+      }
+      return const Center(child: CircularProgressIndicator());
+    }
+    if(_tabController==null){
+      return const Center(child: CircularProgressIndicator());
+    }
+    return CheckStateInGetApiDataWidget(
+      state: state,
+      widgetOfLoading: const SkeletonizerOfHomePage(),
+      widgetOfData: Scaffold(
+        backgroundColor: AppColors.scaffoldColor,
+        extendBodyBehindAppBar: true,
+        appBar: appBarHomeWidget(
+          tabController: _tabController,
+          iconColor: iconColors,
+          appBarColor: appBarColor,
+          section: state.data.section!,
+          pageController: pageController,
+        ),
+        body: PageView.builder(
+          controller: pageController,
+          itemCount: state.data.section!.length,
+          onPageChanged: (index) {
+            ref.read(colorIconAppBarProvider.notifier).setColorIcon(Colors.white);
+            ref.read(colorBackAppBarProvider.notifier).setColorBackGround(Colors.transparent);
+            _tabController!.index = index;
+          },
+          itemBuilder: (context, index) {
+            var section = state.data.section![index];
+            if (!_scrollControllers.containsKey(section.id!)) {
+              _scrollControllers[section.id!] = ScrollController();
+              _scrollListeners[section.id!] = () {
+                _onScroll(section.id!);
+              };
+              _scrollControllers[section.id!]!
+                  .addListener(_scrollListeners[section.id!]!);
+            }
 
-                  flexibleSpace: FlexibleSpaceBar(
-                    background: Stack(
-                      alignment: Alignment.bottomCenter,
-                      children: [
-                        CarouselSliderForOffersWidget(
-                          images: images,
-                          onPageChanged: (index, reason) {
-                            setState(() {
-                              pageController = index;
-                            });
-                          },
-                        ),
-                        SmoothPageIndicatorWidget(
-                          pageController: pageController,
-                          count: images.length,
-                        ),
-                      ],
-                    ),
-                  ),
-                  // backgroundColor: Colors.red,
-                ),
-                SliverToBoxAdapter(
-                  child: Column(
-                    children: [
-                      /// Class List To Display Categories On The Home
-                      const ListToDisplayCategoriesOnTheHomeWidget(),
-
-                      /// Class ListOf Major Offers
-                      const ListOfMajorOffersWidget(),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 8.w, vertical: 5.h),
-                        child: Row(
-                          children: [
-                            /// Class List Of Trend
-                            const Expanded(child: ListOfTrendWidget()),
-                            6.w.horizontalSpace,
-
-                            /// Class List Of Discount
-                            const Expanded(child: ListOfDiscountWidget()),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                SliverPersistentHeader(
-                  pinned: true,
-                  floating: false,
-                  delegate: FilterProductsHomeWidget(),
-                ),
-                const SliverToBoxAdapter(
-                  child: ProductListWidget(),
-                ),
-              ],
+            return SectionOfCategoryInHomePage(
+              scrollController: _scrollControllers[section.id ?? 1]!,
+              idSection: section.id ?? 1,
             );
-          }).toList(),
+          },
         ),
       ),
+
     );
   }
 }
+
+
+

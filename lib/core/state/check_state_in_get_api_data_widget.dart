@@ -2,11 +2,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import '../helpers/flash_bar_helper.dart';
-import '../network/remote_exception.dart';
+import '../network/errors/remote_exception.dart';
 import '../state/state.dart';
+import '../theme/app_colors.dart';
 import '../widgets/no_internet_connection_widget.dart';
 import 'state_data.dart';
-
 
 class CheckStateInGetApiDataWidget extends StatelessWidget {
   final Widget? widgetOfData;
@@ -23,14 +23,16 @@ class CheckStateInGetApiDataWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print(state.stateData);
+
     if (state.stateData == States.loaded) {
       // return state.data!.isEmpty?EmptyWalletWidget() :widgetOfData!;
       return widgetOfData!;
-
     } else if (state.stateData == States.error) {
       if (state.exception!.type == DioExceptionType.connectionError) {
         return NoInternetConnectionWidget();
       } else {
+        print(state.exception!.response!.statusCode);
+
         SchedulerBinding.instance.addPostFrameCallback((_) {
           showFlashBarError(
             context: context,
@@ -42,7 +44,10 @@ class CheckStateInGetApiDataWidget extends StatelessWidget {
       }
     } else if (state.stateData == States.loading) {
       return widgetOfLoading ??
-          const Center(child: CircularProgressIndicator());
+          const Center(
+              child: CircularProgressIndicator(
+            color: AppColors.primaryColor,
+          ));
     } else {
       return const SizedBox();
     }

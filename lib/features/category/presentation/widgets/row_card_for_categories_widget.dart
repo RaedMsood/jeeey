@@ -7,10 +7,12 @@ import '../../../../core/widgets/online_images_widget.dart';
 
 class RowCardForCategoriesWidget extends StatelessWidget {
   final bool circularImage;
+  final String nameCategory;
 
   const RowCardForCategoriesWidget({
     super.key,
     required this.circularImage ,
+    required this.nameCategory
   });
 
   @override
@@ -35,7 +37,7 @@ class RowCardForCategoriesWidget extends StatelessWidget {
           3.w.horizontalSpace,
           Flexible(
             child: AutoSizeTextWidget(
-              text: "ملابس نسائي",
+              text: nameCategory,
               fontSize: 10.sp,
               fontWeight: FontWeight.w500,
               maxLines: 2,

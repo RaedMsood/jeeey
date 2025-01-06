@@ -6,9 +6,12 @@ import '../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../core/widgets/buttons/icon_button_widget.dart';
 import '../../../../core/widgets/buttons/ink_well_button_widget.dart';
 import '../../../home/presentation/widgets/app_bar_home_widget.dart';
+import '../../data/model/category_data.dart';
 
 AppBar appBarCategoryWidget({
   required TabController tabController,
+  required List<CategoryData> category,
+
 }) {
   return AppBar(
     titleSpacing: 0,
@@ -68,8 +71,8 @@ AppBar appBarCategoryWidget({
         controller: tabController,
         indicatorWeight: 4.0,
         isScrollable: true,
-        tabs: categories.map((category) {
-          return Tab(text: category);
+        tabs: category.map((category) {
+          return Tab(text: category.name);
         }).toList(),
       ),
     ),

@@ -39,7 +39,7 @@ class _FilterCategoriesWidgetState extends State<FilterCategoriesWidget> {
     'تخفيضات ي',
     'ملابس نسائية س',
   ];
-  String tempCategoryName = categories[0];
+  String tempCategoryName = "categories[0]";
 
   @override
   Widget build(BuildContext context) {

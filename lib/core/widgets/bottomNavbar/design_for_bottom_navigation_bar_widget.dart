@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../theme/app_colors.dart';
-import '../auto_size_text_widget.dart';
 
 class DesignForBottomNavigationBarWidget extends StatelessWidget {
   final String icon;
@@ -47,13 +46,23 @@ class DesignForBottomNavigationBarWidget extends StatelessWidget {
                   height: active ? 24.h : 22.h,
                 ),
               ),
-              2.h.verticalSpace,
-              AutoSizeTextWidget(
-                text: label,
-                colorText:
-                    active ? Colors.black87 : AppColors.greySwatch.shade400,
-                fontSize: 11.sp,
-              )
+              SizedBox(height: 2.h),
+              // AutoSizeTextWidget(
+              //   text: label,
+              //   colorText:
+              //       active ? Colors.black87 : AppColors.greySwatch.shade400,
+              //   fontSize: 10.8.sp,
+              //   textAlign: TextAlign.left,
+              // ),
+              Text(
+                label,
+                style: TextStyle(
+                  color:
+                      active ? Colors.black87 : AppColors.greySwatch.shade400,
+                  fontSize: 10.8.sp
+                ),
+                textAlign: TextAlign.left,
+              ),
             ],
           ),
         ),

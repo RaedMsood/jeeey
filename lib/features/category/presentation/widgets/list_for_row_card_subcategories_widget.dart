@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+import '../../data/model/category_data.dart';
 import 'row_card_for_categories_widget.dart';
 
 
 class ListForRowCardSubcategoriesWidget extends StatelessWidget {
-  final bool circularImage;
-  const ListForRowCardSubcategoriesWidget({
-    required this.circularImage,
+  // final bool circularImage;
+  final List<CategoryData> category;
+
+  const ListForRowCardSubcategoriesWidget({super.key,
+    required this.category
   });
 
   @override
@@ -18,14 +21,15 @@ class ListForRowCardSubcategoriesWidget extends StatelessWidget {
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.symmetric(horizontal: 8.w),
-        itemCount: 8,
+        itemCount: category.length,
         itemBuilder: (context, index) {
           return Row(
             children: [
               RowCardForCategoriesWidget(
-                circularImage: circularImage,
+                circularImage: category[index].hasChildren==true?true:false,
+                nameCategory: category[index].name!,
               ),
-              circularImage==true?0.horizontalSpace: 6.w.horizontalSpace,
+              category[index].hasChildren==true?0.horizontalSpace: 6.w.horizontalSpace,
 
             ],
           );

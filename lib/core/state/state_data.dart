@@ -1,28 +1,33 @@
 import 'package:dio/dio.dart';
-import 'package:risk/core/state/state.dart';
-import 'package:risk/features/wallet/data/model/wallet_model.dart';
+import 'package:jeeey/core/state/state.dart';
 
-class DataState {
+class DataState<T> {
   States stateData;
   final DioException? exception;
-   dynamic data;
+  final T data;
 
   DataState({
     required this.stateData,
     this.exception,
-    this.data,
+    required this.data,
   });
 
-  factory DataState.initial() {
-    return DataState(stateData: States.initial);
+  factory DataState.initial(T data) {
+    return DataState(
+      stateData: States.initial,
+      data: data,
+    );
   }
 
-  DataState copyWith({
+  DataState<T> copyWith({
     required States state,
     DioException? exception,
-    dynamic data,
+    T? data,
   }) {
-    return DataState(stateData: state, exception: exception, data: data);
+    return DataState(
+      stateData: state,
+      exception: exception,
+      data: data ?? this.data,
+    );
   }
 }
-
