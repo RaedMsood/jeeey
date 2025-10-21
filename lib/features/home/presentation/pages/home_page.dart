@@ -1,6 +1,6 @@
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../core/state/check_state_in_get_api_data_widget.dart';
@@ -8,7 +8,6 @@ import '../../../../core/theme/app_colors.dart';
 import '../riverpod/sections_riverpod.dart';
 import '../widgets/app_bar_home_widget.dart';
 import '../widgets/sections_widget.dart';
-import '../widgets/skeletonizer_of_home_page.dart';
 
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
@@ -17,13 +16,16 @@ class HomePage extends ConsumerStatefulWidget {
   ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMixin {
-   TabController? _tabController;
+class _HomePageState extends ConsumerState<HomePage>
+    with TickerProviderStateMixin {
+  TabController? _tabController;
   bool _isTabControllerInitialized = false;
-  late ScrollController scrollController;
-  final Map<int, ScrollController> _scrollControllers = {};
-  final Map<int, VoidCallback> _scrollListeners = {};
   late PageController pageController;
+  final Map<int, ScrollController> _scrollControllers = {};
+  late ScrollController scrollController;
+  final Map<int, VoidCallback> _scrollListeners = {};
+  final PageStorageBucket _pageStorageBucket = PageStorageBucket();
+
   @override
   void initState() {
     super.initState();
@@ -36,18 +38,28 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
     _scrollControllers.forEach((key, controller) {
       controller.dispose();
     });
-    _tabController!.dispose();
+    _tabController?.dispose();
     pageController.dispose();
     super.dispose();
   }
-
   void _onScroll(int sectionId) {
+
+    var iconColor = ref.watch(colorIconAppBarProvider);
     final scrollController = _scrollControllers[sectionId];
+    double offset = scrollController!.offset;
     if (scrollController == null) {
       return;
     }
-    final offset = scrollController.offset;
-    var iconColor = ref.watch(colorIconAppBarProvider);
+    // if (offset > kToolbarHeight + 45.h) {
+    //   if(iconColor !=  Color(0xff8a1538)) {
+    //     ref
+    //         .read(colorIconAppBarProvider.notifier)
+    //         .setColorIcon(const Color(0xff8a1538));
+    //   }
+    // } else {
+    //   ref.read(colorIconAppBarProvider.notifier).setColorIcon(Colors.white);
+    // }
+
     var appBarColor = ref.watch(colorBackAppBarProvider);
 
     if (offset > kToolbarHeight + 20.h) {
@@ -70,15 +82,15 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
       }
     }
   }
-
   @override
   Widget build(BuildContext context) {
-    var iconColors = ref.watch(colorIconAppBarProvider) ?? Colors.white;
-    var appBarColor = ref.watch(colorBackAppBarProvider) ?? Colors.transparent;
+
     var state = ref.watch(sectionProvider);
+
     if (state.data.section == null || state.data.section!.isEmpty) {
-      return const  Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
     }
+
     try {
       if (!_isTabControllerInitialized) {
         _tabController = TabController(
@@ -91,54 +103,49 @@ class _HomePageState extends ConsumerState<HomePage> with TickerProviderStateMix
       if (kReleaseMode) {
         print("Error initializing TabController in Release mode: $e");
       }
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
     }
-    if(_tabController==null){
-      return const Center(child: CircularProgressIndicator());
+
+    if (_tabController == null) {
+      return const Center(child: CircularProgressIndicator(color: AppColors.primaryColor));
     }
+
     return CheckStateInGetApiDataWidget(
       state: state,
-      widgetOfLoading: const SkeletonizerOfHomePage(),
+     // widgetOfLoading: const SkeletonizerOfHomePage(),
       widgetOfData: Scaffold(
         backgroundColor: AppColors.scaffoldColor,
         extendBodyBehindAppBar: true,
         appBar: appBarHomeWidget(
           tabController: _tabController,
-          iconColor: iconColors,
-          appBarColor: appBarColor,
+          iconColor: ref.watch(colorIconAppBarProvider) ?? Colors.white,
+          appBarColor: ref.watch(colorBackAppBarProvider) ?? Colors.transparent,
           section: state.data.section!,
           pageController: pageController,
+          context: context,
         ),
-        body: PageView.builder(
-          controller: pageController,
-          itemCount: state.data.section!.length,
-          onPageChanged: (index) {
-            ref.read(colorIconAppBarProvider.notifier).setColorIcon(Colors.white);
-            ref.read(colorBackAppBarProvider.notifier).setColorBackGround(Colors.transparent);
-            _tabController!.index = index;
-          },
-          itemBuilder: (context, index) {
-            var section = state.data.section![index];
-            if (!_scrollControllers.containsKey(section.id!)) {
-              _scrollControllers[section.id!] = ScrollController();
-              _scrollListeners[section.id!] = () {
-                _onScroll(section.id!);
-              };
-              _scrollControllers[section.id!]!
-                  .addListener(_scrollListeners[section.id!]!);
-            }
-
-            return SectionOfCategoryInHomePage(
-              scrollController: _scrollControllers[section.id ?? 1]!,
-              idSection: section.id ?? 1,
-            );
-          },
+        body: PageStorage(
+          bucket: _pageStorageBucket,
+          child: TabBarView(
+            controller: _tabController,
+            //physics: const BouncingScrollPhysics(),
+            children: state.data.section!.map((section) {
+              if (!_scrollControllers.containsKey(section.id!)) {
+                _scrollControllers[section.id!] = ScrollController();
+                _scrollListeners[section.id!] = () {
+                  _onScroll(section.id!);
+                };
+                _scrollControllers[section.id!]!
+                    .addListener(_scrollListeners[section.id!]!);
+              }
+              return SectionOfCategoryInHomePage(
+                scrollController:_scrollControllers[section.id!]! ,
+                idSection: section.id!,
+              );
+            }).toList(),
+          ),
         ),
       ),
-
     );
   }
 }
-
-
-

@@ -10,24 +10,19 @@ class SubFilterDesignWidget extends StatelessWidget {
   final String title;
   final String icon;
   final Color? color;
-
+  final GestureTapCallback onTap;
   const SubFilterDesignWidget({
     super.key,
     required this.title,
     required this.icon,
     this.color,
+    required this.onTap
   });
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        DropdownHelper().toggleDropdown(
-            context: context,
-            items: SubFilterDropdownMenuWidget(),
-
-        );
-      },
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 12.w,vertical: 4.h),
         decoration: BoxDecoration(

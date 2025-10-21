@@ -7,18 +7,16 @@ class SectionsRemoteDataSource {
 
   Future<SectionWithCategoryOfAllData> getAllSectionAndAllProductData() async {
     final response = await RemoteRequest.getData(
-      url: "/categories/section?page=1&perPage=5",
+      url: "/sections?page=1",
     );
 
     return SectionWithCategoryOfAllData.fromJson(response.data);
   }
 
-  Future<SectionAndProductData> getSectionData(int idCategory, int page) async {
-    String id;
-    idCategory == 0 ? id = '' : id = idCategory.toString();
-
+  Future<SectionAndProductData> getSectionData(
+      int idSection, int page, int filterType) async {
     final response = await RemoteRequest.getData(
-      url: "/categories/section/$idCategory?page=$page&perPage=6",
+      url: "/sections/$idSection?page=$page&perPage=10&filter=$filterType",
     );
 
     return SectionAndProductData.fromJson(response.data);

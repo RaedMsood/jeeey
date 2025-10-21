@@ -36,6 +36,7 @@ class _ListOfShippingMethodsWidgetState
             setState(() {
               widget.form.control('shipping_method_id').value =
                   state.data.deliveryTypes[index].id;
+              print(widget.form.control('shipping_method_id').value);
               ref.refresh(confirmOrderProvider.notifier);
             });
           },
@@ -43,6 +44,8 @@ class _ListOfShippingMethodsWidgetState
             setState(() {
               widget.form.control('shipping_method_id').value =
                   state.data.deliveryTypes[index].id;
+              print(widget.form.control('shipping_method_id').value);
+
               ref.refresh(confirmOrderProvider.notifier);
             });
           },

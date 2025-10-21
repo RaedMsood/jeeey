@@ -27,7 +27,7 @@ class PriceAndCurrencyDesignWidget extends StatelessWidget {
           child: AutoSizeTextWidget(
             text: price,
             colorText: AppColors.primaryColor,
-            fontSize: fontSize1 ?? 11.4.sp,
+            fontSize: fontSize1 ?? 11.sp,
             fontWeight: FontWeight.w700,
             minFontSize: 11,
           ),

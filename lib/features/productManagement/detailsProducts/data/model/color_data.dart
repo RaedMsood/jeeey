@@ -3,23 +3,26 @@ part 'color_data.g.dart';
 
 @HiveType(typeId: 8)
 class ColorOfProductData {
+  final int? idColor;
   @HiveField(0)
   final String? colorName;
   @HiveField(1)
   final String? colorHex;
   @HiveField(2)
-  final List<String>? image;
+  final List<dynamic>? image;
   @HiveField(3)
-final String? isMain;
-
-  ColorOfProductData({this.colorHex, this.colorName,this.image,this.isMain});
+final int? isMain;
+  final dynamic price;
+  ColorOfProductData({this.colorHex, this.colorName,this.image,this.isMain,this.price,this.idColor});
 
   factory ColorOfProductData.fromJson(Map<String, dynamic> json) {
     return ColorOfProductData(
-      colorName: json['color_name'] ?? "",
-      colorHex: json['color_hex'] ?? "",
-     image: List<String>.from(json['images']?.map((item) => item['image']) ?? []),
-      isMain: json['color_hex'] ?? "0",
+      colorName: json['name'] ?? "",
+      colorHex: json['hex_code'] ?? "",
+     image: List<dynamic>.from(json['images']?.map((item) => item['image']) ?? []),
+      isMain: json['is_main'] ?? 0,
+      price: json['price']??'',
+      idColor: json['id']??0
     );
   }
 

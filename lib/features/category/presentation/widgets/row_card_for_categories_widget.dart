@@ -9,10 +9,12 @@ class RowCardForCategoriesWidget extends StatelessWidget {
   final bool circularImage;
   final String nameCategory;
 
+  final String image;
   const RowCardForCategoriesWidget({
     super.key,
     required this.circularImage ,
-    required this.nameCategory
+    required this.nameCategory,
+    required this.image
   });
 
   @override
@@ -30,8 +32,9 @@ class RowCardForCategoriesWidget extends StatelessWidget {
           Flexible(
             child: OnlineImagesWidget(
               imageUrl:
-                  "https://cdn.salla.sa/wWwyOy/ukjqWnMW48kbzf1lqDGyKeUSsDnXdoSyxr6PWJKX.jpg",
+                image,
               circularImage: circularImage,
+
             ),
           ),
           3.w.horizontalSpace,

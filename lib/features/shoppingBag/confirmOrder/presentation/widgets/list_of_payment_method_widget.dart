@@ -50,9 +50,9 @@ class _ListOfPaymentMethodWidgetState
         );
       },
       separatorBuilder: (context, index) => Divider(
-        color: AppColors.fontColor.withOpacity(.6),
+        color: AppColors.fontColor.withOpacity(.4),
         thickness: 0.7,
-        height: 7.h,
+        height: 12.h,
       ),
     );
   }

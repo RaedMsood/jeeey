@@ -1,11 +1,14 @@
 class SizeData {
-  final String? sizeTypeName;
-
-  SizeData({this.sizeTypeName});
+  final dynamic sizeTypeName;
+  final dynamic price;
+  final int? id;
+  SizeData({this.sizeTypeName,this.price,this.id});
 
   factory SizeData.fromJson(Map<String, dynamic> json) {
     return SizeData(
-      sizeTypeName: json['size_type_name'] ?? "",
+      sizeTypeName: json['measuring_value'] ??"",
+      price: json['price'],
+      id: json['id']
     );
   }
 

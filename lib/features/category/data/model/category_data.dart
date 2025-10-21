@@ -1,4 +1,7 @@
 import 'package:hive/hive.dart';
+
+import '../../../productManagement/detailsProducts/data/model/color_data.dart';
+import '../../../productManagement/detailsProducts/data/model/size_data.dart';
 part 'category_data.g.dart';
 
 @HiveType(typeId: 3)
@@ -9,7 +12,8 @@ class CategoryData {
   final String? name;
   @HiveField(2)
   final String? nameEn;
-
+  @HiveField(3)
+  final String? image;
   final int? categoryLevel;
   final bool? hasChildren;
 
@@ -18,7 +22,7 @@ class CategoryData {
     this.name,
     this.nameEn,
     this.categoryLevel,
-    this.hasChildren
+    this.hasChildren,this.image
   });
 
 
@@ -26,10 +30,9 @@ class CategoryData {
     return CategoryData(
       id: json['id']??0,
       name: json['name']??"",
-     // nameEn: json['name_en']??"",
-
       categoryLevel: json['category_level']??0,
       hasChildren: json['has_children']??"",
+      image: json['image'],
 
 
     );
@@ -55,7 +58,7 @@ class CategoryData {
       id: 0
   );
 static final fakeCategoriesData = List.filled(
-    10,
+    20,
     CategoryData(
 
       name: "",

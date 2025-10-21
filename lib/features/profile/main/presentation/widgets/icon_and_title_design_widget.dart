@@ -25,10 +25,10 @@ class IconAndTitleDesignWidget extends StatelessWidget {
             icon: icon,
             onPressed: onPressed,
           ),
-          3.h.verticalSpace,
+          4.h.verticalSpace,
           AutoSizeTextWidget(
             text: title,
-            fontSize: 10.4.sp,
+            fontSize: 9.5.sp,
             fontWeight: FontWeight.w500,
             maxLines: 2,
             textAlign: TextAlign.center,

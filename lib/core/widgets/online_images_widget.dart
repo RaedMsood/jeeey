@@ -70,7 +70,6 @@ class OnlineImagesWidget extends StatelessWidget {
                       ),
                       height: size?.height,
                       width: size?.width,
-                      // child: child,
                     ),
             ],
           ),
@@ -80,13 +79,13 @@ class OnlineImagesWidget extends StatelessWidget {
         height: size?.height,
         width: size?.width,
         decoration: BoxDecoration(
-          color: AppColors.greySwatch.shade50,
+          color: AppColors.greySwatch.shade100,
           borderRadius: BorderRadius.circular(borderRadius ?? 4.r),
         ),
         child: Center(
           child: Image.asset(
-            AppImages.logo,
-            width: logoWidth ?? 48.r,
+            AppImages.logoWithText,
+            width: logoWidth ?? 50.w,
           ),
         ),
       ),

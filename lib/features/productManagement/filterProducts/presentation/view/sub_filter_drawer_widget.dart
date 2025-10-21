@@ -1,24 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jeeey/features/category/data/model/category_data.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../../generated/l10n.dart';
-import '../widgets/a_menu_to_display_the_sub_filter_content_widget.dart';
+import '../../../detailsProducts/data/model/color_data.dart';
+import '../../../detailsProducts/data/model/size_data.dart';
+import '../state_mangment/riverpod.dart';
+import '../widgets/list_of_color_in_filter_widget.dart';
+import '../widgets/list_of_filter_category_widget.dart';
+import '../widgets/list_of_size_in_filter_widget.dart';
 import '../widgets/card_of_sub_filter_drawer_widget.dart';
 import '../widgets/clear_button_and_done.dart';
+import '../widgets/list_unit_in_filter_widget.dart';
 
-class SubFilterDrawerWidget extends StatefulWidget {
-  const SubFilterDrawerWidget({super.key});
+class SubFilterDrawerWidget extends ConsumerStatefulWidget {
+  const SubFilterDrawerWidget(
+      {super.key,
+      required this.colorFilterList,
+      required this.sizeFilterList,
+        required this.categoryFilterList,
+        required this.nameSearch,
+        required this.isSearchFilter,
+        required this.unitFilterList,
+      required this.idCategory});
+
+  final List<SizeData> sizeFilterList;
+  final List<ColorOfProductData> colorFilterList;
+  final List<CategoryData> categoryFilterList;
+  final String nameSearch;
+  final int idCategory;
+  final bool isSearchFilter;
+  final List<SizeData> unitFilterList;
+
 
   @override
-  State<SubFilterDrawerWidget> createState() => _SubFilterDrawerWidgetState();
+  ConsumerState<SubFilterDrawerWidget> createState() => _SubFilterDrawerWidgetState();
 }
 
-class _SubFilterDrawerWidgetState extends State<SubFilterDrawerWidget> {
+class _SubFilterDrawerWidgetState extends ConsumerState<SubFilterDrawerWidget> {
   RangeValues _currentRangeValues = const RangeValues(0, 694);
 
   @override
   Widget build(BuildContext context) {
+    final selectedSizes = ref.watch(selectedSizesProvider(widget.idCategory ));
+    final selectedUnit= ref.watch(selectedUnitsProvider(widget.idCategory ));
+    final selectedColors = ref.watch(selectedColorsProvider(widget.idCategory ));
+    final selectedCategory = ref.watch(selectedCategoryProvider(widget.idCategory));
     return Drawer(
       backgroundColor: Colors.white,
       shape: const RoundedRectangleBorder(
@@ -45,97 +74,105 @@ class _SubFilterDrawerWidgetState extends State<SubFilterDrawerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   CardOfSubFilterDrawerWidget(
-                    title: "نوع المنتج",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  CardOfSubFilterDrawerWidget(
-                    title: "مقاس",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  CardOfSubFilterDrawerWidget(
-                    title: "تصاميم",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  CardOfSubFilterDrawerWidget(
+                    isOpenToRead: selectedColors.isNotEmpty?true:false,
                     title: "لون",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
+                    child: ListOfColorInFilterWidget(
+                      colorFilter: widget.colorFilterList,
+                      idCategory: widget.idCategory,
+                      nameSearch: widget.nameSearch,
+                      isSearchFilter: widget.isSearchFilter,
+                    ),
                   ),
-                  const CardOfSubFilterDrawerWidget(
-                    title: "طول الاكمام",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  const CardOfSubFilterDrawerWidget(
-                    title: "نوع",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  const CardOfSubFilterDrawerWidget(
-                    title: "نوع",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  const CardOfSubFilterDrawerWidget(
-                    title: "نوع المنتج",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  const CardOfSubFilterDrawerWidget(
+                  CardOfSubFilterDrawerWidget(
+                    isOpenToRead: selectedSizes.isNotEmpty?true:false,
                     title: "مقاس",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  const CardOfSubFilterDrawerWidget(
-                    title: "الحجم",
-                    child: AMenuToDisplayTheSubFilterContentWidget(),
-                  ),
-                  AutoSizeTextWidget(
-                    text: "نطاق السعر",
-                    fontSize: 13.5.sp,
-                    fontWeight: FontWeight.w600,
-                  ),
-                  8.h.verticalSpace,
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      AutoSizeTextWidget(
-                        text: '\$${_currentRangeValues.start.toInt()}',
-                        fontSize: 11.sp,
-                        colorText: Colors.black87,
-                      ),
-                      AutoSizeTextWidget(
-                        text: '\$${_currentRangeValues.end.toInt()}',
-                        fontSize: 11.sp,
-                        colorText: Colors.black87,
-                      ),
-                    ],
-                  ),
-                  2.5.h.verticalSpace,
-                  SliderTheme(
-                    data: SliderTheme.of(context).copyWith(
-                      thumbColor: Colors.grey[200],
-                      activeTrackColor: Colors.black,
-                      inactiveTrackColor: Colors.grey,
-                      trackHeight: 0.6.h,
-                      overlayShape: RoundSliderOverlayShape(overlayRadius: 0.r),
-                      valueIndicatorColor:
-                          AppColors.primaryColor.withOpacity(.8),
-                      valueIndicatorTextStyle: TextStyle(
-                        color: Colors.white,
-                        fontSize: 12.sp,
-                      ),
-                    ),
-                    child: RangeSlider(
-                      values: _currentRangeValues,
-                      min: 0,
-                      max: 694,
-                      divisions: 694,
-                      labels: RangeLabels(
-                        '\$${_currentRangeValues.start.toInt()}',
-                        '\$${_currentRangeValues.end.toInt()}',
-                      ),
-                      onChanged: (RangeValues values) {
-                        setState(() {
-                          _currentRangeValues = values;
-                        });
-                      },
+                    child: ListOfSizeInFilterWidget(
+                      size: widget.sizeFilterList,
+                      idCategory: widget.idCategory,
+                       nameSearch: widget.nameSearch,
+                      isSearchFilter: widget.isSearchFilter,
+
                     ),
                   ),
+                  CardOfSubFilterDrawerWidget(
+                    isOpenToRead: selectedUnit.isNotEmpty?true:false,
+                    title: "وحدات",
+                    child: ListOfUnitInFilterWidget(
+                      unit: widget.unitFilterList,
+                      idCategory: widget.idCategory,
+                      nameSearch: widget.nameSearch,
+                      isSearchFilter: widget.isSearchFilter,
+
+                    ),
+                  ),
+                  CardOfSubFilterDrawerWidget(
+                    isOpenToRead: selectedCategory!=null?true:false,
+                    title: "فئات",
+                    child: ListOfFilterCategoryWidget(
+                      categoryFilter: widget.categoryFilterList,
+                      idCategory: widget.idCategory,
+                      nameSearch: widget.nameSearch,
+                      isSearchFilter: widget.isSearchFilter,
+
+                    ),
+                  ),
+
+                  // const CardOfSubFilterDrawerWidget(
+                  //   title: "الحجم",
+                  //   child: AMenuToDisplayTheSubFilterContentWidget(),
+                  // ),
+                  // AutoSizeTextWidget(
+                  //   text: "نطاق السعر",
+                  //   fontSize: 13.5.sp,
+                  //   fontWeight: FontWeight.w600,
+                  // ),
+                  // 8.h.verticalSpace,
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: [
+                  //     AutoSizeTextWidget(
+                  //       text: '\$${_currentRangeValues.start.toInt()}',
+                  //       fontSize: 11.sp,
+                  //       colorText: Colors.black87,
+                  //     ),
+                  //     AutoSizeTextWidget(
+                  //       text: '\$${_currentRangeValues.end.toInt()}',
+                  //       fontSize: 11.sp,
+                  //       colorText: Colors.black87,
+                  //     ),
+                  //   ],
+                  // ),
+                  // 2.5.h.verticalSpace,
+                  // SliderTheme(
+                  //   data: SliderTheme.of(context).copyWith(
+                  //     thumbColor: Colors.grey[200],
+                  //     activeTrackColor: Colors.black,
+                  //     inactiveTrackColor: Colors.grey,
+                  //     trackHeight: 0.6.h,
+                  //     overlayShape: RoundSliderOverlayShape(overlayRadius: 0.r),
+                  //     valueIndicatorColor:
+                  //         AppColors.primaryColor.withOpacity(.8),
+                  //     valueIndicatorTextStyle: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 12.sp,
+                  //     ),
+                  //   ),
+                  //   child: RangeSlider(
+                  //     values: _currentRangeValues,
+                  //     min: 0,
+                  //     max: 694,
+                  //     divisions: 694,
+                  //     labels: RangeLabels(
+                  //       '\$${_currentRangeValues.start.toInt()}',
+                  //       '\$${_currentRangeValues.end.toInt()}',
+                  //     ),
+                  //     onChanged: (RangeValues values) {
+                  //       setState(() {
+                  //         _currentRangeValues = values;
+                  //       });
+                  //     },
+                  //   ),
+                  // ),
                 ],
               ),
             ),
@@ -147,8 +184,12 @@ class _SubFilterDrawerWidgetState extends State<SubFilterDrawerWidget> {
           ),
           ClearButtonAndDone(
             height: 29.h,
-            doneOnTap: () {},
-            clearOnTap: () {},
+            doneOnTap: () {
+              Navigator.pop(context);
+            },
+            clearOnTap: () {
+              Navigator.pop(context);
+            },
           ),
         ],
       ),

@@ -9,13 +9,18 @@ import '../../../../generated/l10n.dart';
 
 class ConditionsForInputThePasswordWidget extends StatefulWidget {
   final TextEditingController passwordController;
-
   final ValueChanged<bool> onValidationChanged;
+  final BorderSide? borderSide;
+  final String? hintText;
+  final double? fontSize;
 
   const ConditionsForInputThePasswordWidget({
     super.key,
     required this.onValidationChanged,
     required this.passwordController,
+    this.borderSide,
+    this.hintText = '',
+    this.fontSize,
   });
 
   @override
@@ -51,12 +56,16 @@ class _ConditionsForInputThePasswordWidgetState
         TextFormFieldWidget(
           controller: widget.passwordController,
           onChanged: validatePassword,
-          borderSide: const BorderSide(
-            color: Colors.black26,
-          ),
-          borderSideError: const BorderSide(
-            color: AppColors.primaryColor,
-          ),
+          hintText: widget.hintText,
+          hintTextColor: Colors.black87,
+          borderSide: widget.borderSide ??
+              const BorderSide(
+                color: Colors.black26,
+              ),
+          borderSideError: widget.borderSide ??
+              const BorderSide(
+                color: AppColors.primaryColor,
+              ),
           isPassword: isShow,
           suffixIcon: IconButtonWidget(
             onPressed: () {
@@ -72,30 +81,35 @@ class _ConditionsForInputThePasswordWidgetState
         buildRequirementText(
           S.of(context).atLeast8Characters,
           isLengthValid,
+          fontSize: widget.fontSize,
         ),
         buildRequirementText(
           S.of(context).atLeastOneLetter,
           hasLetter,
+          fontSize: widget.fontSize,
+
         ),
         buildRequirementText(
           S.of(context).atLeastOneNumber,
           hasNumber,
+          fontSize: widget.fontSize,
+
         ),
       ],
     );
   }
 
-  Widget buildRequirementText(String text, bool isValid) {
+  Widget buildRequirementText(String text, bool isValid,{double? fontSize}) {
     Color color = isFirstInput
         ? Colors.black
         : (isValid ? Colors.green : AppColors.primarySwatch.shade600);
 
     return Padding(
-      padding: EdgeInsets.only(bottom: 1.h),
+      padding: EdgeInsets.only(bottom: 3.5.h),
       child: AutoSizeTextWidget(
         text: text,
         colorText: color,
-        fontSize: 11.sp,
+        fontSize:fontSize?? 10.5.sp,
       ),
     );
   }

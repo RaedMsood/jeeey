@@ -30,9 +30,9 @@ class DailyNewPage extends StatelessWidget {
               );
             },
           ),
-          const SliverToBoxAdapter(
-            child: ListToSubFilterWidget(),
-          ),
+          // const SliverToBoxAdapter(
+          //   child: ListToSubFilterWidget(),
+          // ),
           // const SliverToBoxAdapter(
           //   child: ProductListWidget(
           //
@@ -40,7 +40,7 @@ class DailyNewPage extends StatelessWidget {
           // ),
         ],
       ),
-      endDrawer: const SubFilterDrawerWidget(),
+      // endDrawer: const SubFilterDrawerWidget(),
     );
   }
 }

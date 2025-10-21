@@ -23,20 +23,42 @@ class ListToDisplayCategoriesOnTheHomeWidget extends ConsumerWidget {
         borderRadius: BorderRadius.circular(12.sp),
       ),
 
-      child: Padding(
-        padding:  EdgeInsets.all(8.0.sp),
-        child: Wrap(
-          spacing: 8.0.w,
-          runSpacing: 10.0.h,
-          children: category!.map((item){
-            return CircleCardForCategoriesWidget(
-                      idCategory: item.id!,
-                      name: item.name!,
-                      image: 'https://eyess.cc/?seraph_accel_gci=wp-content%2Fuploads%2F2019%2F07%2F2138-1.jpg&n=Flq38TbBQfHfEB8rSZ0XQ',
-                    );
-          }).toList(),
+      child: GridView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.all(8.sp),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 3,
+          mainAxisSpacing: 0.0,
+          crossAxisSpacing: 0.0,
+          childAspectRatio: 1.2,
         ),
+        itemCount: category!.length,
+        itemBuilder: (context, index) {
+          return CircleCardForCategoriesWidget(
+            idCategory: category![index].id!,
+            name: category![index].name!,
+           image: category![index].image?? 'https://eyess.cc/?seraph_accel_gci=wp-content%2Fuploads%2F2019%2F07%2F2138-1.jpg&n=Flq38TbBQfHfEB8rSZ0XQ',
+
+           // image: 'https://eyess.cc/?seraph_accel_gci=wp-content%2Fuploads%2F2019%2F07%2F2138-1.jpg&n=Flq38TbBQfHfEB8rSZ0XQ',
+          );
+
+        },
       ),
+      // child: Padding(
+      //   padding:  EdgeInsets.all(8.0.sp),
+      //   child: Wrap(
+      //     spacing: 8.0.w,
+      //     runSpacing: 10.0.h,
+      //
+      //     children: category!.map((item){
+      //       return CircleCardForCategoriesWidget(
+      //                 idCategory: item.id!,
+      //                 name: item.name!,
+      //                 image: 'https://eyess.cc/?seraph_accel_gci=wp-content%2Fuploads%2F2019%2F07%2F2138-1.jpg&n=Flq38TbBQfHfEB8rSZ0XQ',
+      //               );
+      //     }).toList(),
+      //   ),
+      // ),
     );
   }
 }

@@ -8,6 +8,7 @@ import '../../../../core/helpers/flash_bar_helper.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/base_input.dart';
 import '../../../../core/widgets/show_modal_bottom_sheet_widget.dart';
+import '../../../../generated/l10n.dart';
 import '../../data/model/address_model.dart';
 import 'list_to_view_all_district_widget.dart';
 
@@ -27,12 +28,12 @@ class DistrictInputWidget extends StatelessWidget {
           formControlName: 'district_name',
           keyboardType: TextInputType.none,
           validationMessages: {
-            ValidationMessage.required: (e) => 'Province is required',
+            ValidationMessage.required: (e) => S.of(context).provinceIsRequired,
           },
           // fillColor: Colors.red,
 
           cursorHeight: 0,
-          hintText: "Province",
+          hintText: S.of(context).province,
           hintTextColor: form.control('city_name').invalid
               ? AppColors.greySwatch.shade500
               : Colors.black,
@@ -40,8 +41,8 @@ class DistrictInputWidget extends StatelessWidget {
           onTap: form.control('city_name').invalid
               ? (_) {
                   showFlashBarError(
-                    title: "Please chose a city",
-                    text: "plase",
+                    title: S.of(context).pleaseChoseACity,
+                    text: S.of(context).toSpecifyTheArea,
                     context: context,
                   );
                 }

@@ -13,7 +13,7 @@ import 'icon_and_title_design_widget.dart';
 class RequestWidget extends StatelessWidget {
   const RequestWidget({super.key});
 
-  _navigateTo(BuildContext context,int tabIndex) {
+  _navigateTo(BuildContext context, int tabIndex) {
     if (!Auth().loggedIn) {
       navigateTo(context, const LogInPage());
     } else {
@@ -40,7 +40,7 @@ class RequestWidget extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    _navigateTo(context,0);
+                    _navigateTo(context, 0);
                   },
                   child: Row(
                     children: [
@@ -50,9 +50,11 @@ class RequestWidget extends StatelessWidget {
                         colorText: AppColors.fontColor,
                       ),
                       Icon(
-                        Icons.keyboard_arrow_left,
+                        Localizations.localeOf(context).languageCode == "ar"
+                            ? Icons.keyboard_arrow_left
+                            : Icons.keyboard_arrow_right,
                         color: AppColors.fontColor,
-                        size: 20.sp,
+                        size: 18.r,
                       ),
                     ],
                   ),
@@ -70,35 +72,35 @@ class RequestWidget extends StatelessWidget {
                   title: S.of(context).unpaid,
                   icon: AppIcons.unpaid,
                   onPressed: () {
-                    _navigateTo(context,1);
+                    _navigateTo(context, 1);
                   },
                 ),
                 IconAndTitleDesignWidget(
                   title: S.of(context).processing,
                   icon: AppIcons.processing,
                   onPressed: () {
-                    _navigateTo(context,2);
+                    _navigateTo(context, 2);
                   },
                 ),
                 IconAndTitleDesignWidget(
                   title: S.of(context).review,
                   icon: AppIcons.review,
                   onPressed: () {
-                    _navigateTo(context,5);
+                    _navigateTo(context, 5);
                   },
                 ),
                 IconAndTitleDesignWidget(
                   title: S.of(context).shipped,
                   icon: AppIcons.shipped,
                   onPressed: () {
-                    _navigateTo(context,3);
+                    _navigateTo(context, 3);
                   },
                 ),
                 IconAndTitleDesignWidget(
                   title: S.of(context).returns,
                   icon: AppIcons.returns,
                   onPressed: () {
-                    _navigateTo(context,4);
+                    _navigateTo(context, 4);
                   },
                 ),
               ],

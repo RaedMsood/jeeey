@@ -14,25 +14,25 @@ class CheckStateInGetApiDataWidget extends StatelessWidget {
 
   final DataState state;
 
-  const CheckStateInGetApiDataWidget(
-      {super.key,
-      required this.state,
-      this.widgetOfData,
-      this.widgetOfLoading});
+  const CheckStateInGetApiDataWidget({
+    super.key,
+    required this.state,
+    this.widgetOfData,
+    this.widgetOfLoading,
+  });
 
   @override
   Widget build(BuildContext context) {
     print(state.stateData);
 
-    if (state.stateData == States.loaded) {
+    if (state.stateData == States.loaded ||
+        state.stateData == States.loadingMore) {
       // return state.data!.isEmpty?EmptyWalletWidget() :widgetOfData!;
       return widgetOfData!;
     } else if (state.stateData == States.error) {
       if (state.exception!.type == DioExceptionType.connectionError) {
         return NoInternetConnectionWidget();
       } else {
-        print(state.exception!.response!.statusCode);
-
         SchedulerBinding.instance.addPostFrameCallback((_) {
           showFlashBarError(
             context: context,

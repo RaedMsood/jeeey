@@ -4,17 +4,18 @@ import 'package:flutter/material.dart';
 import '../../../../core/widgets/online_images_widget.dart';
 
 class CarouselSliderForOffersWidget extends StatelessWidget {
-  final List<String> images;
+  final List<dynamic> images;
+  final double heightImage;
   final Function(int index, CarouselPageChangedReason reason)? onPageChanged;
 
   const CarouselSliderForOffersWidget(
-      {super.key, required this.onPageChanged, required this.images});
+      {super.key, required this.onPageChanged, required this.images,required this.heightImage});
 
   @override
   Widget build(BuildContext context) {
     return CarouselSlider(
       options: CarouselOptions(
-        height: double.infinity,
+        height:heightImage ,
         autoPlay: true,
         aspectRatio: 0,
         viewportFraction: 1,

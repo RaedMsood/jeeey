@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jeeey/core/widgets/secondary_app_bar_widget.dart';
+import 'package:jeeey/core/widgets/skeletonizer_widget.dart';
 import 'package:reactive_forms/reactive_forms.dart';
 import '../../../../../core/helpers/navigateTo.dart';
 import '../../../../../core/state/check_state_in_get_api_data_widget.dart';
 import '../../../../../core/state/check_state_in_post_api_data_widget.dart';
 import '../../../../../core/state/state.dart';
 import '../../../../../core/theme/app_colors.dart';
-import '../../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../../core/widgets/bottomNavbar/bottom_navigation_bar_widget.dart';
 import '../../../../../core/widgets/bottomNavbar/button_bottom_navigation_bar_design_widget.dart';
 import '../../../../../core/widgets/buttons/default_button.dart';
-import '../../../../../core/widgets/buttons/icon_button_widget.dart';
 import '../../../../../core/widgets/text_form_field.dart';
 import '../../../../../generated/l10n.dart';
 import '../../../cart/presentation/riverpod/cart_riverpod.dart';
+import '../../data/model/check_copon_model.dart';
 import '../riverpod/confirm_order_riverpod.dart';
 import '../widgets/address_to_confirm_the_order_widget.dart';
 import '../widgets/bill_widget.dart';
@@ -35,28 +36,19 @@ class ConfirmOrderPage extends ConsumerWidget {
   Widget build(BuildContext context, ref) {
     var confirmOrderState = ref.watch(confirmOrderProvider);
     var getConfirmOrderDataState = ref.watch(getConfirmOrderDataProvider);
-
+    var checkCoponState = ref.watch(checkCoponProvider);
     var cartState = ref.watch(cartProvider.notifier);
+    var formData;
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        surfaceTintColor: Colors.white,
-        centerTitle: true,
-        elevation: 0.0,
-        title: AutoSizeTextWidget(
-          text: S.of(context).confirmOrder,
-          fontWeight: FontWeight.w600,
-        ),
-        leading: IconButtonWidget(
-          height: 22.h,
-        ),
-      ),
+      appBar: SecondaryAppBarWidget(title: S.of(context).confirmOrder),
       body: CheckStateInGetApiDataWidget(
         state: getConfirmOrderDataState,
         widgetOfData: SingleChildScrollView(
           child: ReactiveFormBuilder(
             form: () => ConfirmOrderController.form.group,
             builder: (context, form, child) {
+              formData = form.value['shipping_method_id'];
+
               return Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -99,18 +91,103 @@ class ConfirmOrderPage extends ConsumerWidget {
                         textAlign: TextAlign.center,
                         hintText: "xxx - xxx",
                         fillColor: AppColors.scaffoldColor,
+                        suffixIcon: CheckStateInPostApiDataWidget(
+                            state: checkCoponState,
+                            messageSuccess: 'تمت عملية التحقق من الكوبون بنجاح',
+                            functionSuccess: () {},
+                            hasMessageSuccess: true,
+                            bottonWidget: DefaultButtonWidget(
+                              text: 'تحقق',
+                              width: 50.w,
+                              isLoading:
+                                  checkCoponState.stateData == States.loading,
+                              onPressed: () {
+                                CheckCoponModel copon = CheckCoponModel(
+                                  cartProducts: cartState.selectedProducts,
+                                  codeCopon: noteController.text,
+                                );
+                                ref
+                                    .read(checkCoponProvider.notifier)
+                                    .getData(copon: copon);
+                              },
+                            )),
                       ),
                     ),
                   ),
                   4.h.verticalSpace,
-                  Column(
-                    children: cartState.selectedProducts.map((items) {
-                      return OrderConfirmationProductCardWidget(data: items);
-                    }).toList(),
+                  Visibility(
+                    visible: checkCoponState.stateData != States.loading,
+                    replacement: Column(
+                      children: cartState.selectedProducts.map((items) {
+                        return SkeletonizerWidget(
+                            child: OrderConfirmationProductCardWidget(
+                          data: items,
+                          isCheckCopon: true,
+                          productInCopon: true,
+                        ));
+                      }).toList(),
+                    ),
+                    child: Visibility(
+                      visible: checkCoponState.data.status == true,
+                      replacement: Column(
+                        children: cartState.selectedProducts.map((items) {
+                          return OrderConfirmationProductCardWidget(
+                            data: items,
+                            isCheckCopon: false,
+                            productInCopon: false,
+                          );
+                        }).toList(),
+                      ),
+                      child: Column(
+                        children: checkCoponState.data.discountProductData!
+                            .map((items) {
+                          return OrderConfirmationProductCardWidget(
+                            data: items,
+                            isCheckCopon: checkCoponState.data.status ?? false,
+                            productInCopon: items.hasCopon ?? false,
+                          );
+                        }).toList(),
+                      ),
+                    ),
                   ),
-                  BillWidget(
-                    total: cartState.calculateSelectedTotalPrice(),
-                    currency: cartState.selectedProducts[0].currency.toString(),
+                  Visibility(
+                    visible: checkCoponState.stateData != States.loading,
+                    replacement: SkeletonizerWidget(
+                      child: BillWidget(
+                        deliveryCost: formData == 2 ? 2000 : 800,
+                        total: cartState.calculateSelectedTotalPrice(),
+                        currency: '',
+                        hasCopon: false,
+                        coponValue: 0,
+                        totalAfterDiscount: 0,
+                      ),
+                    ),
+                    child: Visibility(
+                      visible: checkCoponState.data.status == true,
+                      replacement: BillWidget(
+                        deliveryCost: formData == 2 ? 2000 : 800,
+                        hasCopon: false,
+                        total: cartState.calculateSelectedTotalPrice(),
+                        currency: '',
+                        totalAfterDiscount:
+                            cartState.calculateSelectedTotalPrice() +
+                                (formData == 2 ? 2000 : 800),
+                        coponValue: 0,
+                      ),
+                      child: BillWidget(
+                        hasCopon: true,
+                        deliveryCost: formData == 2 ? 2000 : 800,
+                        coponValue: double.tryParse(
+                            checkCoponState.data.discountTotal.toString())!,
+                        totalAfterDiscount: double.tryParse(checkCoponState
+                                .data.orderTotalAfterDiscount
+                                .toString()) ??
+                            cartState.calculateSelectedTotalPrice() +
+                                (formData == 2 ? 2000 : 800),
+                        total: cartState.calculateSelectedTotalPrice(),
+                        currency: '',
+                      ),
+                    ),
                   ),
                 ],
               );

@@ -44,32 +44,31 @@ class _ContinueToLogInPageState extends ConsumerState<ContinueToLogInPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              8.h.verticalSpace,
               AutoSizeTextWidget(
-                text: "مرحبا بعودتك!",
-                fontSize: 16.5.sp,
+                text: S.of(context).welcomeBack,
+                fontSize: 17.sp,
                 fontWeight: FontWeight.w600,
               ),
+              6.h.verticalSpace,
               AutoSizeTextWidget(
-                text:
-                    "أدخل كلمة المرور الخاصة بك لتسجيل الدخول إلى حسابك على Jeeey",
+                text: S.of(context).enterYourPasswordToLogInToYourJeeeyAccount,
                 fontSize: 12.5.sp,
                 colorText: AppColors.fontColor,
                 maxLines: 2,
               ),
+              10.h.verticalSpace,
               ViewPhoneNumberOrEmailWidget(
                 email: state.data.input,
                 title: state.data.type,
               ),
+              8.h.verticalSpace,
               InputPasswordWidget(
                 title: S.of(context).password,
                 validator: S.of(context).pleaseEnterYourPassword,
                 passwordController: passwordController,
               ),
-              2.5.h.verticalSpace,
-              // ForgetPasswordPageDialog(
-              //   phoneNumberOrEmail: state.data.input,
-              //   title: state.data.type,
-              // ),
+              6.h.verticalSpace,
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
@@ -85,8 +84,9 @@ class _ContinueToLogInPageState extends ConsumerState<ContinueToLogInPage> {
                     },
                     child: AutoSizeTextWidget(
                       text: S.of(context).forgotYourPassword,
-                      fontSize: 11.2.sp,
-                      colorText: AppColors.fontColor,
+                      fontSize: 9.4.sp,
+                      colorText: AppColors.primaryColor,
+                      fontWeight: FontWeight.w600,
                       maxLines: 2,
                     ),
                   ),

@@ -47,24 +47,26 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              14.h.verticalSpace,
               Align(
                 alignment: Alignment.center,
                 child: Image.asset(
-                  AppImages.logo,
+                  AppImages.logoWithText,
+                  width: 200.w,
                 ),
               ),
-              14.h.verticalSpace,
+              34.h.verticalSpace,
               Align(
                 alignment: Alignment.center,
                 child: AutoSizeTextWidget(
                   text: S.of(context).createANewPassword,
-                  fontSize: 16.sp,
+                  fontSize: 15.sp,
                   fontWeight: FontWeight.w600,
                 ),
               ),
               18.h.verticalSpace,
               AutoSizeTextWidget(
-                text: S.of(context).newPassword,
+                text: "${S.of(context).newPassword}:",
                 fontSize: 13.sp,
                 colorText: Colors.black87,
               ),
@@ -79,7 +81,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
               ),
               8.h.verticalSpace,
               InputPasswordWidget(
-                title: S.of(context).confirmPassword,
+                title: "${S.of(context).confirmPassword}:",
                 validator: S.of(context).pleaseConfirmYourPassword,
                 passwordController: confirmPasswordController,
               ),
@@ -92,7 +94,7 @@ class _ResetPasswordPageState extends ConsumerState<ResetPasswordPage> {
                   colorText: AppColors.secondarySwatch.shade500,
                                ),
                ),
-              22.h.verticalSpace,
+              28.h.verticalSpace,
               CheckStateInPostApiDataWidget(
                 state: state,
                 messageSuccess: S.of(context).thePasswordHasBeenChanged,

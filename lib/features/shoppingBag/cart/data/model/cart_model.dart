@@ -4,47 +4,77 @@ class CartModel {
   final int id;
   final int? productId;
   final String? productName;
-  final String? price;
-  final String? currency;
-  final int? quantity;
-  final int? colorId;
+  final dynamic price;
+  int? quantity;
+  dynamic colorId;
   final String? colorName;
   final String? colorHex;
   final int? sizeId;
   final String? sizeName;
   final String? images;
+  final String? originalPrice;
+  final num? discountPerUnit;
+  final num? totalDiscount;
+  final num? finalPrice;
+  final bool? hasCopon;
 
-  CartModel({
-    required this.id,
-    this.productId,
-    this.productName,
-    this.price,
-    this.currency,
-    this.quantity,
-    this.colorId,
-    this.colorName,
-    this.colorHex,
-    this.sizeId,
-    this.sizeName,
-    required this.images,
-  });
+  CartModel(
+      {required this.id,
+      this.productId,
+      this.productName,
+      this.price,
+      this.quantity,
+      this.colorId,
+      this.colorName,
+      this.colorHex,
+      this.sizeId,
+      this.sizeName,
+      required this.images,
+      this.hasCopon,
+      this.originalPrice,
+      this.finalPrice,
+      this.totalDiscount,
+      this.discountPerUnit});
 
   factory CartModel.fromJson(Map<String, dynamic> json) {
     return CartModel(
-      id: json['id'],
+      id: json['id'] ?? 0,
       productId: json['product_id'] as int?,
       productName: json['product_name'] ?? '',
-      price: json['product_price'] ?? '',
-      currency: json['product_currency'] ?? '',
+      price: json['product_price'],
       quantity: json['quantity'] as int?,
-      colorId: json['color_id'] as int?,
+      colorId: json['color_id'],
       colorName: json['color_name'] ?? '',
       colorHex: json['color_hex'] ?? '',
-      sizeId: json['size_id'] as int?,
-      sizeName: json['size_value'] ?? '',
+      sizeId: json['parent_measuring_id'] as int?,
+      sizeName: json['measuring_value'] ?? '',
       images: json['image'] ?? "",
+      discountPerUnit: json['discount_per_unit'] ?? 0,
+      finalPrice: json['final_price'] ?? 0,
+      originalPrice: json['original_price'] ?? '',
+      totalDiscount: json['total_discount'] ?? 0,
+      hasCopon: json['has_coupon'] ?? false,
     );
   }
+
+  factory CartModel.empty() => CartModel(
+        id: 0,
+        productId: 0,
+        quantity: 0,
+        colorId: null,
+        sizeId: 0,
+        colorHex: '',
+        colorName: '',
+        sizeName: '',
+        price: '',
+        images: '',
+        discountPerUnit: 0,
+        finalPrice: 0,
+        hasCopon: false,
+        originalPrice: '',
+        productName: '',
+        totalDiscount: 0,
+      );
 
   static List<CartModel> fromJsonList(List json) {
     return json.map((e) => CartModel.fromJson(e)).toList();
@@ -52,10 +82,13 @@ class CartModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'product_id': productId,
-      'size_type_id': sizeId,
+      'product_name': productName,
+      'parent_measuring_id': sizeId,
       'color_id': colorId,
       'quantity': quantity,
+      'price': price.toString(),
     };
   }
 
@@ -63,7 +96,7 @@ class CartModel {
     int? id,
     int? productId,
     String? productName,
-    String? price,
+    int? price,
     String? currency,
     int? quantity,
     String? images,
@@ -78,7 +111,6 @@ class CartModel {
       productId: productId ?? this.productId,
       productName: productName ?? this.productName,
       price: price ?? this.price,
-      currency: currency ?? this.currency,
       quantity: quantity ?? this.quantity,
       images: images ?? this.images,
       colorName: colorName ?? this.colorName,
@@ -95,15 +127,14 @@ class CartModel {
         id: id,
         productId: productId,
         productName: productName,
-        price: price,
-        currency: currency,
+        price: updatedProduct.price,
         quantity: updatedProduct.quantity,
         colorId: updatedProduct.colorId,
         colorName: updatedProduct.colorName,
         colorHex: updatedProduct.colorHex,
         sizeId: updatedProduct.sizeId,
         sizeName: updatedProduct.sizeName,
-        images: images,
+        images: updatedProduct.image,
       );
     }
     return this;

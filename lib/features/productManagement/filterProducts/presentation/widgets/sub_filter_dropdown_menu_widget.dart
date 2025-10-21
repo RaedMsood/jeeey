@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/helpers/dropdown_helper.dart';
 import '../../../../../core/theme/app_colors.dart';
-import 'a_menu_to_display_the_sub_filter_content_widget.dart';
+import 'list_of_size_in_filter_widget.dart';
 import 'clear_button_and_done.dart';
 
 class SubFilterDropdownMenuWidget extends StatelessWidget {
-  const SubFilterDropdownMenuWidget({super.key});
-
+  const SubFilterDropdownMenuWidget({super.key,required this.aMenuToDisplayTheSubFilterContentWidget});
+  final Widget aMenuToDisplayTheSubFilterContentWidget;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -22,7 +22,7 @@ class SubFilterDropdownMenuWidget extends StatelessWidget {
         Flexible(
           child: SingleChildScrollView(
             padding: EdgeInsets.all(8.sp),
-            child: const AMenuToDisplayTheSubFilterContentWidget(),
+            child:  aMenuToDisplayTheSubFilterContentWidget,
           ),
         ),
         Divider(

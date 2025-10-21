@@ -27,7 +27,8 @@ class DesignForBottomNavigationBarWidget extends StatelessWidget {
         onTap: onTap,
         splashColor: Colors.transparent,
         child: Container(
-          padding: EdgeInsets.only(left: 8.w, right: 8.h, top: 8.h),
+          padding:
+              EdgeInsets.only(left: 8.w, right: 8.h, top: 8.h, bottom: 2.h),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             mainAxisAlignment: MainAxisAlignment.start,
@@ -43,23 +44,20 @@ class DesignForBottomNavigationBarWidget extends StatelessWidget {
                 child: SvgPicture.asset(
                   active ? activeIcon ?? icon : icon,
                   key: ValueKey<String>(active ? activeIcon ?? icon : icon),
-                  height: active ? 24.h : 22.h,
+                  color: active ? AppColors.primaryColor : null,
+                  height: active ? 21.5.h : 20.h,
                 ),
               ),
-              SizedBox(height: 2.h),
-              // AutoSizeTextWidget(
-              //   text: label,
-              //   colorText:
-              //       active ? Colors.black87 : AppColors.greySwatch.shade400,
-              //   fontSize: 10.8.sp,
-              //   textAlign: TextAlign.left,
-              // ),
+              2.h.verticalSpace,
               Text(
                 label,
                 style: TextStyle(
-                  color:
-                      active ? Colors.black87 : AppColors.greySwatch.shade400,
-                  fontSize: 10.8.sp
+                  color: active
+                      ? AppColors.primaryColor
+                      : AppColors.greySwatch.shade400,
+                  fontSize: 8.4.sp,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'NotoKufi',
                 ),
                 textAlign: TextAlign.left,
               ),

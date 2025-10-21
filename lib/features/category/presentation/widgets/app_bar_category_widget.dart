@@ -1,17 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:jeeey/features/home/data/model/section_data.dart';
 import '../../../../core/constants/app_icons.dart';
+import '../../../../core/helpers/navigateTo.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/auto_size_text_widget.dart';
 import '../../../../core/widgets/buttons/icon_button_widget.dart';
 import '../../../../core/widgets/buttons/ink_well_button_widget.dart';
-import '../../../home/presentation/widgets/app_bar_home_widget.dart';
-import '../../data/model/category_data.dart';
+import '../../../../services/auth/auth.dart';
+import '../../../productManagement/wishlist/presentation/pages/wishlist_page.dart';
+import '../../../productManagement/wishlist/presentation/riverpod/wishlist_riverpod.dart';
+import '../../../user/presentation/pages/log_in_page.dart';
 
 AppBar appBarCategoryWidget({
   required TabController tabController,
-  required List<CategoryData> category,
-
+  required List<SectionData> sections,
 }) {
   return AppBar(
     titleSpacing: 0,
@@ -30,18 +34,18 @@ AppBar appBarCategoryWidget({
               colorText: AppColors.fontColor,
             ),
           ),
-          InkWellButtonWidget(
-            icon: AppIcons.camera,
-            height: 12.5.h,
-            iconColor: Colors.black,
-            onPressed: () {},
-          ),
+          // InkWellButtonWidget(
+          //   icon: AppIcons.camera,
+          //   height: 12.5.h,
+          //   iconColor: AppColors.primaryColor,
+          //   onPressed: () {},
+          // ),
           4.w.horizontalSpace,
           Container(
             height: 24.h,
             // margin: EdgeInsets.all(1.5.sp),
             padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 3.5.h),
-            color: Colors.black,
+            color: AppColors.primaryColor,
             child: InkWellButtonWidget(
               icon: AppIcons.search,
               iconColor: Colors.white,
@@ -53,26 +57,43 @@ AppBar appBarCategoryWidget({
     ),
     leading: IconButtonWidget(
       icon: AppIcons.message,
-      iconColor: Colors.black,
-      onPressed: (){
-
-      },
+      iconColor: AppColors.whiteColor,
+      onPressed: () {},
     ),
     actions: [
-      IconButtonWidget(
-        icon: AppIcons.wishlist,
-        iconColor: Colors.black,
-        onPressed: () {},
+      Consumer(
+        builder: (context, ref, child) {
+          return IconButtonWidget(
+            icon: AppIcons.wishlist,
+            onPressed: () {
+              if (!Auth().loggedIn) {
+                navigateTo(context, const LogInPage());
+              } else {
+                ref.refresh(getAllWishesProductsProvider);
+                ref.refresh(getAllListProvider);
+                navigateTo(context, const WishlistPage());
+              }
+            },
+          );
+        },
       ),
     ],
     bottom: PreferredSize(
       preferredSize: Size.fromHeight(34.h),
       child: TabBar(
         controller: tabController,
-        indicatorWeight: 4.0,
+        labelStyle: const TextStyle(
+          fontWeight: FontWeight.w600,
+          fontFamily: 'NotoKufi',
+        ),
+        labelColor: AppColors.primaryColor,
+        indicator: const UnderlineTabIndicator(
+          borderSide: BorderSide(width: 1.6, color: AppColors.primaryColor),
+          insets: EdgeInsets.symmetric(vertical: 10),
+        ),
         isScrollable: true,
-        tabs: category.map((category) {
-          return Tab(text: category.name);
+        tabs: sections.map((section) {
+          return Tab(text: section.name);
         }).toList(),
       ),
     ),

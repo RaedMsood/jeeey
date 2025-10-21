@@ -1,6 +1,5 @@
-import 'package:jeeey/features/profile/myOrders/data/model/order_product_model.dart';
-
-import 'order_model.dart';
+import 'order_product_model.dart';
+import 'status_model.dart';
 
 class OrderDataModel {
   final int id;
@@ -8,7 +7,7 @@ class OrderDataModel {
   final String? trxId;
   final String? date;
   final int? totalProducts;
-  final int? total;
+  final dynamic total;
   final StatusModel? status;
   final List<OrderProductModel>? orderProducts;
 
@@ -30,12 +29,12 @@ class OrderDataModel {
       trxId: json['trx_id'] ?? '',
       date: json['date'] ?? '',
       totalProducts: json['total_products'] as int?,
-      total: json['total'] as int?,
+      total: json['total'] ,
       status:
-      json['status'] != null ? StatusModel.fromJson(json['status']) : null,
+          json['status'] != null ? StatusModel.fromJson(json['status']) : null,
       orderProducts: (json['order_products'] as List?)
-          ?.map((product) => OrderProductModel.fromJson(product))
-          .toList() ??
+              ?.map((product) => OrderProductModel.fromJson(product))
+              .toList() ??
           [],
     );
   }
@@ -44,8 +43,7 @@ class OrderDataModel {
     return json.map((e) => OrderDataModel.fromJson(e)).toList();
   }
 
-  factory OrderDataModel.empty() =>
-      OrderDataModel(
+  factory OrderDataModel.empty() => OrderDataModel(
         id: 0,
         userId: 0,
         trxId: '',
@@ -56,3 +54,5 @@ class OrderDataModel {
         orderProducts: [],
       );
 }
+
+

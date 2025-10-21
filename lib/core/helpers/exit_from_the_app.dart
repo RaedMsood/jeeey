@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'flash_bar_helper.dart';
 
 class ExitFromAppWidget extends StatefulWidget {
-
   const ExitFromAppWidget({super.key, required this.child});
+
   final Widget child;
 
   @override
@@ -19,13 +19,13 @@ class _ExitFromAppWidgetState extends State<ExitFromAppWidget> {
       child: widget.child,
       onWillPop: () async {
         final timeGap = DateTime.now().difference(backPress);
-        final canExit = timeGap >= const Duration(seconds: 2);
+        final canExit = timeGap >= const Duration(milliseconds: 250);
 
         backPress = DateTime.now();
 
         if (canExit) {
           pressAgainToExit(context: context);
-          return  false;
+          return false;
         } else {
           return true;
         }

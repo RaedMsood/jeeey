@@ -51,27 +51,32 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            8.h.verticalSpace,
             AutoSizeTextWidget(
-              text: "مرحبا صديقي الجديد!",
-              fontSize: 16.5.sp,
+              text: S.of(context).helloMyNewFriend,
+              fontSize: 17.sp,
               fontWeight: FontWeight.w600,
             ),
+            6.h.verticalSpace,
             AutoSizeTextWidget(
-              text: "قم بتحديد كلمة المرور الخاصة بك لإنشاء حساب Jeeey",
+              text:
+                  S.of(context).specifyYourNameAndPasswordToCreateAJeeeyAccount,
               fontSize: 12.5.sp,
               colorText: AppColors.fontColor,
               maxLines: 2,
             ),
+            10.h.verticalSpace,
             ViewPhoneNumberOrEmailWidget(
               email: state.data.input,
               title: state.data.type,
             ),
-            6.h.verticalSpace,
+            10.h.verticalSpace,
             AutoSizeTextWidget(
               text: S.of(context).userName,
               fontSize: 13.sp,
               colorText: Colors.black87,
             ),
+            6.h.verticalSpace,
             TextFormFieldWidget(
               controller: _nameController,
               borderSide: const BorderSide(
@@ -86,7 +91,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 }
               },
             ),
-            6.h.verticalSpace,
+            10.h.verticalSpace,
             AutoSizeTextWidget(
               text: S.of(context).password,
               fontSize: 13.sp,

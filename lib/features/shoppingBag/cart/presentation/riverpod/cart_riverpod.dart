@@ -3,45 +3,11 @@ import '../../../../../core/state/state.dart';
 import '../../../../../core/state/state_data.dart';
 import '../../data/model/cart_model.dart';
 import '../../data/model/cart_product_model.dart';
-import '../../data/model/product_details_for_cart_model.dart';
 import '../../data/repos/cart_repo.dart';
 
-final getProductDetailsForCartProvider = StateNotifierProvider.autoDispose
-    .family<GetProductDetailsForCartController,
-    DataState<ProductDetailsForCartModel>,
-    int>(
-      (ref, int prodectId) {
-    return GetProductDetailsForCartController(prodectId);
-  },
-);
-
-class GetProductDetailsForCartController
-    extends StateNotifier<DataState<ProductDetailsForCartModel>> {
-  GetProductDetailsForCartController(this.prodectId)
-      : super(DataState<ProductDetailsForCartModel>.initial(
-    ProductDetailsForCartModel.empty(),
-  )) {
-    getData();
-  }
-
-  final int prodectId;
-  final _controller = CartReposaitory();
-
-  Future<void> getData() async {
-    state = state.copyWith(state: States.loading);
-    final data = await _controller.getProductDetailsForCart(prodectId);
-    data.fold((f) {
-      state = state.copyWith(state: States.error, exception: f);
-    }, (data) {
-      state = state.copyWith(state: States.loaded, data: data);
-    });
-  }
-}
-
 final getAllCartProvider = StateNotifierProvider.autoDispose<
-    GetAllCartController,
-    DataState<List<CartModel>>>(
-      (ref) {
+    GetAllCartController, DataState<List<CartModel>>>(
+  (ref) {
     return GetAllCartController();
   },
 );
@@ -59,14 +25,18 @@ class GetAllCartController extends StateNotifier<DataState<List<CartModel>>> {
     data.fold((f) {
       state = state.copyWith(state: States.error, exception: f);
     }, (data) {
+
       state = state.copyWith(state: States.loaded, data: data);
     });
   }
 }
 
+
+
+
 final cartProvider = StateNotifierProvider.autoDispose<CartController,
     DataState<CartProductModel>>(
-      (ref) {
+  (ref) {
     return CartController();
   },
 );
@@ -100,7 +70,7 @@ class CartController extends StateNotifier<DataState<CartProductModel>> {
   bool isAllProductsSelected(List<CartModel> allProducts) {
     return selectedProducts.length == allProducts.length &&
         allProducts.every(
-                (product) => selectedProducts.any((p) => p.id == product.id));
+            (product) => selectedProducts.any((p) => p.id == product.id));
   }
 
   void toggleProductSelection(bool isChecked, CartModel product) {
@@ -129,13 +99,19 @@ class CartController extends StateNotifier<DataState<CartProductModel>> {
 
   Future<void> addToCart({
     required int prodectId,
-    required int colorId,
+    required dynamic colorId,
     required int sizeId,
+    required dynamic price,
     required int quantity,
   }) async {
     state = state.copyWith(state: States.loading);
-    final data =
-    await _controller.addToCart(prodectId, colorId, sizeId, quantity);
+    final data = await _controller.addToCart(
+      prodectId,
+      colorId,
+      sizeId,
+      price,
+      quantity,
+    );
     data.fold((f) {
       state = state.copyWith(state: States.error, exception: f);
     }, (data) {
@@ -146,13 +122,14 @@ class CartController extends StateNotifier<DataState<CartProductModel>> {
   Future<void> updateCart({
     required int id,
     required int prodectId,
-    required int colorId,
+    required dynamic colorId,
     required int sizeId,
+    required dynamic price,
     required int quantity,
   }) async {
     state = state.copyWith(state: States.loading);
-    final data =
-    await _controller.updateCart(id, prodectId, colorId, sizeId, quantity);
+    final data = await _controller.updateCart(
+        id, prodectId, colorId, sizeId, price, quantity);
     data.fold((f) {
       state = state.copyWith(state: States.error, exception: f);
     }, (data) {
@@ -163,6 +140,7 @@ class CartController extends StateNotifier<DataState<CartProductModel>> {
 
   Future<void> deleteAProductFromTheCart({
     required int id,
+    required WidgetRef ref,
   }) async {
     state = state.copyWith(state: States.loading);
     final data = await _controller.deleteAProductFromTheCart(id);
@@ -170,7 +148,32 @@ class CartController extends StateNotifier<DataState<CartProductModel>> {
       state = state.copyWith(state: States.error, exception: f);
     }, (data) {
       selectedProducts.removeWhere((product) => product.id == id);
+      ref
+          .read(getAllCartProvider.notifier)
+          .state
+          .data
+          .removeWhere((item) => item.id == id);
       state = state.copyWith(state: States.loaded);
     });
+  }
+}
+
+final cartProductProvider = StateNotifierProvider.autoDispose
+    .family<CartProductNotifier, CartModel, int>(
+  (ref, productId) {
+    final cartState = ref.watch(getAllCartProvider);
+    final product = cartState.data.firstWhere(
+      (item) => item.id == productId,
+      orElse: () => CartModel.empty(),
+    );
+    return CartProductNotifier(product);
+  },
+);
+
+class CartProductNotifier extends StateNotifier<CartModel> {
+  CartProductNotifier(super.initialData);
+
+  void updateProduct(CartModel newData) {
+    state = newData;
   }
 }

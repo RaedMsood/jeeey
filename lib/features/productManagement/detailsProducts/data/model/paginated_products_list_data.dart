@@ -8,13 +8,16 @@ class PaginatedProductsList {
   final List<ProductData> data;
   @HiveField(1)
   final int currentPage;
-
   @HiveField(2)
   final int? lastPage;
+  final int? totalProduct;
+  final int? perPage;
   PaginatedProductsList({
     required this.data,
     required this.currentPage,
-     this.lastPage
+     this.lastPage,
+    this.totalProduct,
+    this.perPage
   });
 
   factory PaginatedProductsList.fromJson(Map<String, dynamic> json) {
@@ -23,7 +26,9 @@ class PaginatedProductsList {
           .map((e) => ProductData.fromJson(e as Map<String, dynamic>))
           .toList(),
       currentPage: json['current_page'] as int,
-      lastPage: json['last_page'] as int
+      lastPage: json['last_page'] as int,
+      totalProduct: json['total'],
+      perPage: json['per_page']
     );
   }
 

@@ -39,7 +39,9 @@ class AddANewAddressPage extends ConsumerWidget {
 
     return Scaffold(
       appBar: AppBarAddressWidget(
-        title: address.id != 0 ? "تعديل العنوان" : S.of(context).addANewAddress,
+        title: address.id != 0
+            ? S.of(context).editAddress
+            : S.of(context).addANewAddress,
         action: address.id != 0 ? true : false,
         onTapAction: () {
           showModalBottomSheetWidget(
@@ -83,8 +85,9 @@ class AddANewAddressPage extends ConsumerWidget {
                       child: Padding(
                         padding: EdgeInsets.only(bottom: 12.h),
                         child: AutoSizeTextWidget(
-                          text:
-                              "*يرجى إضافة عنوان جديد دقيق لتمتع بتجربة توصيل مميزة",
+                          text: S
+                              .of(context)
+                              .pleaseAddANewAccurateAddressToEnjoyAUniqueDeliveryExperience,
                           fontSize: 12.8.sp,
                           colorText: const Color(0xfff7a219),
                           fontWeight: FontWeight.w600,
@@ -102,7 +105,7 @@ class AddANewAddressPage extends ConsumerWidget {
                         padding: EdgeInsets.only(
                             top: 7.h, left: 10.sp, right: 10.sp),
                         child: AutoSizeTextWidget(
-                          text: "Please specify store location on the map*",
+                          text: S.of(context).pleaseLocateOnTheMap,
                           fontSize: 10.5.sp,
                           colorText: AppColors.primarySwatch.shade600,
                         ),

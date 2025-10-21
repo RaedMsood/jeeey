@@ -36,6 +36,7 @@ class PaymentMethodWidget extends StatelessWidget {
               size: Size(48.w, 36.h),
               imageUrl: "",
               fit: BoxFit.contain,
+              logoWidth: 34.w,
             ),
             12.w.horizontalSpace,
             Flexible(

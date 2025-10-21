@@ -24,8 +24,8 @@ class ViewPhoneNumberOrEmailWidget extends StatelessWidget {
         12.h.verticalSpace,
         AutoSizeTextWidget(
           text: title == 'email'
-              ? S.of(context).email
-              : S.of(context).phoneNumber,
+              ? "${S.of(context).email}:"
+              : "${S.of(context).phoneNumber}:",
           fontSize: 13.sp,
           colorText: Colors.black87,
         ),
@@ -43,7 +43,6 @@ class ViewPhoneNumberOrEmailWidget extends StatelessWidget {
                 visible: editIcon,
                 child: InkWell(
                   onTap: () {
-                    print("lskfjla.fj");
                     Navigator.pop(context);
                   },
                   child: const Icon(

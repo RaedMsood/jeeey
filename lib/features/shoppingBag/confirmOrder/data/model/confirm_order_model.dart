@@ -26,8 +26,8 @@ class ConfirmOrderModel {
       'address_id': addressId,
       'payment_id': paymentId,
       'delivery_type_id': deliveryTypeId,
-      'note': note ?? '',
-      'unit_price': unitPrice,
+      // 'note': note ?? "",
+      // 'unit_price': unitPrice,
       'phone_number': phoneNumber,
     };
   }

@@ -1,23 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jeeey/features/shoppingBag/cart/data/model/product_details_for_cart_model.dart';
-
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/auto_size_text_widget.dart';
+import '../../../../../generated/l10n.dart';
+import '../../../../productManagement/detailsProducts/data/model/product_data.dart';
 
-class ProductsSizesWidget extends StatelessWidget {
-  final List<SizeTypeDetailModel> sizeTypeDetails;
+class ProductsSizesWidget extends StatefulWidget {
+  final ProductData data;
   final int sizeId;
+  final Function(int, String) onSelect;
+  final ValueChanged<int> onCounterChanged;
+  dynamic sizeTypeName;
 
-  final Function(int) onSelect;
-
-  const ProductsSizesWidget({
+  ProductsSizesWidget({
     super.key,
-    required this.sizeTypeDetails,
+    required this.data,
     required this.sizeId,
     required this.onSelect,
+    required this.onCounterChanged,
+    this.sizeTypeName = '',
   });
 
+  @override
+  State<ProductsSizesWidget> createState() => _ProductsSizesWidgetState();
+}
+
+class _ProductsSizesWidgetState extends State<ProductsSizesWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -25,29 +33,38 @@ class ProductsSizesWidget extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          6.h.verticalSpace,
           AutoSizeTextWidget(
-            text: "مقاس",
-            fontSize: 13.5.sp,
-            fontWeight: FontWeight.w700,
+            text: widget.data.measuringType!.isNotEmpty &&
+                    widget.data.measuringType![0] == "unit"
+                ? "${S.of(context).unity}: ${widget.sizeTypeName.toString()}"
+                : "${S.of(context).size}: ${widget.sizeTypeName.toString()}",
+            fontSize: 12.2.sp,
+            fontWeight: FontWeight.w600,
           ),
-          6.h.verticalSpace,
+          8.h.verticalSpace,
+          // widget.data.measuringType!.isNotEmpty &&
+          //         widget.data.measuringType![0] == "unit"
+          //     ? CounterOfUnitProductWidget(
+          //         onCounterChanged: (int value) =>
+          //             widget.onCounterChanged(value))
+          //     : const SizedBox.shrink(),
           Wrap(
             spacing: 12.w,
             runSpacing: 8.h,
-            children: sizeTypeDetails.map((items) {
+            children: widget.data.sizeProduct!.map((items) {
               return InkWell(
-                onTap: () => onSelect(items.sizeTypeId!),
+                onTap: () => widget.onSelect(items.id!, items.sizeTypeName),
                 child: Container(
                   padding:
-                      EdgeInsets.symmetric(horizontal: 12.w, vertical: 4.h),
+                      EdgeInsets.symmetric(horizontal: 14.w, vertical: 3.h),
+                  margin: EdgeInsets.only(bottom: 6.h),
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(14.sp),
-                    border: items.sizeTypeId == sizeId
+                    border: items.id == widget.sizeId
                         ? Border.all(
-                            color: Colors.black,
-                            width: 0.7,
+                            color: AppColors.primaryColor,
+                            width: 0.8,
                           )
                         : Border.all(
                             color: AppColors.fontColor,
@@ -57,9 +74,9 @@ class ProductsSizesWidget extends StatelessWidget {
                   child: AutoSizeTextWidget(
                     text: items.sizeTypeName.toString(),
                     fontSize: 12.sp,
-                    fontWeight: items.sizeTypeId == sizeId
-                        ? FontWeight.bold
-                        : FontWeight.w600,
+                    fontWeight: items.id == widget.sizeId
+                        ? FontWeight.w600
+                        : FontWeight.w500,
                   ),
                 ),
               );

@@ -7,9 +7,9 @@ import '../../../../../core/widgets/auto_size_text_widget.dart';
 class CardOfSubFilterDrawerWidget extends StatefulWidget {
   final String title;
   final Widget child;
-
+  final bool isOpenToRead;
   const CardOfSubFilterDrawerWidget(
-      {super.key, required this.child, required this.title});
+      {super.key, required this.child, required this.title,required this.isOpenToRead});
 
   @override
   State<CardOfSubFilterDrawerWidget> createState() =>
@@ -24,7 +24,9 @@ class _CardOfSubFilterDrawerWidgetState
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
+
         setState(() {
+
           readAll = !readAll;
         });
       },
@@ -42,11 +44,11 @@ class _CardOfSubFilterDrawerWidgetState
                   fontWeight: FontWeight.w600,
                 ),
                 SvgPicture.asset(
-                  readAll ? AppIcons.arrowUp : AppIcons.arrowBottom,
+                  readAll||widget.isOpenToRead ? AppIcons.arrowUp : AppIcons.arrowBottom,
                 ),
               ],
             ),
-            readAll
+            readAll||widget.isOpenToRead
                 ? Padding(
                     padding: EdgeInsets.only(top: 12.h),
                     child: widget.child,

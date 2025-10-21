@@ -43,10 +43,15 @@ class VerifyCodePage extends ConsumerWidget {
           padding: EdgeInsets.all(14.sp),
           child: Column(
             children: [
-              Image.asset(
-                AppImages.logo,
+              18.h.verticalSpace,
+              Align(
+                alignment: Alignment.center,
+                child: Image.asset(
+                  AppImages.logoWithText,
+                  width: 200.w,
+                ),
               ),
-              8.h.verticalSpace,
+              34.h.verticalSpace,
               AutoSizeTextWidget(
                 text:
                     "${S.of(context).codeHasBeenSendTo} ${phoneNumberOrEmail.substring(0, 3)}******",

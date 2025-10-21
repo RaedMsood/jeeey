@@ -19,8 +19,8 @@ class ColorOfProductDataAdapter extends TypeAdapter<ColorOfProductData> {
     return ColorOfProductData(
       colorHex: fields[1] as String?,
       colorName: fields[0] as String?,
-      image: (fields[2] as List?)?.cast<String>(),
-      isMain: fields[3] as String?,
+      image: (fields[2] as List?)?.cast<dynamic>(),
+      isMain: fields[3] as int?,
     );
   }
 

@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:jeeey/core/theme/app_colors.dart';
 
 class LineThroughPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
-      ..color = Colors.red
+      ..color = Colors.black
       ..strokeWidth = 2
       ..style = PaintingStyle.stroke;
 

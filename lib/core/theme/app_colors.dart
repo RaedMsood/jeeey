@@ -9,6 +9,7 @@ class AppColors {
   static const Color transparent = Colors.transparent;
   static const Color primaryColor = Color(0xff8A1538);
   static Color dangerColor = const Color(0xffD64545);
+  static Color purpleColor = const Color(0xff905bfe);
 
   static const MaterialColor primarySwatch = MaterialColor(
     0xff8A1538,

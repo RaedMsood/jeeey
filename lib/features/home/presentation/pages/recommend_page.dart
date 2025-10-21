@@ -31,14 +31,14 @@ class RecommendPage extends StatelessWidget {
             },
           ),
           const SliverToBoxAdapter(
-            child: ListToSubFilterWidget(),
+          //  child: ListToSubFilterWidget(),
           ),
           SliverToBoxAdapter(
             child: ProductListWidget(product: [],),
           ),
         ],
       ),
-      endDrawer: const SubFilterDrawerWidget(),
+    //  endDrawer: const SubFilterDrawerWidget(),
     );
   }
 }

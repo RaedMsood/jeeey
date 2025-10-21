@@ -31,10 +31,10 @@ class GeneralDesignForOrderConfirmationSectionsWidget extends StatelessWidget {
             padding:  EdgeInsets.symmetric( horizontal: 12.w,),
             child: AutoSizeTextWidget(
               text: title,
-              fontSize:fontSize?? 13.2.sp,
+              fontSize:fontSize?? 13.sp,
             ),
           ),
-          2.h.verticalSpace,
+          4.h.verticalSpace,
           child,
         ],
       ),

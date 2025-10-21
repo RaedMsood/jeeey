@@ -7,6 +7,7 @@ import '../../../../core/constants/app_icons.dart';
 import '../../../../core/theme/app_colors.dart';
 import '../../../../core/widgets/base_input.dart';
 import '../../../../core/widgets/show_modal_bottom_sheet_widget.dart';
+import '../../../../generated/l10n.dart';
 import '../../data/model/address_model.dart';
 import '../riverpod/address_riverpod.dart';
 import 'district_input_widget.dart';
@@ -39,9 +40,9 @@ class _AddANewAddressWidgetState extends ConsumerState<AddANewAddressWidget> {
             BaseInputWidget(
               formControlName: 'address',
               validationMessages: {
-                ValidationMessage.required: (e) => 'Address is required',
+                ValidationMessage.required: (e) => S.of(context).addressIsRequired,
               },
-              hintText: "Address",
+              hintText: S.of(context).address,
               hintTextColor: Colors.black,
               fontSize: 13.sp,
             ),
@@ -49,10 +50,10 @@ class _AddANewAddressWidgetState extends ConsumerState<AddANewAddressWidget> {
               formControlName: 'city_name',
               keyboardType: TextInputType.none,
               validationMessages: {
-                ValidationMessage.required: (e) => 'City is required',
+                ValidationMessage.required: (e) => S.of(context).pleaseChoseACity,
               },
               cursorHeight: 0,
-              hintText: "City",
+              hintText: S.of(context).city,
               hintTextColor: Colors.black,
               fontSize: 13.sp,
               onTap: (i) {
@@ -80,9 +81,9 @@ class _AddANewAddressWidgetState extends ConsumerState<AddANewAddressWidget> {
               formControlName: 'nearest_landmark',
               validationMessages: {
                 ValidationMessage.required: (e) =>
-                    'Nearest landmark is required'
+                    S.of(context).nearestLandmarkIsRequired
               },
-              hintText: "Nearest landmark",
+              hintText: S.of(context).nearestLandmark,
               hintTextColor: Colors.black,
               fontSize: 13.sp,
             ),

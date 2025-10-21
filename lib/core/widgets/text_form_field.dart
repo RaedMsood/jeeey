@@ -26,7 +26,8 @@ class TextFormFieldWidget extends StatelessWidget {
   final bool? expanded;
   final bool? autofocus;
   final int? maxLine;
-
+  final Color?cursorColor;
+  final EdgeInsetsGeometry?contentPadding;
   const TextFormFieldWidget({
     super.key,
     required this.controller,
@@ -51,6 +52,8 @@ class TextFormFieldWidget extends StatelessWidget {
     this.onTap,
     this.onChanged,
     this.onSubmit,
+    this.cursorColor,
+    this.contentPadding,
   });
 
   @override
@@ -65,7 +68,7 @@ class TextFormFieldWidget extends StatelessWidget {
       onFieldSubmitted: onSubmit,
       onTap: onTap,
       onChanged: onChanged,
-      cursorColor: AppColors.primaryColor,
+      cursorColor:cursorColor?? AppColors.primaryColor,
       decoration: InputDecoration(
         fillColor: fillColor ?? Colors.white,
         filled: true,
@@ -100,7 +103,7 @@ class TextFormFieldWidget extends StatelessWidget {
         ),
         prefixIcon: prefix,
         suffixIcon: suffixIcon,
-        contentPadding: const EdgeInsets.all(10.0),
+        contentPadding:contentPadding?? const EdgeInsets.all(10.0),
       ),
       expands: expanded ?? false,
       textAlign: textAlign ?? TextAlign.start,

@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'dart:developer';
 
 import '../../core/local/secure_storage.dart';
+import '../../core/network/remote_request.dart';
+import '../../core/network/urls.dart';
 import '../../features/user/data/model/auth_model.dart';
 import '../../injection.dart';
 
@@ -31,9 +33,7 @@ class Auth {
         user = authModel;
       }
       print(user.token);
-      print(user.user.id);
       print(user.user.email);
-      print(user.user.phoneNumber);
     } catch (ex) {
       throw '$ex';
     }
@@ -73,26 +73,62 @@ class Auth {
     await secureStorage.delete(key: _key);
   }
 
-// void updateFcmToken(String fcmToken) async {
-//   log(fcmToken, name: 'token');
-//   //save fcmtoken
-//
-//   secureStorage.write(key: 'fcmToken', value: fcmToken);
-//   if (loggedIn && user.user.fcmToken != fcmToken) {
-//     user = user.copyWith(
-//       user: user.user.copyWith(
-//         fcmToken: fcmToken,
-//       ),
-//     );
-//     await WingsRemoteService().send(
-//       request: WingsRequest(
-//         url: AppURL.addFcmToken,
-//         body: {'fcmToken': fcmToken},
-//       ),
-//       method: WingsRemoteMethod.post,
-//       onSuccess: (response, code) {},
-//       onError: (RemoteResponse, int) {},
-//     );
-//   }
-// }
+  Future<void> setLanguage(String languageCode) async {
+    await secureStorage.write(key: "LANGUAGE", value: languageCode);
+  }
+
+  Future<String> getLanguage() async {
+    final language = await secureStorage.read(key: "LANGUAGE");
+    return language ?? "ar";
+  }
+
+  Future<void> setCurrency(String currencyCode) async {
+    await secureStorage.write(key: "CURRENCY", value: currencyCode);
+  }
+
+  Future<String> getCurrency() async {
+    final language = await secureStorage.read(key: "CURRENCY");
+    return language ?? "YER";
+  }
+
+  Future<void> saveFCMToken(String fcmToken) async {
+    await secureStorage.write(key: 'fcmToken', value: fcmToken);
+  }
+
+  Future<void> saveCartId(int cartId) async {
+    await secureStorage.write(key: 'cartId', value: cartId.toString());
+  }
+
+  Future<String?> getFCMToken() async {
+    return await secureStorage.read(key: 'fcmToken');
+  }
+
+  Future<int?> getCartId() async {
+    String? cartIdStr = await secureStorage.read(key: 'cartId');
+    return cartIdStr != null ? int.tryParse(cartIdStr) : null;
+  }
+
+  Future<void> updateFCMTokenIfNeeded(String? newToken) async {
+    String? storedToken = await getFCMToken();
+    int? cartId = await getCartId();
+
+    if (newToken != null && storedToken != newToken && cartId != null) {
+      await saveFCMToken(newToken);
+      await sendTokenToServer(cartId, newToken);
+    }
+  }
+
+  Future<void> sendTokenToServer(int cartId, String fcmToken) async {
+    try {
+      await RemoteRequest.postData(
+        path: AppURL.updateFCMToken,
+        data: {
+          'cart_id': cartId,
+          'fcm_token': fcmToken,
+        },
+      );
+    } catch (e) {
+      log('Failed to send FCM token: $e');
+    }
+  }
 }

@@ -15,7 +15,7 @@ class ListForRowCardSubcategoriesWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return category.isNotEmpty? Container(
       height: 40.h,
       color: Colors.white,
       child: ListView.builder(
@@ -26,8 +26,10 @@ class ListForRowCardSubcategoriesWidget extends StatelessWidget {
           return Row(
             children: [
               RowCardForCategoriesWidget(
+
                 circularImage: category[index].hasChildren==true?true:false,
                 nameCategory: category[index].name!,
+                image: category[index].image!,
               ),
               category[index].hasChildren==true?0.horizontalSpace: 6.w.horizontalSpace,
 
@@ -35,7 +37,7 @@ class ListForRowCardSubcategoriesWidget extends StatelessWidget {
           );
         },
       ),
-    );
+    ):const SizedBox();
   }
 }
 

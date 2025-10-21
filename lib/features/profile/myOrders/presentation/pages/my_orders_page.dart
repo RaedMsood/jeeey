@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import '../../../../../core/widgets/secondary_app_bar_widget.dart';
 import '../../../../../generated/l10n.dart';
 import '../riverpod/order_riverpod.dart';
-import '../widgets/app_bar_for_my_orders_widget.dart';
 import '../widgets/list_for_orders_widget.dart';
 
 class MyOrdersPage extends ConsumerStatefulWidget {
@@ -32,9 +31,9 @@ class _MyOrdersPageState extends ConsumerState<MyOrdersPage>
   void _onScroll() {
     if (_scrollController.position.pixels ==
         _scrollController.position.maxScrollExtent) {
-      // ref.read(getAllOrdersProvider.notifier).getData(
-      //       moreData: true,
-      //     );
+      ref.read(getAllOrdersProvider.notifier).getData(
+            moreData: true,
+          );
     }
   }
 
@@ -47,10 +46,10 @@ class _MyOrdersPageState extends ConsumerState<MyOrdersPage>
 
   @override
   Widget build(BuildContext context) {
-    var state = ref.watch(getAllOrdersProvider);
-
     return Scaffold(
-      appBar: AppBarForMyOrdersWidget(),
+      appBar: SecondaryAppBarWidget(
+        title: S.of(context).order,
+      ),
       body: DefaultTabController(
         length: 6,
         child: Column(
@@ -64,39 +63,17 @@ class _MyOrdersPageState extends ConsumerState<MyOrdersPage>
                 padding: EdgeInsets.symmetric(horizontal: 5.w),
                 dividerColor: Colors.black,
                 unselectedLabelColor: Colors.black,
-
-                labelStyle: const TextStyle(fontWeight: FontWeight.w600,fontFamily: "IBMPlexSansArabic"),
-                unselectedLabelStyle:
-                const TextStyle(fontWeight: FontWeight.w500,fontFamily: "IBMPlexSansArabic"),
+                labelStyle: const TextStyle(
+                    fontWeight: FontWeight.w600, fontFamily: "NotoKufi"),
+                unselectedLabelStyle: const TextStyle(
+                    fontWeight: FontWeight.w500, fontFamily: "NotoKufi"),
                 tabs: [
-                  Tab(
-                    text: "جميع الطلبات",
-                  ),
-                  Tab(
-                    text: S
-                        .of(context)
-                        .unpaid,
-                  ),
-                  Tab(
-                    text: S
-                        .of(context)
-                        .processing,
-                  ),
-                  Tab(
-                    text: S
-                        .of(context)
-                        .shipped,
-                  ),
-                  Tab(
-                    text: S
-                        .of(context)
-                        .returns,
-                  ),
-                  Tab(
-                    text: S
-                        .of(context)
-                        .review,
-                  ),
+                  Tab(text: S.of(context).allOrders),
+                  Tab(text: S.of(context).unpaid),
+                  Tab(text: S.of(context).processing),
+                  Tab(text: S.of(context).shipped),
+                  Tab(text: S.of(context).returns),
+                  Tab(text: S.of(context).review),
                 ],
               ),
             ),
@@ -110,12 +87,6 @@ class _MyOrdersPageState extends ConsumerState<MyOrdersPage>
                     status: 0,
                     all: true,
                   ),
-                  // Text("s"),
-                  // Text("s"),
-                  // Text("s"),
-                  // Text("s"),
-                  // Text("s"),
-
                   ListForOrdersWidget(
                     scrollController: _scrollController,
                     status: 1,

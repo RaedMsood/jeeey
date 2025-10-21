@@ -1,80 +1,123 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:jeeey/core/theme/app_colors.dart';
+import 'package:jeeey/core/widgets/buttons/icon_button_widget.dart';
 
+import '../../../../../core/constants/app_icons.dart';
+import '../../../../../core/helpers/navigateTo.dart';
 import '../../../../../core/widgets/auto_size_text_widget.dart';
-import '../../../../../core/widgets/text_form_field.dart';
+import '../../../../../core/widgets/bottomNavbar/bottom_navigation_bar_widget.dart';
+import '../../../../../core/widgets/buttons/ink_well_button_widget.dart';
+import '../../../../../services/firebase/deep_link_services.dart';
+import '../../../search_product/presntation/page/search_page.dart';
 
 class AppBarWithTabBarOfDetailsWidget extends StatelessWidget {
-   AppBarWithTabBarOfDetailsWidget({super.key,required this.tabController,required this.pageController});
+  AppBarWithTabBarOfDetailsWidget(
+      {super.key,
+      required this.tabController,
+      required this.pageController,
+      required this.descriptionForShare,
+      required this.idProductForShare,
+      required this.imageForShare,
+      required this.nameForShare,
+      required this.price});
+
+  final String nameForShare;
+  final String descriptionForShare;
+  final String imageForShare;
+  final int idProductForShare;
+  final String price;
   late PageController pageController;
   late TabController tabController;
-   TextEditingController controller = TextEditingController();
+  TextEditingController controller = TextEditingController();
 
-   @override
+  @override
   Widget build(BuildContext context) {
-    return  Column(
+    return Column(
       children: [
         AppBar(
           backgroundColor: Colors.white,
           surfaceTintColor: Colors.white,
           elevation: 0.0,
           titleSpacing: 0.0,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: Colors.black,
-              size: 19.sp,
+          leading: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12.w),
+            child: InkWell(
+              onTap: () {
+                Navigator.pop(context);
+              },
+              child: Icon(
+                Icons.arrow_back_ios,
+                color: AppColors.primaryColor,
+                size: 19.sp,
+              ),
             ),
-            onPressed: (){
-              Navigator.pop(context);
+          ),
+          leadingWidth: 34.w,
+          title: InkWell(
+            onTap: () {
+              navigateTo(
+                  context,
+                  SearchPage(
+                    hintTextSearch: "",
+                  ));
             },
-          ),
-          title: Container(
-            height: 35.h,
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(20)),
-            child: TextFormFieldWidget(
-              controller: controller,
-              prefix: const Icon(Icons.search),
-              fillColor: Colors.grey[200],
-              label: "blue skirt",
-              labelFontSize: 13.sp,
-              labelTextColor: Colors.black,
+            child: Container(
+              height: 28.h,
+              width: double.infinity,
+              color: AppColors.scaffoldColor,
+              child: Row(
+                children: [
+                  Container(
+                    height: 24.h,
+                    padding: EdgeInsets.symmetric(horizontal: 8.w),
+                    child: InkWellButtonWidget(
+                      icon: AppIcons.search,
+                      iconColor: AppColors.primaryColor,
+                      onPressed: () {},
+                    ),
+                  ),
+                  Expanded(
+                    child: AutoSizeTextWidget(
+                      text: "البحث",
+                      colorText: AppColors.primaryColor,
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                  6.w.horizontalSpace,
+                ],
+              ),
             ),
           ),
-
           actions: [
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.shopping_basket_outlined,
-                    color: Colors.black,
-                    size: 19.sp,
-                  ),
+            12.horizontalSpace,
+            InkWellButtonWidget(
+              icon: AppIcons.sharing,
+              height: 20.h,
+              onPressed: () {
+                DynamicLinkService.shareProduct(
+                  context,
+                  nameForShare,
+                  descriptionForShare,
+                  idProductForShare,
+                  imageForShare,
+                  price,
+                );
+              },
+            ),
+            Consumer(
+              builder: (context, ref, child) {
+                return IconButtonWidget(
+                  icon: AppIcons.cartActive,
+                  height: 20.h,
                   onPressed: () {
+                    ref.read(activeIndexProvider.notifier).state = 2;
+                    navigateTo(context, const BottomNavigationBarWidget());
                   },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.share,
-                    color: Colors.black,
-                    size: 19.sp,
-                  ),
-                  onPressed: () {
-                  },
-                ),
-                IconButton(
-                  icon: Icon(
-                    Icons.density_medium_sharp,
-                    color: Colors.black,
-                    size: 19.sp,
-                  ),
-                  onPressed: () {
-                  },
-                ),
-              ],
+                );
+              },
             ),
           ],
         ),
@@ -83,55 +126,51 @@ class AppBarWithTabBarOfDetailsWidget extends StatelessWidget {
           width: double.infinity,
           height: 40.h,
           alignment: Alignment.center,
-
           child: TabBar(
             controller: tabController,
-            labelColor: Colors.black,
-            indicatorColor: Colors.black,
-            physics: const ClampingScrollPhysics(),
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.w600,
+                fontFamily: 'NotoKufi',
+                color: AppColors.primaryColor),
+            labelColor: AppColors.primaryColor,
+            indicator: const UnderlineTabIndicator(
+              borderSide: BorderSide(width: 1.6, color: AppColors.primaryColor),
+              insets: EdgeInsets.symmetric(vertical: 10),
+            ),
+            isScrollable: true,
             dividerHeight: 0,
-            unselectedLabelColor: Colors.grey,
+            unselectedLabelColor: Colors.black,
             indicatorSize: TabBarIndicatorSize.label,
             labelPadding: EdgeInsets.symmetric(horizontal: 33.sp),
-            // indicator: BoxDecoration(
-            //   borderRadius: BorderRadius.circular(25.sp),
-            //   color: const Color(0xffFFF8ED),
-            // ),
             tabAlignment: TabAlignment.center,
             tabs: const [
               Tab(
                 child: Align(
                   alignment: Alignment.centerRight,
-                  child: AutoSizeTextWidget(
-                    text: "السلع",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                  child: Text(
+                    "السلع",
                   ),
                 ),
               ),
               Tab(
                 child: Align(
                   alignment: Alignment.center,
-                  child: AutoSizeTextWidget(
-                    text: "التعليقات",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                  child: Text(
+                    "التعليقات",
                   ),
                 ),
               ),
               Tab(
                 child: Align(
                   alignment: Alignment.centerLeft,
-                  child: AutoSizeTextWidget(
-                    text: "التوصية",
-                    fontSize: 15,
-                    fontWeight: FontWeight.bold,
+                  child: Text(
+                    "التوصية",
                   ),
                 ),
               ),
             ],
             onTap: (index) {
-             pageController.animateToPage(index,
+              pageController.animateToPage(index,
                   duration: Duration(milliseconds: 300),
                   curve: Curves.easeInOut);
             },

@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import '../../../../../core/constants/app_icons.dart';
+import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/auto_size_text_widget.dart';
 
 class ListTileSettingsWidget extends StatelessWidget {
   final String title;
   final VoidCallback onTap;
+  final double? fontSize;
 
   const ListTileSettingsWidget({
     super.key,
     required this.title,
     required this.onTap,
+    this.fontSize,
   });
 
   @override
@@ -20,12 +21,15 @@ class ListTileSettingsWidget extends StatelessWidget {
       onTap: onTap,
       title: AutoSizeTextWidget(
         text: title,
-        fontSize: 12.8.sp,
+        fontSize:fontSize?? 11.sp,
         colorText: Colors.black87,
       ),
-      trailing: Padding(
-        padding: EdgeInsets.only(top: 8.h),
-        child: SvgPicture.asset(AppIcons.arrowLeft),
+      trailing: Icon(
+        Localizations.localeOf(context).languageCode == "ar"
+            ? Icons.keyboard_arrow_left
+            : Icons.keyboard_arrow_right,
+        color: AppColors.primarySwatch.shade700,
+        size: 18.r,
       ),
       titleAlignment: ListTileTitleAlignment.center,
       dense: true,

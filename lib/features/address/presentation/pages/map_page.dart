@@ -33,7 +33,7 @@ class _MapPageState extends ConsumerState<MapPage> {
   bool showError = false;
 
   final Completer<GoogleMapController> _controller =
-      Completer<GoogleMapController>();
+  Completer<GoogleMapController>();
 
   getCurrentLocation({
     required LatLng latLng,
@@ -92,8 +92,9 @@ class _MapPageState extends ConsumerState<MapPage> {
                 padding: EdgeInsets.all(8.sp),
                 margin: EdgeInsets.only(bottom: 120.h, left: 40.w, right: 40.w),
                 child: AutoSizeTextWidget(
-                  text:
-                      "العنوان الذي أدخلة غير موجود ضمن نطاق التوصيل يرجى التحقق مره أخرى وتحديد العنوان الصحيح",
+                  text: S
+                      .of(context)
+                      .theAddressYouEnteredIsNotWithinTheDeliveryRange,
                   fontSize: 10.sp,
                   maxLines: 12,
                 ),
@@ -111,24 +112,32 @@ class _MapPageState extends ConsumerState<MapPage> {
             ),
           ),
           ButtonBottomNavigationBarDesignWidget(
-            child: ref.read(mapProvider.notifier).checkForLocationChanges ==
-                    false
+            child: ref
+                .read(mapProvider.notifier)
+                .checkForLocationChanges ==
+                false
                 ? DefaultButtonWidget(
-                    text: S.of(context).confirmAddress,
-                    height: 43.h,
-                    textSize: 13.5.sp,
-                    background: AppColors.primaryColor.withOpacity(.6),
-                  )
+              text: S
+                  .of(context)
+                  .confirmAddress,
+              height: 43.h,
+              textSize: 13.5.sp,
+              background: AppColors.primaryColor.withOpacity(.6),
+            )
                 : DefaultButtonWidget(
-                    text: S.of(context).confirmAddress,
-                    height: 43.h,
-                    textSize: 13.5.sp,
-                    onPressed: () async {
-                      ref.read(mapProvider.notifier).confirmLocation();
-                      ref.read(mapProvider.notifier).locationIsEmpty = false;
-                      Navigator.pop(context);
-                    },
-                  ),
+              text: S
+                  .of(context)
+                  .confirmAddress,
+              height: 43.h,
+              textSize: 13.5.sp,
+              onPressed: () async {
+                ref.read(mapProvider.notifier).confirmLocation();
+                ref
+                    .read(mapProvider.notifier)
+                    .locationIsEmpty = false;
+                Navigator.pop(context);
+              },
+            ),
           ),
         ],
       ),
@@ -145,7 +154,7 @@ class _MapPageState extends ConsumerState<MapPage> {
           ),
           onPressed: () async {
             Position position =
-                await requestLocationPermissionAndGetCurrentLocation();
+            await requestLocationPermissionAndGetCurrentLocation();
             getCurrentLocation(
               latLng: LatLng(position.latitude, position.longitude),
               ref: ref,
@@ -158,7 +167,7 @@ class _MapPageState extends ConsumerState<MapPage> {
 
   String normalizeText(String text) {
     String normalized =
-        text.replaceAll(RegExp(r'[\u200E\u200F\u202A-\u202E]'), '');
+    text.replaceAll(RegExp(r'[\u200E\u200F\u202A-\u202E]'), '');
     normalized = normalized.trim();
     normalized = normalized.toLowerCase();
     return normalized;
@@ -170,11 +179,10 @@ class _MapPageState extends ConsumerState<MapPage> {
     var citiesState = ref.watch(citiesProvider);
 
     List<String> normalizedYemenCities =
-        citiesState.data.map((city) => normalizeText(city.name)).toList();
+    citiesState.data.map((city) => normalizeText(city.name)).toList();
     if (normalizedYemenCities.contains(normalizedCityName)) {
       tempId = citiesState.data
-          .firstWhere(
-              (city) => normalizeText(city.name) == normalizedCityName)
+          .firstWhere((city) => normalizeText(city.name) == normalizedCityName)
           .id;
       setState(() {
         widget.form.patchValue({
@@ -185,12 +193,16 @@ class _MapPageState extends ConsumerState<MapPage> {
         widget.form.patchValue({'district_name': null});
         showError = false;
         ref.read(mapProvider.notifier).changeLocation(latLng);
-        ref.read(mapProvider.notifier).checkForLocationChanges = true;
+        ref
+            .read(mapProvider.notifier)
+            .checkForLocationChanges = true;
       });
     } else {
       setState(() {
         showError = true;
-        ref.read(mapProvider.notifier).checkForLocationChanges = false;
+        ref
+            .read(mapProvider.notifier)
+            .checkForLocationChanges = false;
       });
     }
   }
@@ -198,7 +210,7 @@ class _MapPageState extends ConsumerState<MapPage> {
   Future<void> _getCityName(LatLng latLng) async {
     try {
       List<Placemark> placemarks =
-          await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
+      await placemarkFromCoordinates(latLng.latitude, latLng.longitude);
       if (placemarks.isNotEmpty) {
         String? city = placemarks.first.locality;
         if (city != null) {

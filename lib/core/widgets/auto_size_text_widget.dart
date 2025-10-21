@@ -32,7 +32,7 @@ class AutoSizeTextWidget extends StatelessWidget {
         fontWeight: fontWeight ?? FontWeight.w500,
         fontSize: fontSize ?? 14.sp,
         color: colorText ?? Colors.black,
-        fontFamily: 'IBMPlexSansArabic',
+        fontFamily: 'NotoKufi',
       ),
       maxLines: maxLines ?? 1,
       maxFontSize: maxFontSize ?? 24,

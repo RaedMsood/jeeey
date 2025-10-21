@@ -9,7 +9,7 @@ class ButtonBottomNavigationBarDesignWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 12.h, bottom: 4.h),
+      padding: EdgeInsets.only(left: 12.w, right: 12.w, top: 8.h, bottom: 4.h),
       decoration: BoxDecoration(
         color: Colors.white,
         boxShadow: [

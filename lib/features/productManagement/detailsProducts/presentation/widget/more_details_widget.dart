@@ -24,7 +24,7 @@ class MoreDetailsWidget extends StatelessWidget {
            AutoSizeTextWidget(
             text:describe ,
             colorText: Colors.black,
-             fontSize: 14.sp,
+             fontSize: 12.5.sp,
           ),
           const Spacer(),
           Icon(

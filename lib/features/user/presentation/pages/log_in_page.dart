@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:jeeey/core/state/check_state_in_get_api_data_widget.dart';
+import 'package:jeeey/core/constants/app_images.dart';
 import 'package:jeeey/core/state/check_state_in_post_api_data_widget.dart';
 import 'package:jeeey/core/state/state.dart';
 import 'package:jeeey/features/user/presentation/riverpod/user_riverpod.dart';
@@ -43,20 +43,13 @@ class _LogInPageState extends ConsumerState<LogInPage> {
             children: [
               Align(
                 alignment: Alignment.center,
-                child: AutoSizeTextWidget(
-                  text: "جي",
-                  fontSize: 20.sp,
-                  maxLines: 2,
+                child: Image.asset(
+                  AppImages.logoWithText,
+                  width: 78.w,
                 ),
               ),
-              Align(
-                alignment: Alignment.center,
-                child: AutoSizeTextWidget(
-                  text: "jeeey",
-                  fontSize: 16.sp,
-                ),
-              ),
-              14.h.verticalSpace,
+
+              18.h.verticalSpace,
 
               /// Class Exclusive Discount And Benefits Widget
               const ExclusiveDiscountAndBenefitsWidget(),

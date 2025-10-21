@@ -1,9 +1,8 @@
-import 'package:auto_size_text/auto_size_text.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
-import 'buttons/default_button.dart';
+import 'package:jeeey/core/widgets/auto_size_text_widget.dart';
+import '../../generated/l10n.dart';
+import '../theme/app_colors.dart';
 
 class NoInternetConnectionWidget extends StatelessWidget {
   final Function()? onPressed;
@@ -16,7 +15,7 @@ class NoInternetConnectionWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Colors.white,
+      color: Colors.transparent,
       width: double.infinity,
       height: 500.h,
       alignment: Alignment.center,
@@ -26,48 +25,21 @@ class NoInternetConnectionWidget extends StatelessWidget {
         children: [
           Icon(
             Icons.signal_wifi_connected_no_internet_4_rounded,
-            color: Colors.black,
-            size: 50.sp,
+            size: 54.sp,
           ),
-          SizedBox(
-            height: 12.h,
+          10.h.verticalSpace,
+          AutoSizeTextWidget(
+            text: S.of(context).timeout,
+            fontWeight: FontWeight.bold,
+            fontSize: 15.sp,
           ),
-          AutoSizeText(
-            "يوجد مشكلة في الإتصال",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 16.sp,
-            ),
-            minFontSize: 10,
-            maxFontSize: 20,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+          4.h.verticalSpace,
+          AutoSizeTextWidget(
+            text: S.of(context).network2,
+            colorText: AppColors.fontColor,
+            fontWeight: FontWeight.bold,
+            fontSize: 13.5.sp,
           ),
-          SizedBox(
-            height: 6.h,
-          ),
-          AutoSizeText(
-            "الرجاء التحقق من الإتصال بالإنترنت",
-            style: TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 14.sp,
-            ),
-            minFontSize: 10,
-            maxFontSize: 20,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-          SizedBox(
-            height: 12.h,
-          ),
-          DefaultButtonWidget(
-            width: 120.w,
-            textSize: 15.sp,
-            text: "تحديث",
-            onPressed: onPressed,
-          )
         ],
       ),
     );

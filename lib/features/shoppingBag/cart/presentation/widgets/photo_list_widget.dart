@@ -4,19 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../../core/widgets/online_images_widget.dart';
 import '../../../../../core/widgets/photo_view_dialog_widget.dart';
-import '../../data/model/product_color_model.dart';
-import '../riverpod/cart_riverpod.dart';
 
 class PhotoListWidget extends ConsumerWidget {
-  final List<ImagesModel> image;
+  final List<dynamic> image;
 
   const PhotoListWidget({super.key, required this.image});
 
   @override
   Widget build(BuildContext context, ref) {
-    // var state = ref.watch(getProductDetailsForCartProvider(productId));
-    // int mainIndex =
-    //     state.data.productColors!.indexWhere((color) => color.isMain == 1);
     return SizedBox(
       height: 230.h,
       child: ListView.separated(
@@ -28,16 +23,11 @@ class PhotoListWidget extends ConsumerWidget {
             onTap: () {
               PhotoViewDialogWidget.show(
                 context,
-                image[index].image,
-                // state.data.productColors![mainIndex].images![index].image
-                //     .toString(),
+                image[index].toString(),
               );
             },
             child: OnlineImagesWidget(
-              imageUrl: image[index].image,
-              // imageUrl: state
-              //     .data.productColors![mainIndex].images![index].image
-              //     .toString(),
+              imageUrl: image[index].toString(),
               size: Size(150.w, double.infinity),
               borderRadius: 0,
             ),

@@ -67,7 +67,7 @@ class DefaultButtonWidget extends StatelessWidget {
                     fontSize: textSize ?? 12.4.sp,
                     colorText: textColor ?? Colors.white,
                     textAlign: TextAlign.center,
-                    fontWeight: FontWeight.w600,
+                    fontWeight:fontWeight?? FontWeight.w600,
                     maxFontSize: maxFontSize ?? 25,
                     minFontSize: minFontSize ?? 8,
                   ),

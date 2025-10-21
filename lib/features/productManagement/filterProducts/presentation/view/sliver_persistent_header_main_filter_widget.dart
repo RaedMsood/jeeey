@@ -13,6 +13,8 @@ class SliverPersistentHeaderMainFilterWidget
       BuildContext context, double shrinkOffset, bool overlapsContent) {
     return MainFilterWidget(
       onTapFilter: onTapFilter,
+      idCategory: 0,
+      nameSearch: '',
     );
   }
 

@@ -51,7 +51,7 @@ extension ColorExtension on String {
     // }
     // return Color(int.parse('0x$hex'));
     if (formattedColor.length == 6) {
-    formattedColor = 'FF$formattedColor';
+      formattedColor = 'FF$formattedColor';
     }
     return Color(int.parse("0x$formattedColor"));
   }
@@ -96,6 +96,12 @@ String dayDate(String date) {
 
 DateTime dateTime(String date) {
   return DateFormat('yyyy-MM-dd HH:mm:ss').parse(date);
+
+  // try {
+  // } catch (e) {
+  //   print("Error parsing date: $e");
+  //   return DateTime.now();
+  // }
 }
 
 String todayYesterdayOrDayOfWeek(String date) {

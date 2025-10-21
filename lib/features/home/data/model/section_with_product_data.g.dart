@@ -19,17 +19,20 @@ class SectionAndProductDataAdapter extends TypeAdapter<SectionAndProductData> {
     return SectionAndProductData(
       sections: (fields[1] as List?)?.cast<SectionData>(),
       product: fields[2] as PaginatedProductsList?,
+      imageBanner: (fields[3] as List?)?.cast<dynamic>(),
     );
   }
 
   @override
   void write(BinaryWriter writer, SectionAndProductData obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(1)
       ..write(obj.sections)
       ..writeByte(2)
-      ..write(obj.product);
+      ..write(obj.product)
+      ..writeByte(3)
+      ..write(obj.imageBanner);
   }
 
   @override

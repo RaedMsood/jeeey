@@ -5,8 +5,6 @@ class OrderProductModel {
   final String? image;
   final String? basePrice;
   final int? quantity;
-  // final int? sectionId;
-  // final int? categoryId;
   final int? total;
 
   OrderProductModel({
@@ -16,8 +14,6 @@ class OrderProductModel {
     this.image,
     this.basePrice,
     this.quantity,
-    // this.sectionId,
-    // this.categoryId,
     this.total,
   });
 
@@ -29,8 +25,6 @@ class OrderProductModel {
       image: json['image'],
       basePrice: json['base_price'],
       quantity: json['quantity'],
-      // sectionId: json['section_id'],
-      // categoryId: json['category_id'],
       total: json['total'],
     );
   }

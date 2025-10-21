@@ -6,21 +6,23 @@ import '../network/errors/remote_exception.dart';
 import '../state/state.dart';
 import '../state/state_data.dart';
 
-
 class CheckStateInPostApiDataWidget extends StatelessWidget {
   final Widget? bottonWidget;
 
   final DataState state;
   final Function? functionSuccess;
   final String? messageSuccess;
+
   final bool hasMessageSuccess;
-  const CheckStateInPostApiDataWidget(
-      {super.key,
-      required this.bottonWidget,
-      required this.state,
-        this.messageSuccess,
-        this.hasMessageSuccess = true,
-      this.functionSuccess});
+
+  const CheckStateInPostApiDataWidget({
+    super.key,
+    required this.bottonWidget,
+    required this.state,
+    this.messageSuccess,
+    this.hasMessageSuccess = true,
+    this.functionSuccess,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +31,14 @@ class CheckStateInPostApiDataWidget extends StatelessWidget {
       SchedulerBinding.instance.addPostFrameCallback((_) {
         functionSuccess!();
 
-       hasMessageSuccess? showFlashBarSuccess(
-          message: messageSuccess??" تم اكمال العملية بنجاح",
-              context: context,
-            ):const SizedBox();
+        hasMessageSuccess
+            ? showFlashBarSuccess(
+                message: messageSuccess ?? " تم اكمال العملية بنجاح",
+                context: context,
+              )
+            : const SizedBox.shrink();
         state.stateData = States.initial;
-
       });
-
     } else if (state.stateData == States.error) {
       SchedulerBinding.instance.addPostFrameCallback(
         (_) {

@@ -85,6 +85,7 @@ class _SkeletonizerOfHomePageState extends State<SkeletonizerOfHomePage> with Ti
                       children: [
                         SkeletonizerWidget(
                           child: CarouselSliderForOffersWidget(
+                            heightImage: double.infinity,
                             images: images,
                             onPageChanged: (index, reason) {
                               setState(() {

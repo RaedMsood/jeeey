@@ -17,7 +17,7 @@ class ShimmerCardWidget extends ConsumerWidget {
     return ListView.builder(
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
-      itemCount: 4,
+      itemCount: 6,
       itemBuilder: (context, index) {
         return Container(
           margin: EdgeInsets.only(top: 8.h),
@@ -43,8 +43,9 @@ class ShimmerCardWidget extends ConsumerWidget {
                     width: 80.w,
                   ),
                   Image.asset(
-                    AppImages.logo,
-                    height: 52.h,
+                    AppImages.logoWithText,
+                    height: 54.h,
+                    width: 54.w,
                   ),
                 ],
               ),

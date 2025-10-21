@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:jeeey/core/extension/string.dart';
-
+import '../../../../../core/theme/app_colors.dart';
 import '../../../../../core/widgets/auto_size_text_widget.dart';
-import '../../data/model/product_color_model.dart';
+import '../../../../../generated/l10n.dart';
+import '../../../../productManagement/detailsProducts/data/model/color_data.dart';
 
 class ProductColorsWidget extends StatelessWidget {
-  final List<ProductColorModel> productsColors;
+  final List<ColorOfProductData> productsColors;
   final int colorId;
+  String colorName;
+  final Function(int, int, String) onSelect;
 
-  final Function(int,int) onSelect;
-
-  const ProductColorsWidget({
+  ProductColorsWidget({
     super.key,
     required this.productsColors,
     required this.colorId,
     required this.onSelect,
+    this.colorName = '',
   });
 
   @override
@@ -23,40 +25,49 @@ class ProductColorsWidget extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+
         Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: AutoSizeTextWidget(
-            text: "الون",
-            fontSize: 13.5.sp,
-            fontWeight: FontWeight.w700,
+            text: "${S.of(context).colors}: $colorName ",
+            fontSize: 12.sp,
+            fontWeight: FontWeight.w600,
           ),
         ),
-        4.h.verticalSpace,
+        8.h.verticalSpace,
         SizedBox(
           height: 24.h,
           child: ListView.builder(
             shrinkWrap: true,
             scrollDirection: Axis.horizontal,
             padding: EdgeInsets.symmetric(horizontal: 10.w),
-            itemCount:productsColors.length ,
+            itemCount: productsColors.length,
             itemBuilder: (context, index) {
               return InkWell(
-                onTap: () => onSelect(productsColors[index].colorId!,index),
+                onTap: () => onSelect(
+                  productsColors[index].idColor!,
+                  index,
+                  productsColors[index].colorName!,
+                ),
                 child: Row(
                   children: [
                     Container(
-                      padding: EdgeInsets.all(1.4.sp),
+                      padding: EdgeInsets.all(1.6.sp),
                       decoration: BoxDecoration(
-                        border: Border.all(
-                          color: productsColors[index].colorId == colorId
-                              ? Colors.black
-                              : Colors.transparent,
-                          width: 1.w,
-                        ),
+                        border: productsColors[index].idColor == colorId
+                            ? Border.all(
+                                color: AppColors.primaryColor,
+                                width: 0.8,
+                              )
+                            : Border.all(
+                                color: AppColors.fontColor,
+                                width: 0.3,
+                              ),
                         borderRadius: BorderRadius.circular(14.r),
                       ),
                       child: CircleAvatar(
-                        backgroundColor: productsColors[index].colorHex!.toColor(),
+                        backgroundColor:
+                            productsColors[index].colorHex!.toColor(),
                         radius: 9.r,
                       ),
                     ),
@@ -67,16 +78,7 @@ class ProductColorsWidget extends StatelessWidget {
             },
           ),
         ),
-        // SizedBox(
-        //   height: 24.h,
-        //   child: ListView(
-        //       shrinkWrap: true,
-        //       scrollDirection: Axis.horizontal,
-        //       padding: EdgeInsets.symmetric(horizontal: 10.w),
-        //       children: productsColors.map((items) {
-        //         return
-        //       }).toList()),
-        // ),
+        8.h.verticalSpace,
       ],
     );
   }

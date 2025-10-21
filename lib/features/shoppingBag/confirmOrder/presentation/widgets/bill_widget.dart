@@ -2,13 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../../../core/theme/app_colors.dart';
 import '../../../../../generated/l10n.dart';
-import 'bill_design_widget.dart';
+import '../../../../../core/widgets/bill_design_widget.dart';
 
 class BillWidget extends StatelessWidget {
   final double total;
   final String currency;
-
-  const BillWidget({super.key, required this.total, required this.currency});
+  final bool hasCopon;
+  final double totalAfterDiscount;
+  final double coponValue;
+  final double deliveryCost;
+  const BillWidget(
+      {super.key,
+      required this.total,
+      required this.currency,
+      required this.hasCopon,
+        required this.coponValue,
+        required this.deliveryCost,
+      required this.totalAfterDiscount});
 
   @override
   Widget build(BuildContext context) {
@@ -22,28 +32,31 @@ class BillWidget extends StatelessWidget {
           BillDesignWidget(
             name: S.of(context).theTotal,
             price: total,
-            currency: currency,
             color1: Colors.black87,
           ),
           BillDesignWidget(
             name: S.of(context).deliveryCost,
-            price: 0.0,
-            currency: currency,
-
+            price: deliveryCost,
           ),
           BillDesignWidget(
             name: S.of(context).discountOnBill,
             price: 0.0,
-            currency: currency,
-
+          ),
+          Visibility(
+            visible: hasCopon,
+            child: BillDesignWidget(
+              name: 'خصم الكوبون',
+              price:coponValue ,
+              color1: AppColors.primaryColor,
+              color2:AppColors.primaryColor ,
+            ),
           ),
           8.h.verticalSpace,
           BillDesignWidget(
             name: S.of(context).total,
-            price: total,
-            currency: currency,
-            fontSize1: 14.2.sp,
-            fontSize2: 11.8.sp,
+            price: totalAfterDiscount,
+            fontSize1: 14.sp,
+            fontSize2: 11.6.sp,
             color1: Colors.black87,
             color2: AppColors.primaryColor,
           ),

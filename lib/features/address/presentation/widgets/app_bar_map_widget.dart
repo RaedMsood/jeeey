@@ -21,8 +21,8 @@ class AppBarMapWidget extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       elevation: 0.0,
       title: Image.asset(
-        AppImages.logo,
-        height: 60.h,
+        AppImages.logoWithText,
+        height: 50.h,
       ),
       leading: IconButtonWidget(
         icon: AppIcons.arrowBack,

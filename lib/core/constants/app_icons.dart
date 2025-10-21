@@ -1,7 +1,6 @@
 class AppIcons {
   static const String _iconsPath = 'assets/icons/';
   static const String logo = '${_iconsPath}logo.svg';
-  static const String wishlist = '${_iconsPath}wishlist.svg';
   static const String camera = '${_iconsPath}camera.svg';
   static const String calender = '${_iconsPath}calender.svg';
   static const String message = '${_iconsPath}message.svg';
@@ -15,6 +14,7 @@ class AppIcons {
   static const String arrowUp = '${_iconsPath}arrow_up.svg';
   static const String arrowBottom = '${_iconsPath}arrow_bottom.svg';
   static const String arrowLeft = '${_iconsPath}arrow_left.svg';
+  static const String arrowRight = '${_iconsPath}arrow_right.svg';
 
   static const String showRow = '${_iconsPath}show_row.svg';
   static const String filter = '${_iconsPath}filter.svg';
@@ -33,6 +33,17 @@ class AppIcons {
       '${_iconsPath}your_order_has_been_confirmed_successfully.svg';
   static const String mapLocation = '${_iconsPath}map_location.svg';
   static const String trash = '${_iconsPath}trash.svg';
+
+  static const String like = '${_iconsPath}like.svg';
+  static const String disLike = '${_iconsPath}dis_like.svg';
+  static const String addComment = '${_iconsPath}add_comment.svg';
+
+  /// Wishlist
+  static const String multipleChoice = '${_iconsPath}multiple_choice.svg';
+  static const String wishlist = '${_iconsPath}wishlist.svg';
+  static const String wishlistActive = '${_iconsPath}wishlist_active.svg';
+  static const String emptyWishlist = '${_iconsPath}empty_wishlist.svg';
+  static const String emptyList = '${_iconsPath}empty_list.svg';
 
   /// Contact
   static const String facebook = '${_iconsPath}contact/facebook.svg';

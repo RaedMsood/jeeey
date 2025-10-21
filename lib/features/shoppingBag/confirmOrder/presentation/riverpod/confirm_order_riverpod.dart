@@ -3,8 +3,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../../../../core/state/state.dart';
 import '../../../../../core/state/state_data.dart';
 import '../../../cart/data/model/cart_model.dart';
+import '../../data/model/check_copon_model.dart';
 import '../../data/model/confirm_order_data_model.dart';
 import '../../data/model/confirm_order_model.dart';
+import '../../data/model/discount_copon_data.dart';
 import '../../data/repos/confirm_order_repo.dart';
 import '../widgets/order_data_form_widget.dart';
 
@@ -75,10 +77,38 @@ class ConfirmOrderController extends StateNotifier<DataState<Unit>> {
         phoneNumber: formData['recipients_phone_number'].toString(),
       ),
     );
+
     data.fold((f) {
       state = state.copyWith(state: States.error, exception: f);
     }, (data) {
       state = state.copyWith(state: States.loaded);
+    });
+  }
+}
+
+
+final checkCoponProvider = StateNotifierProvider.autoDispose<
+    CheckCoponNotifier, DataState<DiscountProductFromCoponModel>>(
+      (ref) => CheckCoponNotifier(),
+);
+
+class CheckCoponNotifier
+    extends StateNotifier<DataState<DiscountProductFromCoponModel>> {
+  CheckCoponNotifier()
+      : super(DataState<DiscountProductFromCoponModel>.initial(
+      DiscountProductFromCoponModel.empty()));
+
+  final _controller = ConfirmOrderReposaitory();
+
+  Future<void> getData({required CheckCoponModel copon }) async {
+    state = state.copyWith(state: States.loading);
+
+    final data = await _controller.checkCopon(copon);
+
+    data.fold((f) {
+      state = state.copyWith(state: States.error, exception: f);
+    }, (data) {
+      state = state.copyWith(state: States.loaded, data: data);
     });
   }
 }

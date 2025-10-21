@@ -1,0 +1,122 @@
+{
+  "project_info": {
+    "project_number": "60518073247",
+    "project_id": "new-jeeey",
+    "storage_bucket": "new-jeeey.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60518073247:android:19c23adeed62aa20e9f3aa",
+        "android_client_info": {
+          "package_name": "com.devstation.jeeey"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60518073247-81o6rhjs1l9s3tot5s6j14sari241lk2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devstation.jeeey",
+            "certificate_hash": "25eb4a62f7237374c230c49c6b093006f22b442a"
+          }
+        },
+        {
+          "client_id": "60518073247-prdd1201ava9e5fbp6dt803pdesre8s9.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devstation.jeeey",
+            "certificate_hash": "31dcae175ad6d1b57adce9a8dc1de3c71a48c213"
+          }
+        },
+        {
+          "client_id": "60518073247-u7q2dtcv3ikjo3rbh4bj67f4k78betcf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.devstation.jeeey",
+            "certificate_hash": "5affaf6c2e529550a9dcada5dc5ba0eb122bfe86"
+          }
+        },
+        {
+          "client_id": "60518073247-7mp796mgahhu9jo7hehtpjeem2t2ma0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeXWPD9X6OMcav3rFlWhaC2WAV1BmI0HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60518073247-7mp796mgahhu9jo7hehtpjeem2t2ma0l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "60518073247-ochj1igem7rbg077jl5g2f70i7ghajfe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devstation.jeeey"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:60518073247:android:45164168095fe741e9f3aa",
+        "android_client_info": {
+          "package_name": "com.jeeey.shopin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "60518073247-cev3l7c176rkhp6bhmdgsr060kkfn3te.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jeeey.shopin",
+            "certificate_hash": "31dcae175ad6d1b57adce9a8dc1de3c71a48c213"
+          }
+        },
+        {
+          "client_id": "60518073247-j6jar84noul9g605kefhahchgtjfauht.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jeeey.shopin",
+            "certificate_hash": "25eb4a62f7237374c230c49c6b093006f22b442a"
+          }
+        },
+        {
+          "client_id": "60518073247-7mp796mgahhu9jo7hehtpjeem2t2ma0l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCeXWPD9X6OMcav3rFlWhaC2WAV1BmI0HQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "60518073247-7mp796mgahhu9jo7hehtpjeem2t2ma0l.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "60518073247-ochj1igem7rbg077jl5g2f70i7ghajfe.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.devstation.jeeey"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

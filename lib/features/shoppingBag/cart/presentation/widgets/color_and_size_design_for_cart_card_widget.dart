@@ -46,6 +46,8 @@ class ColorAndSizeDesignForCartCardWidget extends StatelessWidget {
             onSuccess: onSuccess,
             sizeId: sizeId,
             colorId: colorId,
+            sizeTypeName: sizeName,
+            colorName: colorName,
           ),
         );
       },
@@ -62,14 +64,18 @@ class ColorAndSizeDesignForCartCardWidget extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            CircleAvatar(
-              backgroundColor: colorHex.toColor(),
-              radius: 5.r,
-            ),
-            2.w.horizontalSpace,
+            colorHex.isNotEmpty
+                ? CircleAvatar(
+                    backgroundColor: colorHex.toColor(),
+                    radius: 5.r,
+                  )
+                : const SizedBox.shrink(),
+            3.4.w.horizontalSpace,
             Flexible(
               child: AutoSizeTextWidget(
-                text: "${sizeName.toString()} / ${colorName.toString()}",
+                text: colorName.isNotEmpty
+                    ? "${colorName.toString()} / ${sizeName.toString()}"
+                    : sizeName.toString(),
                 colorText: AppColors.fontColor,
                 fontSize: 10.5.sp,
                 maxLines: 2,

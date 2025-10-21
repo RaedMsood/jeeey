@@ -1,3 +1,6 @@
+import 'dart:async';
+
+import 'package:dartz/dartz.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:jeeey/features/home/data/model/section_with_category_of_all_data.dart';
@@ -5,6 +8,7 @@ import '../../../../core/state/state.dart';
 import '../../../../core/state/state_data.dart';
 import '../../../home/data/model/section_with_product_data.dart';
 import '../../../productManagement/detailsProducts/data/model/paginated_products_list_data.dart';
+import '../../../productManagement/detailsProducts/presentation/state_mangment/riverpod_details.dart';
 import '../../data/reposaitory/reposaitories.dart';
 
 final sectionProvider = StateNotifierProvider<SectionNotifier,
@@ -14,14 +18,12 @@ class SectionNotifier
     extends StateNotifier<DataState<SectionWithCategoryOfAllData>> {
   SectionNotifier()
       : super(DataState<SectionWithCategoryOfAllData>.initial(
-      SectionWithCategoryOfAllData.empty())) {
+            SectionWithCategoryOfAllData.empty())) {
     getMainSectionAndAllProduct();
   }
 
   int idSection = 1;
-  Color iconColor = Colors.white;
-  Color appBarColor = Colors.transparent;
-  double offst = 0;
+
   final _controller = SectionReposaitory();
 
   Future<void> getMainSectionAndAllProduct() async {
@@ -37,86 +39,155 @@ class SectionNotifier
   getSectionId(int num) {
     idSection = num;
   }
-
-  colorIconOfAppBar(Color iconsColor) {
-    iconColor = iconsColor;
-
-    print(iconColor);
-  }
-
-  coloBackGroundOfAppBar(Color backGroundColor) {
-    appBarColor = backGroundColor;
-    print(appBarColor);
-  }
-
-  getOffsetNumberOfHomePage(double offset) {
-    offst = offset;
-  }
 }
 
-final subSectionProvider = StateNotifierProvider.family<
-    SubSectionNotifier,
-    DataState<SectionAndProductData>,
-    int>((ref, idSection) => SubSectionNotifier(idSection));
+final subSectionProvider = StateNotifierProvider.family<SubSectionNotifier,
+    DataState<SectionAndProductData>, Tuple2<int, int>>(
+  (ref, params) => SubSectionNotifier(
+    ref ,
+    params.value1,
+    params.value2,
+  ),
+);
+//
+// class SubSectionNotifier
+//     extends StateNotifier<DataState<SectionAndProductData>> {
+//   SubSectionNotifier(this.idSection,this.idFilter)
+//       : super(DataState<SectionAndProductData>.initial(
+//       SectionAndProductData.empty())) {
+//     getSubSectionData();
+//   }
+//
+//   int idSection;
+//   int idFilter;
+//   //int filterType;
+//   final _controller = SectionReposaitory();
+//
+//
+//   Future<void> getSubSectionData({bool moreData = false,bool isRefresh = false,}) async {
+//
+//
+//     // int totalPages = (state.data.product!.totalProduct! / state.data.product!.perPage!).ceil();
+//     // if (state.data.product!.currentPage >= totalPages) {
+//     //   return;
+//     // }
+//     // if (state.data.product!.currentPage >= state.data.product!.lastPage!) {
+//     //     return; // نخرج مباشرة من الدالة
+//     //   }
+//
+//     if(moreData ==true){
+//       state = state.copyWith(state: States.loadingMore);
+//     }else{
+//
+//       state = state.copyWith(state: States.loading);
+//
+//     }
+//
+//     int page =isRefresh==true?1 :state.data.product!.currentPage+1;
+//     final data = await _controller.getSectionData(idSection,page,isRefresh,idFilter);
+//
+//     data.fold((f) {
+//       state = state.copyWith(state: States.error, exception: f);
+//     }, (section) {
+//       print(idFilter.toString()+"------------------");
+//
+//         var oldData = state.data;
+//         if (oldData.product!.data.isNotEmpty&&isRefresh==false) {
+//
+//           PaginatedProductsList productData;
+//           productData=oldData.product!.copyWith(
+//             data: [...oldData.product!.data,...section.product!.data],
+//             currentPage: section.product!.currentPage,
+//           );
+//           oldData = oldData.copyWith(products: productData);
+//         }
+//         else{
+//           oldData =section;
+//         }
+//         state = state.copyWith(state: States.loaded, data: oldData);
+//
+//
+//     });
+//   }
+// }
 
 class SubSectionNotifier
     extends StateNotifier<DataState<SectionAndProductData>> {
-  SubSectionNotifier(this.idSection)
+  SubSectionNotifier(this.ref,this.idSection, this.idFilter)
       : super(DataState<SectionAndProductData>.initial(
-      SectionAndProductData.empty())) {
+            SectionAndProductData.empty())) {
     getSubSectionData();
   }
 
-  int idSection;
+  Ref ref;
+  final int idSection;
+  int idFilter;
   final _controller = SectionReposaitory();
 
-  Future<void> getSubSectionData({bool moreData = false,bool isRefresh = false}) async {
-    if(moreData ==true){
+  // خريطة لتخزين البيانات الخاصة بكل فلتر
+  Map<int, PaginatedProductsList> filterProductMap = {};
+
+  Future<void> getSubSectionData(
+      {bool moreData = false, bool isRefresh = false}) async {
+    // إذا كان هناك طلب لبيانات إضافية، نعرض حالة تحميل إضافي
+    if (moreData) {
       state = state.copyWith(state: States.loadingMore);
-    }else{
-
+    } else {
       state = state.copyWith(state: States.loading);
-
     }
 
-    int page =isRefresh==true?1 :state.data.product!.currentPage+1;
-    final data = await _controller.getSectionData(idSection,page,isRefresh);
+    // نحدد الصفحة بناءً على ما إذا كانت العملية هي تحديث أم لا
+    int page = isRefresh ? 1 : state.data.product!.currentPage + 1;
+
+    // نحصل على البيانات من الـ API بناءً على `idSection` و `idFilter`
+    final data =
+        await _controller.getSectionData(idSection, page, isRefresh, idFilter);
+    print(idFilter);
+    // معالجة البيانات القادمة من الـ API
     data.fold((f) {
       state = state.copyWith(state: States.error, exception: f);
     }, (section) {
       var oldData = state.data;
-      if (oldData.product!.data.isNotEmpty&&isRefresh==false) {
 
+      // إذا كانت البيانات الخاصة بالـ `idFilter` غير موجودة، نقوم بإنشاء قائمة جديدة
+      if (!filterProductMap.containsKey(idFilter)) {
+        filterProductMap[idFilter] = section.product!;
+      } else {
+        // إذا كانت البيانات موجودة بالفعل، نقوم بإضافة المنتجات الجديدة
+        var existingData = filterProductMap[idFilter]!;
+        var updatedData = existingData.copyWith(
+          data: [...existingData.data, ...section.product!.data],
+          currentPage: section.product!.currentPage,
+        );
+        filterProductMap[idFilter] = updatedData;
+      }
+
+      // إذا لم يكن هناك بيانات سابقة، نقوم بتخزين البيانات القادمة في الـ `filterProductMap`
+      if (oldData.product!.data.isNotEmpty && !isRefresh) {
         PaginatedProductsList productData;
-        productData=oldData.product!.copyWith(
-          data: [...oldData.product!.data,...section.product!.data],
+        productData = oldData.product!.copyWith(
+          data: [...oldData.product!.data, ...section.product!.data],
           currentPage: section.product!.currentPage,
         );
         oldData = oldData.copyWith(products: productData);
+      } else {
+        oldData = section;
       }
-      else{
-        oldData =section;
-      }
+
       state = state.copyWith(state: States.loaded, data: oldData);
     });
   }
-}
-
-
-
-class SectionIdNotifier extends StateNotifier<int?> {
-  SectionIdNotifier() : super(null);
-
-  void setSectionId(int id) {
-    state = id; // تحديث قيمة الـ id
+  Future<void> clearCacheAndRefresh() async {
+    filterProductMap.clear();
+    state = DataState<SectionAndProductData>.initial(SectionAndProductData.empty());
+  }
+  // عندما يتغير الـ `idFilter`، نقوم بتحديث البيانات
+  void updateFilter(int newFilter) {
+    idFilter = newFilter;
+    // نقوم بتحديث البيانات باستخدام الـ `idFilter` الجديد
+    getSubSectionData(isRefresh: true);
   }
 }
-
-final sectionIdProvider = StateNotifierProvider<SectionIdNotifier, int?>((ref) {
-  return SectionIdNotifier();
-});
-
-
 
 class ColorIconAppBarNotifier extends StateNotifier<Color?> {
   ColorIconAppBarNotifier() : super(null);
@@ -126,11 +197,10 @@ class ColorIconAppBarNotifier extends StateNotifier<Color?> {
   }
 }
 
-final colorIconAppBarProvider = StateNotifierProvider<ColorIconAppBarNotifier, Color?>((ref) {
+final colorIconAppBarProvider =
+    StateNotifierProvider<ColorIconAppBarNotifier, Color?>((ref) {
   return ColorIconAppBarNotifier();
 });
-
-
 
 class ColorBackAppBarNotifier extends StateNotifier<Color?> {
   ColorBackAppBarNotifier() : super(null);
@@ -140,6 +210,21 @@ class ColorBackAppBarNotifier extends StateNotifier<Color?> {
   }
 }
 
-final colorBackAppBarProvider = StateNotifierProvider<ColorBackAppBarNotifier, Color?>((ref) {
+final colorBackAppBarProvider =
+    StateNotifierProvider<ColorBackAppBarNotifier, Color?>((ref) {
   return ColorBackAppBarNotifier();
 });
+
+final getSectionFilterTypeProvider =
+    StateNotifierProvider.family<GetSectionFilterTypeNotifier, int?, int?>(
+        (ref, idSection) {
+ return GetSectionFilterTypeNotifier();
+});
+
+class GetSectionFilterTypeNotifier extends StateNotifier<int?> {
+  GetSectionFilterTypeNotifier() : super(null);
+
+  void setSectionFilterNumber(int numberFillter) {
+    state = numberFillter;
+  }
+}

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 import '../../../../../core/widgets/online_images_widget.dart';
 import '../../data/model/product_data.dart';
 import '../state_mangment/riverpod_details.dart';
@@ -38,8 +37,12 @@ class _ImageSliderWidgetState extends State<ImageSliderWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final images = widget.productData.colorsProduct!.isNotEmpty?
-    widget.productData.colorsProduct![widget.indexColorImage ?? 0].image??[]:[];
+    final imagesByColor = widget.productData.colorsProduct!.isNotEmpty
+        ? widget.productData.colorsProduct![widget.indexColorImage ?? 0]
+                .image ??
+            []
+        : [];
+    final allImage = widget.productData.allImage!;
     return Consumer(
       builder: (context, ref, child) =>
           NotificationListener<ScrollNotification>(
@@ -60,13 +63,18 @@ class _ImageSliderWidgetState extends State<ImageSliderWidget> {
             controller: _scrollController,
             scrollDirection: Axis.horizontal,
             physics: const PageScrollPhysics(),
-            itemCount: images.length,
+            itemCount: widget.productData.colorHasImage == false
+                ? allImage.length
+                : imagesByColor.length,
             itemBuilder: (context, index) {
               return SizedBox(
                 width: MediaQuery.of(context).size.width,
                 child: OnlineImagesWidget(
-                  imageUrl: images[index],
+                  imageUrl: widget.productData.colorHasImage == false
+                      ? allImage[index]
+                      : imagesByColor[index],
                   size: Size(double.infinity, 450.h),
+                  borderRadius: 0,
                 ),
               );
             },
